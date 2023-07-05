@@ -12,17 +12,9 @@ import { RouterModule } from '@angular/router';
                         (m) => m.ProfileListModule
                     ),
             },
-            {
-                path: 'create',
-                data: { breadcrumb: 'Create' },
-                loadChildren: () =>
-                    import('./create/profilecreate.module').then(
-                        (m) => m.ProfileCreateModule
-                    ),
-            },
             { path: '**', redirectTo: '/notfound' },
         ]),
     ],
     exports: [RouterModule],
 })
-export class ProfileRoutingModule {}
+export class ProfileRoutingModule { }

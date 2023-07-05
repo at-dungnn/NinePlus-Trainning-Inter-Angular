@@ -1,0 +1,47 @@
+<div class="card">
+    <span class="text-80 text-xl font-bold mb-4 block">Detail Customer Profile</span>
+    <div class="grid">
+        <div class="col-12 lg:col-1">
+        </div>
+        <div class="col-12 lg:col-9 pl-8 flex flex-column justify-content-start">
+            <div class="field mb-4 col-12 flex align-items-center">
+                <label for="nickname" class="font-medium text-900 mr-4">ID <span
+                        class="text-red-500 text-900">*</span></label>
+                <input id="nickname" type="text" class="" [value]="customer.id" pInputText [disabled]="true">
+            </div>
+            <div class="field mb-4 col-12 flex align-items-center ">
+                <label for="name" class="font-medium text-900 mr-4">Name <span
+                        class="text-red-500 text-900">*</span></label>
+                <input id="name" type="text" [value]="customer.name" class="w-5" pInputText [disabled]="true">
+            </div>
+            <div class="field mb-4 col-12 flex align-items-center ">
+                <label for="phone_number" class="font-medium text-900 mr-4">Phone Number <span
+                        class="text-red-500 text-900">*</span></label>
+                <input id="phone_number" type="text" [value]="customer.phone_number" class="w-4-3" pInputText
+                    [disabled]="true">
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for=" address" class="font-medium text-900 mr-3 ">Address</label>
+                <input id="address" type="text" [value]="customer.address" class="flex-1" pInputText [disabled]="true">
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center ">
+                <label for="birthDay" class="font-medium text-900 mr-3">BirthDay</label>
+                <input id="birthDay" class="w-5" type="text" value="{{ customer.date_of_birth | date:'dd/MM/yyyy'}}"
+                    pInputText [disabled]="true" name="date_of_birth">
+            </div>
+            <div class="field w-field mb-2 col-12 flex align-items-center ">
+                <label for="total_money" class="font-medium text-900 mr-3">Total Money</label>
+                <input id="total_money" type="text" [value]="customer.total_money | currency:'VND'" class="w-5"
+                    pInputText [disabled]="true">
+            </div>
+            <div class="col-12">
+                <button pButton pRipple label="Back" class="w-auto px-5" (click)="navigateToListCustomer()"></button>
+            </div>
+        </div>
+        <div class="col-12 lg:col-2">
+            <p-button label="Booking History" icon="pi pi-plus" styleClass="p-button-raised flex ml-auto"
+                (click)="showDialogBooking()"></p-button>
+        </div>
+    </div>
+</div>
+<app-history-booking [dialogBooking]="dialogBooking" (controlDialog)="hideDialog()"></app-history-booking>

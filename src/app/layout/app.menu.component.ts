@@ -9,18 +9,69 @@ import { LayoutService } from './service/app.layout.service';
 export class AppMenuComponent implements OnInit {
     model: any[] = [];
 
-    constructor(public layoutService: LayoutService) {}
+    constructor(public layoutService: LayoutService) { }
 
     ngOnInit() {
         this.model = [
             {
-                label: 'MENU.DASHBOAD',
+                label: 'Dashboard',
                 icon: 'pi pi-home',
                 items: [
-                    { label: 'SaaS', icon: 'pi pi-desktop', routerLink: ['/'] },
+                    // { label: 'SaaS', icon: 'pi pi-desktop', routerLink: ['/'] },
                     // { label: 'Sales', icon: 'pi pi-chart-bar', routerLink: ['/dashboard-sales'] }
                 ],
             },
+            {
+                label: 'Employee',
+                icon: 'pi pi-wrench',
+                items: [
+
+                ],
+            },
+            {
+                label: 'Service',
+                icon: 'pi pi-slack',
+                items: [
+
+                ],
+            },
+            {
+                label: 'Customer',
+                icon: 'pi pi-users',
+                items: [
+                    { label: 'List', icon: 'pi pi-list', routerLink: ['/customer/list'] },
+                    { label: 'Create', icon: 'pi pi-plus', routerLink: ['/customer/create'] }
+                ],
+            },
+            {
+                label: 'Booking',
+                icon: 'pi pi-book',
+                items: [
+
+                ],
+            },
+            {
+                label: 'User',
+                icon: 'pi pi-user',
+                items: [
+
+                ],
+            },
+            {
+                label: 'Feedback',
+                icon: 'pi pi-envelope',
+                items: [
+
+                ],
+            },
+            {
+                label: 'Settings',
+                icon: 'pi pi-cog',
+                items: [
+
+                ],
+            },
+
 
             // TODO
             // {
@@ -46,32 +97,32 @@ export class AppMenuComponent implements OnInit {
             // },
 
             // TODO
-            {
-                label: 'MENU.MANAGE_SYSTEM',
-                icon: 'pi pi-th-large',
-                items: [
-                    {
-                        label: 'MENU.BRAND',
-                        icon: 'pi pi-fw pi-sliders-v',
-                        routerLink: ['/manage-system/list-branch'],
-                    },
-                    {
-                        label: 'MENU.DEPARTEMENT',
-                        icon: 'pi pi-fw pi-users',
-                        routerLink: ['/manage-system/list-departement'],
-                    },
-                    {
-                        label: 'MENU.LOCATION',
-                        icon: 'pi pi-fw pi-check-square',
-                        routerLink: ['/manage-system/list-location'],
-                    },
-                    {
-                        label: 'Commotityes',
-                        icon: 'pi pi-fw pi-shopping-cart',
-                        routerLink: ['/manage-system/-list-commotityes'],
-                    },
-                ],
-            },
+            // {
+            //     label: 'MENU.MANAGE_SYSTEM',
+            //     icon: 'pi pi-th-large',
+            //     items: [
+            //         {
+            //             label: 'MENU.BRAND',
+            //             icon: 'pi pi-fw pi-sliders-v',
+            //             routerLink: ['/manage-system/list-branch'],
+            //         },
+            //         {
+            //             label: 'MENU.DEPARTEMENT',
+            //             icon: 'pi pi-fw pi-users',
+            //             routerLink: ['/manage-system/list-departement'],
+            //         },
+            //         {
+            //             label: 'MENU.LOCATION',
+            //             icon: 'pi pi-fw pi-check-square',
+            //             routerLink: ['/manage-system/list-location'],
+            //         },
+            //         {
+            //             label: 'Commotityes',
+            //             icon: 'pi pi-fw pi-shopping-cart',
+            //             routerLink: ['/manage-system/-list-commotityes'],
+            //         },
+            //     ],
+            // },
 
             // TODO
             // {
@@ -254,22 +305,7 @@ export class AppMenuComponent implements OnInit {
             // },
 
             // TODO
-            {
-                label: 'User Management',
-                icon: 'pi pi-fw pi-user',
-                items: [
-                    {
-                        label: 'List',
-                        icon: 'pi pi-fw pi-list',
-                        routerLink: ['profile/list'],
-                    },
-                    {
-                        label: 'Create',
-                        icon: 'pi pi-fw pi-plus',
-                        routerLink: ['profile/create'],
-                    },
-                ],
-            },
+
 
             // TODO
             // {

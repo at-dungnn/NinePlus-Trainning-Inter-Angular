@@ -39,11 +39,11 @@ const routes: Routes = [
                     ),
             },
             {
-                path: 'profile',
-                data: { breadcrumb: 'User Management' },
+                path: 'customer',
+                data: { breadcrumb: 'Manage Customer' },
                 loadChildren: () =>
-                    import('./demo/components/profile/profile.module').then(
-                        (m) => m.ProfileModule
+                    import('./modules/manage-system/components/customer/customer.module').then(
+                        (m) => m.CustomerModule
                     ),
             },
             {

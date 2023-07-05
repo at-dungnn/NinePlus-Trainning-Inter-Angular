@@ -1,0 +1,49 @@
+<div class="card">
+    <span class="text-80 text-xl font-bold mb-4 block">Edit Customer Profile</span>
+    <div class="grid">
+        <div class="col-12 lg:col-2">
+        </div>
+        <div class="col-12 lg:col-10">
+            <div class="grid formgrid p-fluid">
+                <div class="field mb-4 col-12">
+                    <label for="id" class="font-medium text-900">ID <span class="text-red-500 text-900">*</span></label>
+                    <input id="id" type="text" [(ngModel)]="customer.id" pInputText required name="id">
+
+                </div>
+                <div class="field mb-4 col-12">
+                    <label for="name" class="font-medium text-900">Name <span
+                            class="text-red-500 text-900">*</span></label>
+                    <input id="name" type="text" [(ngModel)]="customer.name" pInputText required name="name" />
+                </div>
+                <div class="field mb-4 col-12">
+                    <label for="phone_number" class="font-medium text-900">Phone Number <span
+                            class="text-red-500 text-900">*</span></label>
+                    <input id="phone_number" type="text" [(ngModel)]="customer.phone_number" pInputText required
+                        name="phone_number">
+                </div>
+                <div class="field mb-4 col-12">
+                    <label for="address" class="font-medium text-900">Address</label>
+                    <textarea id="address" type="text" [(ngModel)]="customer.address" pInputTextarea rows="5"
+                        [autoResize]="true" name="address"></textarea>
+                </div>
+                <div class="field mb-4 col-7">
+                    <label class="font-medium text-900">BirthDay</label>
+                    <p-calendar [dateFormat]="dateFormat" [showIcon]="true" [readonlyInput]="true"
+                        [(ngModel)]="customer.date_of_birth"
+                        placeholder="{{customer.date_of_birth | date : 'dd/MM/yyyy'}}" name="date_of_birth">
+                    </p-calendar>
+                </div>
+                <div class="field mb-4 col-12">
+                    <label for="total_money" class="font-medium text-900">Total Money</label>
+                    <p-inputNumber id="total_money" inputId="integeronly" [(ngModel)]="customer.total_money"
+                        name="total_money"></p-inputNumber>
+                </div>
+                <div class="col-12 mt-3">
+                    <button pButton pRipple label="Save" style="min-width: 100px;" class="w-auto"></button>
+                    <button pButton pRipple label="Cancel" icon="pi pi-times" class="ml-5 w-auto"
+                        style="min-width: 100px;" (click)="navigateToListCustomer()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

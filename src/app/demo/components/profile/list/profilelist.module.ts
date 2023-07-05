@@ -7,6 +7,14 @@ import { TableModule } from 'primeng/table';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { ProfileListComponent } from './profilelist.component';
 import { ProfileListRoutingModule } from './profilelist-routing.module';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { FormsModule } from '@angular/forms';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+
 
 @NgModule({
 	imports: [
@@ -16,7 +24,15 @@ import { ProfileListRoutingModule } from './profilelist-routing.module';
 		ButtonModule,
 		InputTextModule,
 		TableModule,
-		ProgressBarModule
+		ProgressBarModule,
+		ConfirmDialogModule,
+		ToastModule,
+		ConfirmDialogModule,
+		ConfirmPopupModule,
+		FormsModule,
+		DialogModule,
+		CalendarModule,
+		DynamicDialogModule
 	],
 	declarations: [ProfileListComponent]
 })
