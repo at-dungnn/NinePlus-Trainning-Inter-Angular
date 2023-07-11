@@ -1,5 +1,5 @@
-<p-dialog [(visible)]="dialogBooking" [style]="{width: '80%'}" header="Booking History" [modal]="true" class="p-fluid"
-    (onHide)="hideDialog()">
+<p-dialog [(visible)]="dialogBooking" [draggable]="true" [style]="{width: '80%',overflowY:'auto'}"
+    header="Booking History" [modal]="true" class="p-fluid" (onHide)="hideDialogBooking()">
     <p-table [value]="bookings" [resizableColumns]="true" styleClass="p-datatable-gridlines"
         [tableStyle]="{'min-width': '50rem'}">
         <ng-template pTemplate="header">
@@ -13,14 +13,14 @@
         <ng-template pTemplate="body" let-booking>
             <tr>
                 <td>{{booking.id}}</td>
-                <td>{{booking.date}}</td>
+                <td>{{booking.date_booking | date : "dd/MM/yyyy" }}</td>
                 <td>{{booking.name_service}}</td>
-                <td>{{booking.price}}</td>
+                <td>{{booking.price_service}}</td>
             </tr>
         </ng-template>
     </p-table>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-times" label="Cancel" class="p-button-danger flex justify-content-center mt-5"
-            (click)="hideDialog()"></p-button>
+            (click)="hideDialogBooking()"></p-button>
     </ng-template>
 </p-dialog>

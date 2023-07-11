@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BookingDetail } from 'src/app/demo/api/booking-detail';
+import { BookingDetailService } from 'src/app/demo/service/booking-detail.service';
 
 @Component({
   selector: "app-history-booking",
@@ -8,49 +10,27 @@ export class HistorybookingComponent implements OnInit {
 
   @Output() controlDialog: EventEmitter<any> = new EventEmitter();
 
-
   @Input() dialogBooking: boolean = false;
 
-  bookings: any = [];
+  @Input() idCustomer: string = '';
 
-  hideDialog() {
+  bookings: BookingDetail[] = [];
+
+  constructor(private bookingService: BookingDetailService) {
+  }
+
+  hideDialogBooking() {
     // child call parent
     this.controlDialog.emit()
   }
   ngOnInit(): void {
-    // call api bookings
-    this.bookings = [
-      {
-        id: 112,
-        date: "14/04-2023 15:00 PM",
-        name_service: "Massage",
-        price: 5000000
-      },
-      {
-        id: 112,
-        date: "14/04-2023 15:00 PM",
-        name_service: "Massage",
-        price: 5000000
-      },
-      {
-        id: 112,
-        date: "14/04-2023 15:00 PM",
-        name_service: "Massage",
-        price: 5000000
-      },
-      {
-        id: 112,
-        date: "14/04-2023 15:00 PM",
-        name_service: "Massage",
-        price: 5000000
-      },
-      {
-        id: 112,
-        date: "14/04-2023 15:00 PM",
-        name_service: "Massage",
-        price: 5000000
-      }
-    ]
+    this.fetListHistoryBooking()
+  }
+
+  fetListHistoryBooking () {
+    this.bookingService.getHistoryBookingWithCustomer(this.idCustomer).subscribe(bookings => {
+      this.bookings = bookings
+    })
   }
 
 

@@ -4,38 +4,41 @@
         <div class="col-12 lg:col-1">
         </div>
         <div class="col-12 lg:col-9 pl-8 flex flex-column justify-content-start">
-            <div class="field mb-4 col-12 flex align-items-center">
-                <label for="nickname" class="font-medium text-900 mr-4">ID <span
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="nickname" class="font-medium text-900 mr-3">ID <span
                         class="text-red-500 text-900">*</span></label>
-                <input id="nickname" type="text" class="" [value]="customer.id" pInputText [disabled]="true">
+                <input id="nickname" type="text" class="" [value]="customer.id" pInputText [disabled]="true"
+                    class="w-6">
             </div>
-            <div class="field mb-4 col-12 flex align-items-center ">
-                <label for="name" class="font-medium text-900 mr-4">Name <span
+            <div class="field w-field mb-4 col-12 flex align-items-center ">
+                <label for="name" class="font-medium text-900 mr-3">Name <span
                         class="text-red-500 text-900">*</span></label>
-                <input id="name" type="text" [value]="customer.name" class="w-5" pInputText [disabled]="true">
+                <input id="name" type="text" [value]="customer.name" class="w-6" pInputText [disabled]="true">
             </div>
-            <div class="field mb-4 col-12 flex align-items-center ">
-                <label for="phone_number" class="font-medium text-900 mr-4">Phone Number <span
+            <div class="field w-field mb-4 col-12 flex align-items-center ">
+                <label for="phone_number" class="font-medium text-900 mr-3">Phone<span
                         class="text-red-500 text-900">*</span></label>
-                <input id="phone_number" type="text" [value]="customer.phone_number" class="w-4-3" pInputText
+                <input id="phone_number" type="text" [value]="customer.phone_number" class="w-6" pInputText
                     [disabled]="true">
             </div>
-            <div class="field w-field mb-4 col-12 flex align-items-center">
+            <div class="field w-field mb-4 col-12 flex">
                 <label for=" address" class="font-medium text-900 mr-3 ">Address</label>
-                <input id="address" type="text" [value]="customer.address" class="flex-1" pInputText [disabled]="true">
+                <textarea id="address" type="text" [disabled]="true" class="flex-1" [value]="customer.address"
+                    pInputTextarea rows="3" [autoResize]="true"></textarea>
             </div>
             <div class="field w-field mb-4 col-12 flex align-items-center ">
                 <label for="birthDay" class="font-medium text-900 mr-3">BirthDay</label>
-                <input id="birthDay" class="w-5" type="text" value="{{ customer.date_of_birth | date:'dd/MM/yyyy'}}"
+                <input id="birthDay" class="w-6" type="text" value="{{ customer.date_of_birth | date:'dd/MM/yyyy'}}"
                     pInputText [disabled]="true" name="date_of_birth">
             </div>
             <div class="field w-field mb-2 col-12 flex align-items-center ">
                 <label for="total_money" class="font-medium text-900 mr-3">Total Money</label>
-                <input id="total_money" type="text" [value]="customer.total_money | currency:'VND'" class="w-5"
+                <input id="total_money" type="text" [value]="customer.total_money | currency:'VND'" class="w-6"
                     pInputText [disabled]="true">
             </div>
             <div class="col-12">
-                <button pButton pRipple label="Back" class="w-auto px-5" (click)="navigateToListCustomer()"></button>
+                <button pButton icon="pi pi-angle-left" pRipple label="Back" class="w-auto"
+                    (click)="navigateToListCustomer()"></button>
             </div>
         </div>
         <div class="col-12 lg:col-2">
@@ -44,4 +47,5 @@
         </div>
     </div>
 </div>
-<app-history-booking [dialogBooking]="dialogBooking" (controlDialog)="hideDialog()"></app-history-booking>
+<app-history-booking [idCustomer]="idCustomer" [dialogBooking]="dialogBooking"
+    (controlDialog)="hideDialogBooking()"></app-history-booking>

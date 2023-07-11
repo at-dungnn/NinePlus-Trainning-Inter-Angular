@@ -1,4 +1,5 @@
 <div class="card">
+    <p-toast key="bc"></p-toast>
     <span class="text-90 text-xl font-bold mb-4 block">Add New</span>
     <div class="grid">
         <div class="col-12 lg:col-2">
@@ -6,42 +7,72 @@
             <p class="m-0 p-0 text-600 line-height-3 mr-3">Odio euismod lacinia at quis risus sed vulputate odio.</p>
         </div>
         <div class="col-12 lg:col-10">
-            <div class="grid formgrid p-fluid">
-                <div class="field mb-4 col-12">
-                    <label for="name" class="font-medium text-900">ID <span
-                            class="text-red-500 text-900">*</span></label>
-                    <input id="name" type="text" [(ngModel)]="customer.id" pInputText required>
+            <form [formGroup]="formAddNewCustomer" (ngSubmit)="onSubmit()">
+                <div class="grid formgrid p-fluid">
+                    <div class="field mb-4 col-12">
+                        <label for="id" class="font-medium text-900">ID <span
+                                class="text-red-500 text-900">*</span></label>
+                        <input id="id" type="text" formControlName="id" pInputText required />
+                        <div *ngIf="f['id'].invalid && submitted && f['id'].errors" class="text-red-500 mt-2 block">
+                            <div *ngIf="f['id'].errors['required']">
+                                Id is required.
+                            </div>
+                            <div *ngIf="f['id'].errors['pattern']">
+                                Input does not contain spaces
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12">
+                        <label for="name" class="font-medium text-900">Name <span
+                                class="text-red-500 text-900">*</span></label>
+                        <input id="name" type="text" formControlName="name" pInputText required />
+                        <div *ngIf="f['name'].invalid && submitted && f['name'].errors" class="text-red-500 mt-2 block">
+                            <div *ngIf="f['name'].errors['required']">
+                                Name is required.
+                            </div>
+                            <div *ngIf="f['name'].errors['pattern']">
+                                Input does not contain spaces
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12">
+                        <label for="phone_number" class="font-medium text-900">Phone Number <span
+                                class="text-red-500 text-900">*</span></label>
+                        <input id="phone_number" type="text" formControlName="phone_number" pInputText
+                            (keypress)="keyPress($event)" required />
+                        <div *ngIf="f['phone_number'].invalid && submitted && f['phone_number'].errors "
+                            class="text-red-500 mt-2 block">
+                            <div
+                                *ngIf="f['phone_number'].errors['required'] && !f['phone_number'].hasError('minlength') ">
+                                Phone number is required.
+                            </div>
+                            <div *ngIf="f['phone_number'].hasError('minlength')">
+                                Phone number must be at least 10 numbers
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12">
+                        <label for="address" class="font-medium text-900">Address</label>
+                        <textarea id="address" type="text" formControlName="address" pInputTextarea rows="5"
+                            [autoResize]="true"></textarea>
+                    </div>
+                    <div class="field mb-4 col-7">
+                        <label class="font-medium text-900">BirthDay</label>
+                        <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" formControlName="date_of_birth"
+                            [readonlyInput]="true">
+                        </p-calendar>
+                    </div>
+                    <div class="field mb-4 col-12">
+                        <label for="total_money" class="font-medium text-900">Total Money</label>
+                        <p-inputNumber id="total_money" inputId="integeronly"
+                            formControlName="total_money"></p-inputNumber>
+                    </div>
+                    <div class="col-12">
+                        <button type="submit" [loading]="isLoadingSubmit" pButton pRipple label="Add New"
+                            class="w-auto mt-3"></button>
+                    </div>
                 </div>
-                <div class="field mb-4 col-12">
-                    <label for="name" class="font-medium text-900">Name <span
-                            class="text-red-500 text-900">*</span></label>
-                    <input id="name" type="text" [(ngModel)]="customer.name" pInputText required>
-                </div>
-                <div class="field mb-4 col-12">
-                    <label for="phone_number" class="font-medium text-900">Phone Number <span
-                            class="text-red-500 text-900">*</span></label>
-                    <input id="phone_number" type="text" [(ngModel)]="customer.phone_number" pInputText required>
-                </div>
-                <div class="field mb-4 col-12">
-                    <label for="address" class="font-medium text-900">Address</label>
-                    <textarea id="address" type="text" [(ngModel)]="customer.address" pInputTextarea rows="5"
-                        [autoResize]="true"></textarea>
-                </div>
-                <div class="field mb-4 col-7">
-                    <label class="font-medium text-900">BirthDay</label>
-                    <p-calendar [dateFormat]="dateFormat" [showIcon]="true" [(ngModel)]="customer.date_of_birth"
-                        [readonlyInput]="true">
-                    </p-calendar>
-                </div>
-                <div class="field mb-4 col-12">
-                    <label for="total_money" class="font-medium text-900">Total Money</label>
-                    <p-inputNumber id="total_money" inputId="integeronly"
-                        [(ngModel)]="customer.total_money"></p-inputNumber>
-                </div>
-                <div class="col-12">
-                    <button pButton pRipple label="Add New" class="w-auto mt-3" (click)="onSubmit()"></button>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>

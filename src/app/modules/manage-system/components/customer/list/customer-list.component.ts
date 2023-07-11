@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DialogService} from 'primeng/dynamicdialog';
+import { DialogService } from 'primeng/dynamicdialog';
 import { Table } from 'primeng/table';
 import { MESSAGE_TITLE } from 'src/app/shared';
 import { CustomerService } from 'src/app/demo/service/customer.service';
@@ -13,23 +13,13 @@ import { Customer } from 'src/app/demo/api/customer';
 })
 export class CustomerListComponent implements OnInit {
 
-    dateFormat: string = "mm/dd/yy";
-
-    tbDate: string = "";
-
-    selectedcustomers: Customer[] = [];
-
     submitted: boolean = false;
-
-    rowsPerPageOptions = [5, 15, 25];
 
     customers: Customer[] = [];
 
-    customer: Customer = {};
+    isSkeleton: boolean = false;
 
-    isSkelaton: boolean = true;
-
-
+    resetPageOnSort: boolean = false;
 
     constructor(
         private router: Router,
@@ -39,14 +29,24 @@ export class CustomerListComponent implements OnInit {
         private customerService: CustomerService
     ) { }
 
-
-
     ngOnInit() {
-        setTimeout(() => {
-            this.isSkelaton = false
-        }, 2000)
-        this.customerService.getCustomer().then(customers => this.customers = customers)
+        this.showSkeleton()
+        this.fetListCustomer()
     }
+
+    showSkeleton() {
+        this.isSkeleton = true
+        setTimeout(() => {
+            this.isSkeleton = false
+        }, 2000)
+    }
+
+    fetListCustomer() {
+        this.customerService.getListCustomer().subscribe(customers => {
+            this.customers = customers.reverse()
+        });
+    }
+
     navigateToCreateCustomer() {
         this.router.navigate(['customer/create'])
     }
@@ -56,41 +56,59 @@ export class CustomerListComponent implements OnInit {
     navigateToDeatailCustomer(customer: Customer) {
         this.router.navigate(['customer/detail/' + customer.id])
     }
-   
 
-    onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
+    deleteCustomer(id: string | undefined) {
+        this.customerService.getCustomerById(id).subscribe({
+            next: data => {
+                this.customerService.deleteCustomer(id).subscribe(res => {
+                    this.resetPageOnSort = true
+                    this.fetListCustomer()
+                    this.showSuccess(MESSAGE_TITLE.DELETE_SUCC)
+                })
+            },
+            error: err => {
+                console.log(err);
+                this.showError('Customer does not exist')
+            },
+        });
     }
 
-
-    handleDeleteCustomer(data: any) {
+    showConfirmDelete(customer: Customer) {
         this.confirmationService.confirm({
-            message: 'Are you sure that you want to proceed?',
+            message: `Are you sure you want to delete customer: ${customer.name}?`,
             header: 'Confirmation',
             icon: 'pi pi-exclamation-triangle',
             key: 'confirm',
             accept: () => {
-                this.customers.forEach(((customer, index) => {
-                    if (customer.id === data.id) {
-                        setTimeout(() => {
-                            delete this.customers[index]
-                        }, 1300)
-                    }
-                }))
+                this.deleteCustomer(customer.id)
                 this.confirmationService.close()
-                this.showSuccess(MESSAGE_TITLE.DELETE_SUCC)
             },
             reject: () => {
                 this.confirmationService.close()
             },
         });
     }
-    showSuccess(detailMessage: string) {
+
+    showError(message: string) {
+        this.messageService.add({
+            key: 'bc',
+            severity: 'error',
+            summary: 'Error',
+            detail: message,
+        });
+    }
+
+    showSuccess(message: string) {
         this.messageService.add({
             key: 'bc',
             severity: 'success',
             summary: 'Success',
-            detail: detailMessage,
+            detail: message
         });
     }
+
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal((event.target as HTMLInputElement).value, 'contains')
+    }
+
 }
