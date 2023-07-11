@@ -2,7 +2,8 @@
     <p-toast key="bc"></p-toast>
     <p-table #dt [value]="customers" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
         responsiveLayout="scroll" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [rowsPerPageOptions]="rowsPerPageOptions" [globalFilterFields]="['name','phone_number']">
+        [rowsPerPageOptions]="[5, 15, 25]" [globalFilterFields]="['id','name','phone_number']"
+        [resetPageOnSort]="resetPageOnSort">
         <ng-template pTemplate="caption">
             <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <span class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0">
@@ -15,13 +16,14 @@
                     label="Add New"></button>
             </div>
         </ng-template>
+
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id" class="white-space-nowrap" style="width:25%">ID<p-sortIcon
                         field="id"></p-sortIcon></th>
                 <th pSortableColumn="name" class="white-space-nowrap" style="width:25%">Name <p-sortIcon
                         field="name"></p-sortIcon></th>
-                <th pSortableColumn="phone_number" class="white-space-nowrap" style="width:25%">Phone Number<p-sortIcon
+                <th pSortableColumn="phone_number" class="white-space-nowrap" style="width:25%">Phone<p-sortIcon
                         field="phone_number"></p-sortIcon></th>
                 <th pSortableColumn="address" class="white-space-nowrap" style="width:25%">Address <p-sortIcon
                         field="address"></p-sortIcon></th>
@@ -30,12 +32,11 @@
                 <th pSortableColumn="total_money" class="white-space-nowrap" style="width:25%">Total Money<p-sortIcon
                         field="total_money"></p-sortIcon></th>
                 <th class="white-space-nowrap" style="width:25%"></th>
-
             </tr>
         </ng-template>
 
         <ng-template pTemplate="body" let-customer>
-            <ng-container *ngIf="isSkelaton; else elseTemplate">
+            <ng-container *ngIf="isSkeleton; else elseTemplate">
                 <tr>
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
@@ -65,13 +66,11 @@
                             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2"
                                 (click)="navigateToEditCustomer(customer)"></button>
                             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"
-                                (click)="handleDeleteCustomer(customer)"></button>
+                                (click)="showConfirmDelete(customer)"></button>
                         </div>
                     </td>
                 </tr>
-
             </ng-template>
-
 
         </ng-template>
     </p-table>

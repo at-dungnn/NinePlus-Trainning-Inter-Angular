@@ -1,8 +1,8 @@
 export interface Customer {
-    id?: number;
+    id?: string;
     name?: string;
     phone_number?: string;
     address?: string
-    date_of_birth?: string;
+    date_of_birth?: Date;
     total_money?: number;
 }

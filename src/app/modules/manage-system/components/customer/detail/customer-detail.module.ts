@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { SkeletonModule } from 'primeng/skeleton';
 import { HistorybookingComponent } from './historybooking/historybooking.component';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { HistorybookingComponent } from './historybooking/historybooking.compone
     FormsModule,
     DynamicDialogModule,
     SkeletonModule,
+    InputTextareaModule
   ]
 })
 export class CustomerDetailModule { }
