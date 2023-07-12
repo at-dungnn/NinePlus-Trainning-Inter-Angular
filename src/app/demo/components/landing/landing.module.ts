@@ -23,7 +23,6 @@ import { FooterLoginTypesModule } from '../auth/footer-login-types/footer-login-
         SharedModule,
         FormsModule,
         FooterLoginTypesModule,
-        
     ],
     declarations: [
         LandingComponent,

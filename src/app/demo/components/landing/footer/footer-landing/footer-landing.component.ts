@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./footer-landing.component.scss']
 })
 export class FooterLandingComponent {
-
 }

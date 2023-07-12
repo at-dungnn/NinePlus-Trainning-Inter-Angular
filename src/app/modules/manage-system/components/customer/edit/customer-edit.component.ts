@@ -107,9 +107,7 @@ export class CustomerEditComponent implements OnInit {
         this.loadingSubmit();
         this.submitted = true;
         if (this.formUpdateCustomer.valid) {
-            let updateCustomer = this.trimValueCustomer(
-                this.valueFormUpdateCustomer
-            );
+            let updateCustomer = this.trimValueCustomer(this.valueFormUpdateCustomer);
             this._customerService.getCustomerById(this.customerId).subscribe({
                 next: (data) => {
                     if (!isEmpty(data)) {
@@ -118,17 +116,11 @@ export class CustomerEditComponent implements OnInit {
                 },
                 error: (err) => {
                     console.log(err);
-                    this._toastService.showError(
-                        MESSAGE_ERROR.CHECK_ID_CUSTOMER,
-                        this.keyToast
-                    );
+                    this._toastService.showError(MESSAGE_ERROR.CHECK_ID_CUSTOMER, this.keyToast);
                 },
             });
         } else {
-            this._toastService.showError(
-                MESSAGE_ERROR_INPUT.VALID,
-                this.keyToast
-            );
+            this._toastService.showError(MESSAGE_ERROR_INPUT.VALID, this.keyToast);
         }
     }
 
@@ -136,10 +128,7 @@ export class CustomerEditComponent implements OnInit {
         this._customerService.updateCustomer(customer).subscribe({
             next: (res) => {
                 if (res.succeeded && res.data) {
-                    this._toastService.showSuccess(
-                        MESSAGE_TITLE.EDIT_SUCC,
-                        this.keyToast
-                    );
+                    this._toastService.showSuccess(MESSAGE_TITLE.EDIT_SUCC, this.keyToast);
                     setTimeout(() => {
                         this.navigateToListCustomer();
                     }, 1500);
@@ -147,10 +136,7 @@ export class CustomerEditComponent implements OnInit {
             },
             error: (err) => {
                 console.log(err);
-                this._toastService.showError(
-                    MESSAGE_TITLE.EDIT_ERR,
-                    this.keyToast
-                );
+                this._toastService.showError(MESSAGE_TITLE.EDIT_ERR, this.keyToast);
             },
         });
     }

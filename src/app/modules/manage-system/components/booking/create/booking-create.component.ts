@@ -7,7 +7,7 @@ import {
     MESSAGE_ERROR_INPUT,
     MESSAGE_TITLE,
     ROUTER,
-    Toast,
+    TOAST,
 } from 'src/app/shared';
 import * as _ from 'lodash';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -33,7 +33,7 @@ export class BookingCreateComponent {
   ) {}
 
   initKeyToast() {
-    this.keyToast = Toast.KEY_BC;
+    this.keyToast = TOAST.KEY_BC;
 }
 
 initFormAddNewCustomer() {

@@ -7,7 +7,7 @@ import { Table } from 'primeng/table';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { MESSAGE_TITLE, ROUTER, Toast } from 'src/app/shared';
+import { MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 
 @Component({
     templateUrl: './booking-list.component.html',
@@ -62,7 +62,7 @@ export class BookingListComponent implements OnInit {
     }
 
     initKeyToast() {
-        this.keyToast = Toast.KEY_BC;
+        this.keyToast = TOAST.KEY_BC;
     }
 
     handleDeleteBooking(id: string) {

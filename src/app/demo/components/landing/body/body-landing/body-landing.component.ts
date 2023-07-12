@@ -1,6 +1,5 @@
 import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Product } from '../../../../api/product';
 import { ProductService } from '../../../../service/product.service';
 
