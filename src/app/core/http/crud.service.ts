@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpHelper } from '../helpers/http.helper';
 import { environment } from 'src/environments/environment';
+import { Employee } from 'src/app/demo/api/employee';
 
 export abstract class ApiBaseService {
     protected get basePath(): string {
@@ -30,7 +31,7 @@ export class CrudBaseService extends ApiBaseService {
     get(id: string): Observable<any> {
         return this.httpClient
             .get<any>(`${this.basePath}/${id}`)
-            .pipe(map((res: any) => res && res.data));
+            .pipe(map((res: any) => res && res));
     }
 
     list(): Observable<any> {
@@ -51,8 +52,8 @@ export class CrudBaseService extends ApiBaseService {
         return this.httpClient.post(`${this.basePath}`, body);
     }
 
-    update(body: any): Observable<any> {
-        return this.httpClient.post(`${this.basePath}`, body);
+    update(body: Employee): Observable<Employee> {
+        return this.httpClient.put<Employee>("http://localhost:3000/employees", body);
     }
 
     delete(id: string, key: string): Observable<any> {

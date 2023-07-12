@@ -6,7 +6,8 @@
       "forceConsistentCasingInFileNames": true,
       "strict": true,
       "noImplicitOverride": true,
-      "noPropertyAccessFromIndexSignature": true,
+      "noPropertyAccessFromIndexSignature": false,
+      // "noPropertyAccessFromIndexSignature": false,
       "noImplicitReturns": true,
       "noFallthroughCasesInSwitch": true,
       "sourceMap": true,
@@ -20,7 +21,8 @@
       "lib": [
         "es2020",
         "dom"
-      ]
+      ],
+      
     },
     "angularCompilerOptions": {
       "enableI18nLegacyMessageIdFormat": false,

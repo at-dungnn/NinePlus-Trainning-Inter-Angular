@@ -20,7 +20,8 @@ import { ProfileCreateRoutingModule } from './profilecreate-routing.module';
 		InputTextModule,
 		DropdownModule,
 		FileUploadModule,
-		InputTextareaModule
+		InputTextareaModule,
+		DropdownModule
 	],
 	declarations: [ProfileCreateComponent]
 })

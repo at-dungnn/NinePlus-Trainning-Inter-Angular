@@ -11,7 +11,6 @@ import { SharedModule } from 'src/app/shared';
 import { DepartementCreateEditComponent } from './components/departement/departement-create-edit/departement-create-edit.component';
 import { CommotityesListComponent } from './components/commotityes/commotityes-list/commotityes-list.component';
 
-
 @NgModule({
     declarations: [
         ManageSystemComponent,

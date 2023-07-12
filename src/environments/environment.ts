@@ -6,7 +6,7 @@
 export const environment = {
     production: false,
     apiUrl: 'api',
-    defaultApiBasePath: 'http://a1lplatform.com:7521/api',
+    defaultApiBasePath: 'http://localhost:3000',
     session_expiry: 1000,
     originPath: 'http://localhost:4200',
     apiVersion: '',
