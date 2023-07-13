@@ -1,0 +1,41 @@
+<p-dialog
+    [(visible)]="dialogBooking"
+    [draggable]="true"
+    [style]="{ width: '80%', overflowY: 'auto' }"
+    header="Booking History"
+    [modal]="true"
+    class="p-fluid"
+    (onHide)="hideDialogBooking()"
+>
+    <p-table
+        [value]="historyBookings"
+        [resizableColumns]="true"
+        styleClass="p-datatable-gridlines"
+        [tableStyle]="{ 'min-width': '50rem' }"
+    >
+        <ng-template pTemplate="header">
+            <tr>
+                <th pResizableColumn>ID</th>
+                <th pResizableColumn>Date Time</th>
+                <th pResizableColumn>Service</th>
+                <th pResizableColumn>Price</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-booking>
+            <tr>
+                <td>{{ booking.bookingId }}</td>
+                <td>{{ booking.bookingDate | date : "dd/MM/yyyy" }}</td>
+                <td>{{ booking.serviceName }}</td>
+                <td>{{ booking.price }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <ng-template pTemplate="footer">
+        <p-button
+            icon="pi pi-times"
+            label="Cancel"
+            class="p-button-danger flex justify-content-center mt-5"
+            (click)="hideDialogBooking()"
+        ></p-button>
+    </ng-template>
+</p-dialog>

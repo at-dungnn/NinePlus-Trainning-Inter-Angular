@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { a } from '@fullcalendar/core/internal-common';
 import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { CrudBaseService } from 'src/app/core';
-import { Employee } from 'src/app/demo/api/employee';
+import { Employee, EmployeeCreate, EmployeeUpdate } from 'src/app/demo/api/employee';
 
 @Injectable({
     providedIn: 'root',
@@ -16,7 +16,7 @@ export class EmployeeService extends CrudBaseService {
     URL = 'http://119.82.130.211:6060/api/v1/employee';
     dataEmployee$: Observable<any>;
     constructor(private _httpClient: HttpClient) {
-        super('employees', _httpClient);
+        super('employee', _httpClient);
         this._employeeSubject = new BehaviorSubject<any>({});
         this.dataEmployee$ = this._employeeSubject.asObservable();
     }
@@ -27,37 +27,23 @@ export class EmployeeService extends CrudBaseService {
         return this.subject.asObservable();
     }
 
-    // getAllObjetcJsonServer
-    getList(): Observable<Employee[]> {
+    getListEmployee(): Observable<any> {
         return this.list();
     }
 
-    // getAllObjectBackEndAPI
-    getListBackEnd(): Observable<any> {
-        const headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
-        return this._httpClient.get<any>(this.URL, { headers });
-    }
-
-    // getObjectJsonServer
-    getById(id: string): Observable<Employee> {
+    getEmployeeById(id: string): Observable<any> {
         return this.get(id);
     }
 
-    // getObjectBackEmdAPI
-    getByIdBackEnd(id: string): Observable<any> {
-        const headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.token);
-        return this._httpClient.get<any>(this.URL + '/' + id, { headers });
-    }
-
     deleteEmployeeById(id: string): Observable<Employee> {
-        return this._httpClient.delete<Employee>(this.basePath + '/' + id);
+        return this.delete(id, 'id');
     }
 
-    updateById(employee: Employee): Observable<Employee> {
-        return this.update(employee);
+    updateEmployeeById(employee: EmployeeUpdate): Observable<EmployeeUpdate> {
+        return this.updateEmployee(employee);
     }
 
-    createEmployee(employee: Employee): Observable<Employee> {
+    createEmployee(employee: EmployeeCreate): Observable<EmployeeCreate> {
         return this.create(employee);
     }
 }

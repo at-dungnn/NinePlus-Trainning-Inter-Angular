@@ -1,11 +1,10 @@
 <div class="card">
+    <p-toast></p-toast>
     <span class="text-900 text-xl font-bold mb-4 block">Chỉnh sửa thông tin nhân
         viên</span>
     <div class="grid">
         <div class="col-12 lg:col-2">
             <div class="text-900 font-medium text-xl mb-3">Profile</div>
-            <!-- <p class="m-0 p-0 text-600 line-height-3 mr-3">Odio euismod lacinia
-                at quis risus sed vulputate odio.</p> -->
         </div>
         <form [formGroup]="form" (ngSubmit)="updateEmployeeById()">
             <div class="col-12 lg:col-10">
@@ -24,7 +23,7 @@
                                 style="color: red"> *</span></label>
                         <input id="name" type="text" pInputText
                             formControlName="name">
-                            <p style="color: red"
+                        <p style="color: red"
                             *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">*
                             Không được để trống</p>
                         <p style="color: red"
@@ -36,7 +35,7 @@
                                 style="color: red"> *</span></label>
                         <input id="email" type="text" pInputText
                             formControlName="email">
-                            <p style="color: red"
+                        <p style="color: red"
                             *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">*
                             Không được để trống</p>
                         <p style="color: red"
@@ -48,7 +47,7 @@
                                 style="color: red"> *</span></label>
                         <input id="phone" type="text" pInputText
                             formControlName="phoneNumber">
-                            <p style="color: red"
+                        <p style="color: red"
                             *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">*
                             Không được để trống</p>
                         <p style="color: red"
@@ -62,22 +61,47 @@
                                 <p-dropdown inputId="gender" [options]="genders"
                                     optionLabel="name" [filter]="true"
                                     filterBy="name"
+                                    optionValue="code"
                                     [showClear]="true"
-                                    placeholder="Select a Gender">
+                                    placeholder="Select a Gender"
+                                    formControlName="gender"
+                                    [(ngModel)]="genderInit">
                                     <ng-template let-genders pTemplate="item">
                                         <div class="flex align-items-center">
-                                            <div>{{genders.name}}</div>
+                                            <div>{{ genders.name}}</div>
                                         </div>
                                     </ng-template>
                                 </p-dropdown>
                             </div>
                             <div class="field col-12 md:col-7">
                                 <label for="birthday"
-                                    class="font-medium text-900">Date</label>
-                                <p-calendar [(ngModel)]="birthdayInit" id="birthday"
-    (ngModelChange)="onBirthdayChange($event)"
-    [showIcon]="true" formControlName="birthday" dataType="dd/mm/yyyy" ></p-calendar>
+                                    class="font-medium text-900">Birthday</label>
+                                <p-calendar [(ngModel)]="birthdayInit"
+                                    id="birthday"
+                                    [showTime]="true"
+                                    [showSeconds]="true"
+                                    [showIcon]="true"
+                                    formControlName="birthday"></p-calendar>
                             </div>
+                        </div>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="avatar" class="font-medium text-900">Avatar</label>
+                        <div class="flex align-items-center">
+                            <div class="img-container mr-4">
+                                <img
+                                    [src]=imageDisplay alt="Trống" />
+                                <span *ngIf="imageDisplay"
+                                    class="pi pi-times hoverClick"
+                                    (click)="setImageDefault()"></span>
+                            </div>
+                            <p-fileUpload id="image" mode="basic"
+                                accept="image/**"
+                                name="image" chooseLabel="Upload Image"
+                                styleClass="p-button-outlined p-button-plain"
+                                [maxFileSize]="1000000"
+                                (onSelect)="onFileSelect($event)"
+                                ngDefaultControl="image"></p-fileUpload>
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
@@ -86,36 +110,26 @@
                             formControlName="address">
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="userName" class="font-medium text-900"
-                            formControlName="id">User Name<span
-                                style="color: red"> *</span></label>
-                        <input id="userName" type="text" pInputText>
-                    </div>
-                    <div class="field mb-4 col-12 md:col-6">
-                        <label for="avatar" class="font-medium text-900" >Avatar</label>
-                        <p-fileUpload mode="basic" name="avatar" url="./upload.php" accept="image/*" [maxFileSize]="1000000" styleClass="p-button-outlined p-button-plain" chooseLabel="Upload Image"></p-fileUpload>
-                    </div>
-                    <div class="field mb-4 col-12 md:col-6">
-                        <label for="password" class="font-medium text-900">Password<span
-                                style="color: red"> *</span></label>
-                        <input id="password" type="password" pInputText>
-                    </div>
-                    <div class="field mb-4 col-12 md:col-6">
                         <label for="workshiftId" class="font-medium text-900">Workshift_ID<span
                                 style="color: red"> *</span></label>
                         <input id="workshiftId" type="text" pInputText
                             formControlName="workShiftId">
-                            <p style="color: red"
+                        <p style="color: red"
                             *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">*
                             Không được để trống</p>
                     </div>
-                    <div class="col-12 md:col-6 lg:col-4 mt-3">
+                    <div class="col-12 md:col-6 lg:col-5 mt-3">
+                        <p style="color: red"
+                            *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">*
+                            Không được để trống</p>
+                    </div>
+                    <div class="col-12 md:col-6 lg:col-5 mt-3">
                         <div class="grid">
-                            <div class="col-6 md:col-6">
-                                <p-button pRipple label="Save"
-                                    icon="pi pi-check" type="submit"></p-button>
+                            <div class="col-6 md:col-5 lg:col-6">
+                                <button pButton pRipple label="Save"
+                                    icon="pi pi-check" type="submit"></button>
                             </div>
-                            <div class="col-6 md:col-6">
+                            <div class="col-6 md:col-6 lg:col-6">
                                 <button pButton pRipple label="Cancel"
                                     icon="pi pi-times"
                                     (click)="navigateBackEmployeeList()"

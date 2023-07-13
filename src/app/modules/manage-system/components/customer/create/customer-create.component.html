@@ -1,0 +1,167 @@
+<div class="card">
+    <p-toast key="bc"></p-toast>
+    <span class="text-90 text-xl font-bold mb-4 block">Add New</span>
+    <div class="grid">
+        <div class="col-12 lg:col-2">
+            <div class="text-900 font-medium text-xl mb-3">Profile</div>
+            <p class="m-0 p-0 text-600 line-height-3 mr-3">
+                Odio euismod lacinia at quis risus sed vulputate odio.
+            </p>
+        </div>
+        <div class="col-12 lg:col-10">
+            <ng-template [ngIf]="formAddNewCustomer">
+                <form [formGroup]="formAddNewCustomer" (ngSubmit)="onSubmit()">
+                    <div class="grid formgrid p-fluid">
+                        <div class="field mb-4 col-12">
+                            <label class="font-medium text-900">ID </label>
+                            <input type="text" pInputText [disabled]="true" />
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label for="name" class="font-medium text-900"
+                                >Name
+                                <span class="text-red-500 text-900"
+                                    >*</span
+                                ></label
+                            >
+                            <input
+                                id="name"
+                                type="text"
+                                formControlName="customerName"
+                                pInputText
+                                required
+                            />
+                            <div
+                                *ngIf="
+                                    f['customerName'].invalid &&
+                                    submitted &&
+                                    f['customerName'].errors
+                                "
+                                class="text-red-500 mt-2 block"
+                            >
+                                <div
+                                    *ngIf="f['customerName'].errors['required']"
+                                >
+                                    Name is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label
+                                for="phone-number"
+                                class="font-medium text-900"
+                                >Phone Number
+                                <span class="text-red-500 text-900"
+                                    >*</span
+                                ></label
+                            >
+                            <input
+                                id="phone-number"
+                                type="text"
+                                formControlName="phoneNumber"
+                                pInputText
+                                (keypress)="keyPressPhoneNumber($event)"
+                                required
+                            />
+                            <div
+                                *ngIf="
+                                    f['phoneNumber'].invalid &&
+                                    submitted &&
+                                    f['phoneNumber'].errors
+                                "
+                                class="text-red-500 mt-2 block"
+                            >
+                                <div
+                                    *ngIf="f['phoneNumber'].errors['required']"
+                                >
+                                    Phone number is required.
+                                </div>
+
+                                <div *ngIf="f['phoneNumber'].errors['pattern']">
+                                    Phone number does not exist
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label for="address" class="font-medium text-900"
+                                >Address</label
+                            >
+                            <textarea
+                                id="address"
+                                type="text"
+                                formControlName="address"
+                                pInputTextarea
+                                rows="5"
+                                [autoResize]="true"
+                            ></textarea>
+                        </div>
+                        <div class="field mb-4 col-7">
+                            <label class="font-medium text-900">BirthDay</label>
+                            <p-calendar
+                                dateFormat="dd/mm/yy"
+                                [showIcon]="true"
+                                formControlName="dateOfBirth"
+                                [readonlyInput]="true"
+                            >
+                            </p-calendar>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label class="font-medium text-900"
+                                >Total Money</label
+                            >
+                            <input
+                                [disabled]="true"
+                                inputId="integeronly"
+                                pInputText
+                            />
+                        </div>
+
+                        <div class="field mb-4 col-12">
+                            <label for="username" class="font-medium text-900"
+                                >Username
+                            </label>
+                            <input
+                                id="username"
+                                type="text"
+                                formControlName="username"
+                                pInputText
+                                (keypress)="keyPressUsername($event)"
+                            />
+                            <div
+                                *ngIf="f['username']['errors']"
+                                class="text-red-500 mt-2 block"
+                            >
+                                <div *ngIf="f['username'].errors['pattern']">
+                                    Username does not contain spaces and special
+                                    characters
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label for="password" class="font-medium text-900"
+                                >Password
+                            </label>
+                            <input
+                                id="password"
+                                type="password"
+                                formControlName="password"
+                                (keypress)="keyPressPassword($event)"
+                                pInputText
+                            />
+                        </div>
+
+                        <div class="col-12">
+                            <button
+                                type="submit"
+                                [loading]="isLoadingSubmit"
+                                pButton
+                                pRipple
+                                label="Add New"
+                                class="w-auto mt-3"
+                            ></button>
+                        </div>
+                    </div>
+                </form>
+            </ng-template>
+        </div>
+    </div>
+</div>

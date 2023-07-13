@@ -33,6 +33,19 @@ export enum MESSAGE_TITLE {
     EDIT_BRANCH_SUCC = 'Edit branch successful',
     ADD_NEW_BRANCH_ERR = 'Add new branch error',
     EDIT_BRANCH_ERR = 'Edit branch error',
+    CONFIRM_DELETE = 'Are you sure you want to delete customer: ',
+}
+
+export enum MESSAGE_ERROR_INPUT {
+    VALID = 'Input fields are incorrect',
+    MIN_LENGTH_NAME = 'Name enter at least 4 characters',
+    MIN_LENGTH_PASSWORD = 'Password enter at least 8 characters',
+    MIN_LENGTH_USERNAME = 'Username enter at least 8 characters',
+    USERNAME_EXISTS = 'Username already exists',
+    PASSWORD_OR_USERNAME_EMPTY = 'username or password not entered',
+    ID_ALREADY_EXISTS = 'Id already exists',
+    ID_DOES_NOT_EXISTS = "Id doesn't exist",
+    EMAIL_ALREADY_EXISTS = 'Email already exists',
 }
 
 export const MESSAGE_ERROR = [

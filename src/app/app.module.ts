@@ -1,4 +1,4 @@
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -6,8 +6,13 @@ import { AppLayoutModule } from './layout/app.layout.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import {
+    HTTP_INTERCEPTORS,
+    HttpClient,
+    HttpClientModule,
+} from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ApiDefaultHeaderInterceptor } from './core';
 @NgModule({
     imports: [
         AppLayoutModule,
@@ -21,17 +26,23 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
                 deps: [HttpClient],
             },
         }),
-        HttpClientModule
+        HttpClientModule,
     ],
-    declarations: [
-        AppComponent,
-    ],
+    declarations: [AppComponent],
     providers: [
-        {provide: LocationStrategy, useClass: HashLocationStrategy}
+        {
+            provide: LocationStrategy,
+            useClass: HashLocationStrategy,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ApiDefaultHeaderInterceptor,
+            multi: true,
+        },
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http);
 }

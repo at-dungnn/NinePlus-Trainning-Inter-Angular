@@ -5,7 +5,6 @@ import {
     HttpEvent,
     HttpInterceptor
 } from '@angular/common/http';
-
 import { Observable } from 'rxjs';
 import { isNil } from 'lodash';
 
@@ -21,7 +20,6 @@ export class ExternalApiInterceptor implements HttpInterceptor {
                 headers: request.headers.delete('is-external')
             });
         }
-
         return next.handle(request);
     }
 }

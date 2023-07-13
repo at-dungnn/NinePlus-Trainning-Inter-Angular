@@ -1,9 +1,10 @@
 <div class="card">
-    <p-table #dt [value]="employeeTest" [paginator]="true" [rows]="10"
+    <p-toast></p-toast>
+    <p-table #dt [value]="employees" [paginator]="true" [rows]="5"
         [showCurrentPageReport]="true" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [rowsPerPageOptions]="[10,25,50]"
-        [globalFilterFields]="['name','country.name','representative.name']">
+        [rowsPerPageOptions]="[5,15,25]"
+        [globalFilterFields]="['id','name','phoneNumber']">
         <ng-template pTemplate="caption">
             <div
                 class="flex flex-wrap gap-2 align-items-center justify-content-between">
@@ -20,7 +21,6 @@
                         icon="pi pi-file-export" label="Export Excel"
                         (click)="toggle()"></button>
                 </div>
-
                 <span>
                     <button pButton
                         class="sm:w-auto flex-order-0 mr-3 p-button-success"
@@ -55,7 +55,11 @@
                                 [showClear]="true" placeholder="Select a Gender">
                                 <ng-template let-genders pTemplate="item">
                                     <div class="flex align-items-center">
+<<<<<<< HEAD
+                                        <div>{{ genders.name}}</div>
+=======
                                         <div>{{genders.name}}</div>
+>>>>>>> ef0b3aa ([SBFA-3] update employee management)
                                     </div>
                                 </ng-template>
                             </p-dropdown>
@@ -70,15 +74,24 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th pSortableColumn="id" class="white-space-nowrap" style="width:25%">ID <p-sortIcon field="id"></p-sortIcon></th>
-                <th pSortableColumn="name" class="white-space-nowrap" style="width:25%">Name <p-sortIcon field="name"></p-sortIcon></th>
-                <th pSortableColumn="country.name" class="white-space-nowrap" style="width:25%">Gender <p-sortIcon field="country.name"></p-sortIcon></th>
-                <th pSortableColumn="date" class="white-space-nowrap" style="width:25%">Birthday <p-sortIcon field="date"></p-sortIcon></th>
-                <th pSortableColumn="representative.name" class="white-space-nowrap" style="width:25%">Phone <p-sortIcon field="representative.name"></p-sortIcon></th>
-                <th  style="width:25%"></th>
+                <th pSortableColumn="id" class="white-space-nowrap"
+                    style="width:25%">ID <p-sortIcon field="id"></p-sortIcon></th>
+                <th pSortableColumn="name" class="white-space-nowrap"
+                    style="width:25%">Name <p-sortIcon field="name"></p-sortIcon></th>
+                <th pSortableColumn="country.name" class="white-space-nowrap"
+                    style="width:25%">Gender <p-sortIcon field="country.name"></p-sortIcon></th>
+                <th pSortableColumn="date" class="white-space-nowrap"
+                    style="width:25%">Birthday <p-sortIcon field="date"></p-sortIcon></th>
+                <th pSortableColumn="representative.name"
+                    class="white-space-nowrap" style="width:25%">Phone
+                    <p-sortIcon field="representative.name"></p-sortIcon></th>
+                <th style="width:25%"></th>
             </tr>
         </ng-template>
+<<<<<<< HEAD
+=======
 
+>>>>>>> ef0b3aa ([SBFA-3] update employee management)
         <ng-template pTemplate="body" let-employeeTest>
             <ng-container *ngIf="isSkeleton ; else showTable">
                 <tr>
@@ -94,7 +107,8 @@
                 <tr>
                     <td>{{employeeTest.id}}</td>
                     <td>{{employeeTest.name}}</td>
-                    <td>{{employeeTest.gender ? "Nam" : "Nữ"}}</td>
+                    <td>{{employeeTest.gender ? "Nam" :
+                        employeeTest.gender===false ? "Nữ" : "Trống"}}</td>
                     <td>{{employeeTest.createdOn | date: 'MM/dd/yyyy, h:mm a'}}</td>
                     <td>{{employeeTest.phoneNumber}}</td>
                     <td>

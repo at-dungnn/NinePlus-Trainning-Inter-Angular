@@ -25,7 +25,7 @@ import { MessagesModule } from 'primeng/messages';
         FormsModule,
         SkeletonModule,
         MessagesModule,
-        SharedModule
-    ]
+        SharedModule,
+    ],
 })
 export class EmployeeListModule {}

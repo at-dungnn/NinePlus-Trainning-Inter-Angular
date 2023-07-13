@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Validators } from '@angular/forms';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { EmployeeService } from 'src/app/shared';
 import { MessageService } from 'primeng/api';
 import { MESSAGE_TITLE } from 'src/app/shared';
-
+import { EmployeeCreate } from 'src/app/demo/api/employee';
+import { Genders } from 'src/app/shared/constants/gender';
 @Component({
     selector: 'app-employee-create',
     templateUrl: './employee-create.component.html',
@@ -13,58 +14,75 @@ import { MESSAGE_TITLE } from 'src/app/shared';
     providers: [MessageService],
 })
 export class EmployeeCreateComponent {
-    genders: any[] = [
-        { name: 'Male', code: true },
-        { name: 'Female', code: false },
-    ];
-    date: Date | undefined;
-    form: FormGroup;
-    constructor(private router: Router, private employeeService: EmployeeService, private messageService: MessageService) {
-        // Form get data and validate
-        // const uppercaseFirstName = /^[A-Z][a-zA-Z]*$/;
-        // const phone = /^(?:\+?84|0)(?:\d{9,10})$/;
-        // const email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        // this.form = new FormGroup({
-        //     id: new FormControl('', [Validators.required]),
-        //     name: new FormControl('', [Validators.required, Validators.pattern(uppercaseFirstName)]),
-        //     gender: new FormControl(),
-        //     birthday: new FormControl(),
-        //     phone: new FormControl('', [Validators.required, Validators.pattern(phone)]),
-        //     address: new FormControl(),
-        //     email: new FormControl('', [Validators.required, Validators.pattern(email)]),
-        //     image: new FormControl(),
-        //     workshiftId: new FormControl('', [Validators.required]),
-        // });
+    genders: any[] = Genders;
+    form!: FormGroup;
+    constructor(
+        private _router: Router,
+        private _employeeService: EmployeeService,
+        private _messageService: MessageService,
+        private _fb: FormBuilder
+    ) {}
 
-        const uppercaseFirstName = /^[A-Z][a-zA-Z]*$/;
+    ngOnInit() {
+        this.initFormCreateEmployee();
+    }
+
+    initFormCreateEmployee() {
         const phone = /^(?:\+?84|0)(?:\d{9,10})$/;
         const email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        this.form = new FormGroup({
-            id: new FormControl('', [Validators.required]),
-            name: new FormControl('', [Validators.required, Validators.pattern(uppercaseFirstName)]),
-            gender: new FormControl(),
-            birthday: new FormControl(),
-            phoneNumber: new FormControl('', [Validators.required, Validators.pattern(phone)]),
-            address: new FormControl(),
-            email: new FormControl('', [Validators.required, Validators.pattern(email)]),
-            image: new FormControl(),
-            workShiftId: new FormControl('', [Validators.required]),
+        const password = /^.{8,}$/;
+        this.form = this._fb.group({
+            name: ['', Validators.compose([Validators.required])],
+            gender: [''],
+            birthday: [''],
+            phoneNumber: ['', Validators.compose([Validators.required, Validators.pattern(phone)])],
+            address: [''],
+            email: ['', Validators.compose([Validators.required, Validators.pattern(email)])],
+            imageFile: [null],
+            username: ['', Validators.compose([Validators.required])],
+            password: ['', Validators.compose([Validators.required, Validators.pattern(password)])],
+            workShiftId: [0, Validators.compose([Validators.required])],
         });
     }
 
-    navigateBackEmployeeList() {
-        this.router.navigate(['manage-employee/list']);
+    onFileSelect(event: any): void {
+        this.form.get('imageFile')?.setValue(event.files[0]);
+        console.log(event);
+        this.form.patchValue({
+            imageFile: event,
+        });
     }
 
     createEmployee() {
-        this.employeeService.createEmployee(this.form.value).subscribe(
+        if (this.form.get('birthday')?.value) {
+            this.form.patchValue({
+                birthday: this.form.get('birthday')?.value.toISOString(),
+            });
+        }
+        const formData = new FormData();
+        Object.keys(this.form.controls).forEach((key) => {
+            const control = this.form.get(key);
+            if (control) {
+                formData.append(key, control.value);
+            }
+        });
+
+
+        this._employeeService.createEmployee(formData as EmployeeCreate).subscribe(
             (next) => {
                 this.navigateBackEmployeeList();
-                this.messageService.add({ severity: MESSAGE_TITLE.SUCCESS, summary: 'Successful', detail: MESSAGE_TITLE.EDIT_SUCC, life: 3000 });
+                this._messageService.add({ severity: 'success', summary: 'Successful', detail: MESSAGE_TITLE.ADD_NEW_BRANCH_SUCC, life: 3000 });
             },
             (error) => {
+                // error.error.messages.forEach((item: string) => {
+                //     this._messageService.add({ severity: 'error', summary: 'Error', detail: item, life: 3000 });
+                // });
                 console.log(error);
             }
         );
+    }
+
+    navigateBackEmployeeList() {
+        this._router.navigate(['employee/list']);
     }
 }

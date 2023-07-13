@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CrudBaseService } from 'src/app/core';
-import { Branch } from '../models/branch';
 import { Departement } from '../models/departement';
 @Injectable({
     providedIn: 'root',
