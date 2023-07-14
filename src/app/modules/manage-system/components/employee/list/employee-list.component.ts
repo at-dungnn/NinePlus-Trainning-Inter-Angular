@@ -16,7 +16,6 @@ export class EmployeeListComponent {
     overlayVisible: boolean = false;
     isSkeleton: boolean = true;
     employees: Employee[] = [];
-    tests: any[] = [];
     employee: Employee = {};
     deleteProductsDialog: boolean = false;
 

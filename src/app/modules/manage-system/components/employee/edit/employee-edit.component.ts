@@ -100,6 +100,9 @@ export class EmployeeEditComponent {
             }
         });
 
+        for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
         this._employeeService.updateEmployeeById(formData as EmployeeUpdate).subscribe(
             (next) => {
                 this.navigateBackEmployeeList();
@@ -118,6 +121,23 @@ export class EmployeeEditComponent {
         this.imageDisplay = '';
         this.form.patchValue({
             imageFile: ' ',
+        });
+    }
+
+    navigateBackEmployeeList() {
+        this._router.navigate(['employee/list']);
+    }
+
+    convertBirthdayFormat() {
+        const originalDate = new Date(this.form.get('birthday')?.value);
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        const hours = String(originalDate.getHours()).padStart(2, '0');
+        const minutes = String(originalDate.getMinutes()).padStart(2, '0');
+        const seconds = String(originalDate.getSeconds()).padStart(2, '0');
+        this.form.patchValue({
+            birthday: `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`,
         });
     }
 }

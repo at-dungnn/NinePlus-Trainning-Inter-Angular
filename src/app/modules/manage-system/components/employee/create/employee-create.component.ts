@@ -59,6 +59,7 @@ export class EmployeeCreateComponent {
                 birthday: this.form.get('birthday')?.value.toISOString(),
             });
         }
+        console.log(this.form.value)
         const formData = new FormData();
         Object.keys(this.form.controls).forEach((key) => {
             const control = this.form.get(key);
@@ -67,7 +68,9 @@ export class EmployeeCreateComponent {
             }
         });
 
-
+        for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
         this._employeeService.createEmployee(formData as EmployeeCreate).subscribe(
             (next) => {
                 this.navigateBackEmployeeList();

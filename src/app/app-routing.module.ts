@@ -27,10 +27,6 @@ const routes: Routes = [
                 loadChildren: () => import('./demo/components/pages/pages.module').then((m) => m.PagesModule),
             },
             {
-                path: 'employee',
-                data: { breadcrumb: 'Apps' },
-            },
-            {
                 path: 'customer',
                 data: { breadcrumb: 'Manage Customer' },
                 loadChildren: () => import('./modules/manage-system/components/customer/customer.module').then((m) => m.CustomerModule),
