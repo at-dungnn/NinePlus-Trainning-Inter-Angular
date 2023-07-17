@@ -4,54 +4,51 @@
     <div class="grid">
         <div class="col-12 lg:col-2">
             <div class="text-900 font-medium text-xl mb-3">Profile</div>
-            <!-- <p class="m-0 p-0 text-600 line-height-3 mr-3">Odio euismod lacinia
-                at quis risus sed vulputate odio.</p> -->
         </div>
-        <form [formGroup]="form" (ngSubmit)="create()">
+        <form [formGroup]="form" (ngSubmit)="createEmployee()">
             <div class="col-12 lg:col-10">
                 <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="id" class="font-medium text-900">ID*</label>
+                        <label for="id" class="font-medium text-900">ID<span style="color: red"> *</span></label>
                         <input id="id" type="text" pInputText
                             formControlName="id">
-                        <p style="color: red"
+                        <!-- <p style="color: red"
                             *ngIf="form.controls.id.hasError('required') && form.controls.id.touched">*
-                            Không được để trống</p>
+                            Không được để trống</p> -->
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="name" class="font-medium text-900">Name*</label>
+                        <label for="name" class="font-medium text-900">Name<span style="color: red"> *</span></label>
                         <input id="name" type="text" pInputText
                             formControlName="name">
-                        <p style="color: red"
+                        <!-- <p style="color: red"
                             *ngIf="form.controls.name.hasError('required') && form.controls.name.touched">*
                             Không được để trống</p>
-                            <p style="color: red"
+                        <p style="color: red"
                             *ngIf="form.controls.name.hasError('pattern') && form.controls.name.touched">*
-                            Chữ cái đầu phải viết hoa</p>
+                            Chữ cái đầu phải viết hoa</p> -->
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="email" class="font-medium text-900">Email*</label>
+                        <label for="email" class="font-medium text-900">Email<span style="color: red"> *</span></label>
                         <input id="email" type="text" pInputText
                             formControlName="email">
-                        <p style="color: red"
+                        <!-- <p style="color: red"
                             *ngIf="form.controls.email.hasError('required') && form.controls.email.touched">*
                             Không được để trống</p>
-                            <p style="color: red"
+                        <p style="color: red"
                             *ngIf="form.controls.email.hasError('pattern') && form.controls.email.touched">*
-                            Email chưa đúng định dạng. Ex: abc12@gmail.com</p>
+                            Email chưa đúng định dạng. Ex: abc12@gmail.com</p> -->
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="phone" class="font-medium text-900">Phone*</label>
+                        <label for="phone" class="font-medium text-900">Phone<span style="color: red"> *</span></label>
                         <input id="phone" type="text" pInputText
                             formControlName="phone">
-                        <p style="color: red"
+                        <!-- <p style="color: red"
                             *ngIf="form.controls.phone.hasError('required') && form.controls.phone.touched">*
                             Không được để trống</p>
-                            <p style="color: red"
+                        <p style="color: red"
                             *ngIf="form.controls.phone.hasError('pattern') && form.controls.phone.touched">*
-                            Số điện thoại bao gồm 10 số và không chứ kí tự</p>
+                            Số điện thoại bao gồm 10 số và không chứ kí tự</p> -->
                     </div>
-
                     <div class="col-12 md:col-6">
                         <div class="grid field">
                             <div class="field col-12 md:col-5">
@@ -76,7 +73,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="address" class="font-medium text-900">Address</label>
                         <input id="address" type="text" pInputText
@@ -84,30 +80,25 @@
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="userName" class="font-medium text-900"
-                            formControlName="id">User Name*</label>
+                            formControlName="id">User Name<span style="color: red"> *</span></label>
                         <input id="userName" type="text" pInputText>
                     </div>
-
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="avatar" class="font-medium text-900" >Avatar</label>
                         <p-fileUpload mode="basic" name="avatar" url="./upload.php" accept="image/*" [maxFileSize]="1000000" styleClass="p-button-outlined p-button-plain" chooseLabel="Upload Image"></p-fileUpload>
                     </div>
-
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="password" class="font-medium text-900">Password*</label>
+                        <label for="password" class="font-medium text-900">Password<span style="color: red"> *</span></label>
                         <input id="password" type="text" pInputText>
                     </div>
-                    <!-- <div class="md:col-6"></div> -->
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="workshiftId" class="font-medium text-900">Workshift_ID*</label>
+                        <label for="workshiftId" class="font-medium text-900">Workshift_ID<span style="color: red"> *</span></label>
                         <input id="workshiftId" type="text" pInputText
-                            formControlName="workshiftId">
-                        <p style="color: red"
-                            *ngIf="form.controls.workshiftId.hasError('required') && form.controls.workshiftId.touched">*
-                            Không được để trống</p>
+                            formControlName="workShiftId">
+                        <!-- <p style="color: red"
+                            *ngIf="form.controls.workShiftId.hasError('required') && form.controls.workShiftId.touched">*
+                            Không được để trống</p> -->
                     </div>
-                    <!-- <div class="md:col-6"></div> -->
-
                     <div class="col-12 md:col-6 lg:col-4 mt-3">
                         <div class="grid">
                             <div class="col-6 md:col-6">
@@ -122,11 +113,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </form>
-
-
     </div>
 </div>

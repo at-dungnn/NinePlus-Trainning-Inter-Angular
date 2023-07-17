@@ -11,6 +11,7 @@ import { ContextMenuModule } from 'primeng/contextmenu';
 import { FormsModule } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { SharedModule } from 'src/app/shared';
+import { MessagesModule } from 'primeng/messages';
 @NgModule({
     declarations: [EmployeeListComponent],
     imports: [
@@ -23,6 +24,7 @@ import { SharedModule } from 'src/app/shared';
         SplitButtonModule,
         FormsModule,
         SkeletonModule,
+        MessagesModule,
         SharedModule
     ]
 })

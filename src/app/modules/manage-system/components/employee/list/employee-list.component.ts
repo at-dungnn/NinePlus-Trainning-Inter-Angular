@@ -1,27 +1,30 @@
 import { Component } from '@angular/core';
-import { Customer } from 'src/app/demo/api/customer';
-import { CustomerService } from 'src/app/demo/service/customer.service';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
-import { Employee } from 'src/app/demo/api/employee';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { Employee, EmployeeTest } from 'src/app/demo/api/employee';
 import { EmployeeService } from 'src/app/shared';
-import { error } from 'console';
 @Component({
     selector: 'app-employee-list',
     templateUrl: './employee-list.component.html',
     styleUrls: ['./employee-list.component.scss'],
-    providers: [MessageService],
+    providers: [MessageService, ConfirmationService],
 })
 export class EmployeeListComponent {
     overlayVisible: boolean = false;
-    genders: any[] = [];
-    value10: any;
+    genders: string[] = [];
     isSkeleton: boolean = true;
     employees: Employee[] = [];
+    tests: any[] = [];
     employee: Employee = {};
-    deleteProductsDialog = false;
+    deleteProductsDialog: boolean = false;
+    employeeTest: EmployeeTest[] = [];
 
-    constructor(private employeeService: EmployeeService, private messageService: MessageService, private router: Router) {}
+    constructor(
+        private employeeService: EmployeeService,
+        private _messageService: MessageService,
+        private router: Router,
+        private confirmationService: ConfirmationService
+    ) {}
 
     ngOnInit() {
         this.onInitApi();
@@ -31,14 +34,16 @@ export class EmployeeListComponent {
     }
 
     messageErrorDelete() {
-        this.messageService.add({ severity: 'error', summary: 'Notification', detail: 'Delete Failure' });
+        this._messageService.add({ severity: 'error', summary: 'Notification', detail: 'Delete Failure' });
     }
 
     onInitApi() {
-        this.employeeService.getList().subscribe(
+        this.employeeService.getListBackEnd().subscribe(
             (next) => {
-                this.employees = next;
-                // console.log(this.employees);
+                // this.tests = next;
+                // console.log(this.tests);
+                this.employeeTest = next.data;
+                // console.log(this.employeeTest);
             },
             (error) => {
                 console.log(error);
@@ -47,9 +52,7 @@ export class EmployeeListComponent {
     }
 
     confirmDelete(employee: Employee) {
-        // console.log(employee.id?.toString());
         if (employee.id != -1 && employee.id != undefined) {
-            // console.log(employee.id);
             this.employee = { ...employee };
             this.deleteProductsDialog = true;
         }
@@ -57,17 +60,21 @@ export class EmployeeListComponent {
 
     deleteConfirmed() {
         if (this.employee.id) {
-            this.deleteProductsDialog = true;
-            this.employeeService.deleteById(this.employee.id.toString(), 'id').subscribe(
-                (next) => {
-                    this.deleteProductsDialog = false;
+            this.employeeService.deleteEmployeeById(this.employee.id.toString()).subscribe({
+                next: () => {
+                    this._messageService.add({
+                        severity: 'success',
+                        summary: 'Thành công',
+                        detail: 'Xóa Branch thành công',
+                        life: 3000,
+                    });
                     this.onInitApi();
-                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Products Deleted', life: 3000 });
+                    this.deleteProductsDialog = false;
                 },
-                (error) => {
-                    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Products Delete Falied', life: 3000 });
-                }
-            );
+                error: () => {
+                    this._messageService.add({ severity: 'error', summary: 'Error', detail: 'Products Delete Falied', life: 3000 });
+                },
+            });
         }
     }
 
@@ -79,8 +86,9 @@ export class EmployeeListComponent {
         this.router.navigate(['manage-employee/create']);
     }
 
-    navigateToEditEmployee(id:number) {
+    navigateToEditEmployee(id: number) {
         this.router.navigate(['manage-employee/edit/' + id]);
     }
+
     onGlobalFilter(firt: any, event: any) {}
 }

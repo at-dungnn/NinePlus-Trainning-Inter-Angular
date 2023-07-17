@@ -1,5 +1,5 @@
 <div class="card">
-    <p-table #dt [value]="employees" [paginator]="true" [rows]="10"
+    <p-table #dt [value]="employeeTest" [paginator]="true" [rows]="10"
         [showCurrentPageReport]="true" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         [rowsPerPageOptions]="[10,25,50]"
@@ -8,10 +8,8 @@
             <div
                 class="flex flex-wrap gap-2 align-items-center justify-content-between">
                 <div>
-
                     <span
                         class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0 mr-3">
-                        
                         <i class="pi pi-search"></i>
                         <input pInputText type="text"
                             (input)="onGlobalFilter(dt, $event)"
@@ -19,8 +17,8 @@
                     </span>
                     <button pButton
                         class=" sm:w-auto flex-order-0"
-                        icon="pi pi-file-export" label="Export Excel" (click)="toggle()"></button>
-
+                        icon="pi pi-file-export" label="Export Excel"
+                        (click)="toggle()"></button>
                 </div>
 
                 <span>
@@ -30,39 +28,39 @@
                     <p-overlay [(visible)]="overlayVisible"
                         [responsive]="{ breakpoint: '640px', direction: 'top', contentStyleClass: 'h-20rem'}"
                         contentStyleClass="p-4 surface-overlay shadow-2 border-round">
-                        <!-- <div class="sm:pl-8"> -->
                         <div>
                             <div>
-                                <label for="country" class="font-medium text-900">Gender</label>
+                                <label for="country"
+                                    class="font-medium text-900">Gender</label>
                             </div>
                             <p-dropdown inputId="country" [options]="genders"
-                            optionLabel="name" [filter]="true" filterBy="name"
-                            [showClear]="true" placeholder="Select a Gender">
-                            <ng-template let-genders pTemplate="item">
-                                <div class="flex align-items-center">
-                                    <div>{{genders.name}}</div>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
-
+                                optionLabel="name" [filter]="true"
+                                filterBy="name"
+                                [showClear]="true" placeholder="Select a Gender">
+                                <ng-template let-genders pTemplate="item">
+                                    <div class="flex align-items-center">
+                                        <div>{{genders.name}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
                         </div>
                         <div class="mt-4">
                             <div>
-                                <label for="country" class="font-medium text-900">Gender</label>
+                                <label for="country"
+                                    class="font-medium text-900">Gender</label>
                             </div>
                             <p-dropdown inputId="country" [options]="genders"
-                            optionLabel="name" [filter]="true" filterBy="name"
-                            [showClear]="true" placeholder="Select a Gender">
-                            <ng-template let-genders pTemplate="item">
-                                <div class="flex align-items-center">
-                                    <div>{{genders.name}}</div>
-                                </div>
-                            </ng-template>
-                        </p-dropdown>
+                                optionLabel="name" [filter]="true"
+                                filterBy="name"
+                                [showClear]="true" placeholder="Select a Gender">
+                                <ng-template let-genders pTemplate="item">
+                                    <div class="flex align-items-center">
+                                        <div>{{genders.name}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
                         </div>
-                    <!-- </div> -->
                     </p-overlay>
-
                     <button pButton
                         class="sm:w-auto flex-order-0 sm:flex-order-1"
                         icon="pi pi-user-plus" label="Add New"
@@ -80,8 +78,8 @@
                 <th  style="width:25%"></th>
             </tr>
         </ng-template>
-       
-        <ng-template pTemplate="body" let-employees>
+
+        <ng-template pTemplate="body" let-employeeTest>
             <ng-container *ngIf="isSkeleton ; else showTable">
                 <tr>
                     <td><p-skeleton></p-skeleton></td>
@@ -93,25 +91,23 @@
                 </tr>
             </ng-container>
             <ng-template #showTable>
-            <tr>
-                <td>{{employees.id}}</td>
-                <td>{{employees.name}}</td>
-                <td>{{ employees.gender ? "Nam" : "Nữ"}}</td>
-                <!-- <td>{{ employees.gender.id === 1 ? 'Nam' : (employees.gender.id === 2 ? 'Nữ' : 'LGBT') }}</td> -->
-                <td>{{employees.birthday}}</td>
-                <td>{{employees.phone}}</td>
-                <td>
-                    <div class="flex">
-                        <!-- <button pButton pRipple icon="pi pi-eye" class="p-button-rounded p-button-secondary mr-2"></button> -->
-                        <button pButton pRipple icon="pi pi-pencil"
-                            class="p-button-rounded p-button-success mr-2"
-                            (click)="navigateToEditEmployee(employees.id)"></button>
-                        <button pButton pRipple icon="pi pi-trash" (click)="confirmDelete(employees)"
-                            class="p-button-rounded p-button-warning"
-                            ></button>
-                    </div>
-                </td>
-            </tr>
+                <tr>
+                    <td>{{employeeTest.id}}</td>
+                    <td>{{employeeTest.name}}</td>
+                    <td>{{employeeTest.gender ? "Nam" : "Nữ"}}</td>
+                    <td>{{employeeTest.createdOn | date: 'MM/dd/yyyy, h:mm a'}}</td>
+                    <td>{{employeeTest.phoneNumber}}</td>
+                    <td>
+                        <div class="flex">
+                            <button pButton pRipple icon="pi pi-pencil"
+                                class="p-button-rounded p-button-success mr-2"
+                                (click)="navigateToEditEmployee(employeeTest.id)"></button>
+                            <button pButton pRipple icon="pi pi-trash"
+                                (click)="confirmDelete(employeeTest)"
+                                class="p-button-rounded p-button-warning"></button>
+                        </div>
+                    </td>
+                </tr>
             </ng-template>
         </ng-template>
     </p-table>
@@ -124,8 +120,9 @@
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"
                 label="No" (click)="deleteProductsDialog = false"></button>
-            <button pButton pRipple icon="pi pi-check" class="p-button-text" (click)="deleteConfirmed()"
-                label="Yes" ></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-text"
+                (click)="deleteConfirmed()"
+                label="Yes"></button>
         </ng-template>
     </p-dialog>
 </div>

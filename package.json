@@ -29,7 +29,7 @@
         "@ngx-translate/core": "^14.0.0",
         "@ngx-translate/http-loader": "^7.0.0",
         "@types/lodash": "^4.14.182",
-        "chart.js": "^3.3.2", 
+        "chart.js": "^3.3.2",
         "lodash": "^4.17.21",
         "moment": "^2.29.4",
         "primeflex": "^3.2.1",

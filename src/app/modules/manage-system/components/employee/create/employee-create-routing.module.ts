@@ -4,10 +4,7 @@ import { EmployeeCreateComponent } from './employee-create.component';
 const routes: Routes = [];
 
 @NgModule({
-  imports: [RouterModule.forChild([
-    {path: '',
-  component: EmployeeCreateComponent}
-  ])],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild([{ path: '', component: EmployeeCreateComponent }])],
+    exports: [RouterModule],
 })
-export class EmployeeCreateRoutingModule { }
+export class EmployeeCreateRoutingModule {}
