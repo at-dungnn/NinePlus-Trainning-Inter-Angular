@@ -3,13 +3,20 @@ pre.app-code {
     margin: 0 0 1rem 0;
     padding: 0;
     border-radius: var(--border-radius);
-    overflow: auto;
+    overflow-x: hidden;
 
     code {
-        color: var(--surface-900);
         padding: 1rem;
         line-height: 1.5;
         display: block;
         font-family: monaco, Consolas, monospace;
     }
 }
+
+.full-screen-preview {
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    overflow: hidden;
+}
+

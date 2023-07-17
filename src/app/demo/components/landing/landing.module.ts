@@ -7,6 +7,9 @@ import { Router, RouterModule } from '@angular/router';
 import { StyleClassModule } from 'primeng/styleclass';
 import { RippleModule } from 'primeng/ripple';
 import { AppConfigModule } from 'src/app/layout/config/config.module';
+import { HeaderLandingComponent } from './header/header-landing/header-landing.component';
+import { FooterLandingComponent } from './footer/footer-landing/footer-landing.component';
+import { BodyLandingComponent } from './body/body-landing/body-landing.component';
 
 @NgModule({
     imports: [
@@ -16,11 +19,15 @@ import { AppConfigModule } from 'src/app/layout/config/config.module';
         RouterModule,
         StyleClassModule,
         RippleModule,
-        AppConfigModule
+        AppConfigModule,
     ],
-    declarations: [LandingComponent]
+    declarations: [
+        LandingComponent,
+        HeaderLandingComponent,
+        FooterLandingComponent,
+        BodyLandingComponent,
+    ],
 })
-export class LandingModule { 
-
+export class LandingModule {
     constructor(private router: Router) {}
 }
