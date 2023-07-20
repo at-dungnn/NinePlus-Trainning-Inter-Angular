@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { MessageService, ConfirmationService } from 'primeng/api';
-import { Employee, EmployeeTest } from 'src/app/demo/api/employee';
+import { Employee } from 'src/app/demo/api/employee';
 import { EmployeeService } from 'src/app/shared';
+import { Genders } from 'src/app/shared/constants/gender';
 @Component({
     selector: 'app-employee-list',
     templateUrl: './employee-list.component.html',
@@ -10,43 +11,38 @@ import { EmployeeService } from 'src/app/shared';
     providers: [MessageService, ConfirmationService],
 })
 export class EmployeeListComponent {
+    genders: any[] = Genders;
     overlayVisible: boolean = false;
-    genders: string[] = [];
     isSkeleton: boolean = true;
     employees: Employee[] = [];
-    tests: any[] = [];
     employee: Employee = {};
     deleteProductsDialog: boolean = false;
-    employeeTest: EmployeeTest[] = [];
 
     constructor(
-        private employeeService: EmployeeService,
+        private _employeeService: EmployeeService,
         private _messageService: MessageService,
-        private router: Router,
-        private confirmationService: ConfirmationService
+        private _router: Router,
+        private _confirmationService: ConfirmationService
     ) {}
 
     ngOnInit() {
         this.onInitApi();
-        setTimeout(() => {
-            this.isSkeleton = false;
-        }, 1500);
-    }
-
-    messageErrorDelete() {
-        this._messageService.add({ severity: 'error', summary: 'Notification', detail: 'Delete Failure' });
+        this.loadSkeletonTable();
     }
 
     onInitApi() {
-        this.employeeService.getListBackEnd().subscribe(
+        this._employeeService.getListBackEnd().subscribe(
             (next) => {
-                // this.tests = next;
-                // console.log(this.tests);
-                this.employeeTest = next.data;
-                // console.log(this.employeeTest);
+                if (next.data.length > 0) {
+                    this.employees = next.data as Employee[];
+                } else {
+                    this._messageService.add({ severity: 'error', summary: 'Notification', detail: 'Not Found data!' });
+                }
             },
             (error) => {
-                console.log(error);
+                error.error.messages.forEach((item: string) => {
+                    this._messageService.add({ severity: 'error', summary: 'Notification', detail: item });
+                });
             }
         );
     }
@@ -60,7 +56,7 @@ export class EmployeeListComponent {
 
     deleteConfirmed() {
         if (this.employee.id) {
-            this.employeeService.deleteEmployeeById(this.employee.id.toString()).subscribe({
+            this._employeeService.deleteEmployeeById(this.employee.id.toString()).subscribe({
                 next: () => {
                     this._messageService.add({
                         severity: 'success',
@@ -78,16 +74,26 @@ export class EmployeeListComponent {
         }
     }
 
+    messageErrorDelete() {
+        this._messageService.add({ severity: 'error', summary: 'Notification', detail: 'Delete Failure' });
+    }
+
+    loadSkeletonTable() {
+        setTimeout(() => {
+            this.isSkeleton = false;
+        }, 1000);
+    }
+
     toggle() {
         this.overlayVisible = !this.overlayVisible;
     }
 
     navigateToCreateEmployee() {
-        this.router.navigate(['manage-employee/create']);
+        this._router.navigate(['manage-employee/create']);
     }
 
     navigateToEditEmployee(id: number) {
-        this.router.navigate(['manage-employee/edit/' + id]);
+        this._router.navigate(['manage-employee/edit/' + id]);
     }
 
     onGlobalFilter(firt: any, event: any) {}
