@@ -11,6 +11,7 @@ export abstract class ApiBaseService {
         }
         return `${this.apiBasePath}/${this.apiUrl}/${environment.apiVersion}/${this.baseUrl}`;
     }
+
     constructor(
         protected httpClient: HttpClient,
         protected baseUrl = '',
