@@ -6,10 +6,10 @@
 export const environment = {
     production: false,
     apiUrl: 'api',
-    defaultApiBasePath: 'http://localhost:3000',
+    defaultApiBasePath: 'http://119.82.130.211:6060/api/',
     session_expiry: 1000,
     originPath: 'http://localhost:4200',
-    apiVersion: '',
+    apiVersion: 'v1',
     application_key: '',
     application_id: '',
     supporterEmail: '',

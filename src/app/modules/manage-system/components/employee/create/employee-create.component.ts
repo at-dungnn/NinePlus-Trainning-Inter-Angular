@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { EmployeeService } from 'src/app/shared';
 import { MessageService } from 'primeng/api';
 import { MESSAGE_TITLE } from 'src/app/shared';
-import { EmployeeCreateAndUpdate } from 'src/app/demo/api/employee';
+import { EmployeeCreate } from 'src/app/demo/api/employee';
 import { Genders } from 'src/app/shared/constants/gender';
 @Component({
     selector: 'app-employee-create',
@@ -28,12 +28,10 @@ export class EmployeeCreateComponent {
     }
 
     initFormCreateEmployee() {
-        const uppercaseFirstName = /^[A-Z][a-zA-Z]*$/;
         const phone = /^(?:\+?84|0)(?:\d{9,10})$/;
         const email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         const password = /^.{8,}$/;
         this.form = this._fb.group({
-            id: [0],
             name: ['', Validators.compose([Validators.required])],
             gender: [''],
             birthday: [''],
@@ -64,7 +62,7 @@ export class EmployeeCreateComponent {
                 formData.append(key, control.value);
             }
         });
-        this._employeeService.createEmployee(formData as EmployeeCreateAndUpdate).subscribe(
+        this._employeeService.createEmployee(formData as EmployeeCreate).subscribe(
             (next) => {
                 this.navigateBackEmployeeList();
                 this._messageService.add({ severity: 'success', summary: 'Successful', detail: MESSAGE_TITLE.ADD_NEW_BRANCH_SUCC, life: 3000 });

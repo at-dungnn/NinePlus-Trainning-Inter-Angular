@@ -1,10 +1,10 @@
 <div class="card">
     <p-toast></p-toast>
-    <p-table #dt [value]="employees" [paginator]="true" [rows]="10"
+    <p-table #dt [value]="employees" [paginator]="true" [rows]="5"
         [showCurrentPageReport]="true" responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [rowsPerPageOptions]="[10,25,50]"
-        [globalFilterFields]="['name','country.name','representative.name']">
+        [rowsPerPageOptions]="[5,15,25]"
+        [globalFilterFields]="['id','name','phoneNumber']">
         <ng-template pTemplate="caption">
             <div
                 class="flex flex-wrap gap-2 align-items-center justify-content-between">
@@ -100,7 +100,7 @@
                     <td>{{employeeTest.id}}</td>
                     <td>{{employeeTest.name}}</td>
                     <td>{{employeeTest.gender ? "Nam" :
-                        employeeTest.gender===false ? "Nữ" : ""}}</td>
+                        employeeTest.gender===false ? "Nữ" : "Trống"}}</td>
                     <td>{{employeeTest.createdOn | date: 'MM/dd/yyyy, h:mm a'}}</td>
                     <td>{{employeeTest.phoneNumber}}</td>
                     <td>

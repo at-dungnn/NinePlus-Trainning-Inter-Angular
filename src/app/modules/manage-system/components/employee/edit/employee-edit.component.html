@@ -61,8 +61,11 @@
                                 <p-dropdown inputId="gender" [options]="genders"
                                     optionLabel="name" [filter]="true"
                                     filterBy="name"
+                                    optionValue="code"
                                     [showClear]="true"
-                                    placeholder="Select a Gender">
+                                    placeholder="Select a Gender"
+                                    formControlName="gender"
+                                    [(ngModel)]="defaultGender">
                                     <ng-template let-genders pTemplate="item">
                                         <div class="flex align-items-center">
                                             <div>{{ genders.name}}</div>
@@ -72,41 +75,30 @@
                             </div>
                             <div class="field col-12 md:col-7">
                                 <label for="birthday"
-                                    class="font-medium text-900">Date</label>
+                                    class="font-medium text-900">Birthday</label>
                                 <p-calendar [(ngModel)]="birthdayInit"
                                     id="birthday"
-                                    [showTime]="true"
-                                    [showIcon]="true" formControlName="birthday"
-                                    dataType="dd/mm/yyyy"></p-calendar>
+                                    [showTime]="true" 
+                                    [showSeconds]="true"
+                                    [showIcon]="true" 
+                                    formControlName="birthday"></p-calendar>
                             </div>
                         </div>
+                    </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="avatar" class="font-medium text-900">Avatar</label>
+                        <p-fileUpload id="image" mode="basic"
+                            accept="image/**"
+                            name="image" chooseLabel="Upload Image"
+                            styleClass="p-button-outlined p-button-plain"
+                            [maxFileSize]="1000000"
+                            (onSelect)="onFileSelect($event)"
+                            ngDefaultControl="image"></p-fileUpload>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="address" class="font-medium text-900">Address</label>
                         <input id="address" type="text" pInputText
                             formControlName="address">
-                    </div>
-                    <div class="field mb-4 col-12 md:col-6">
-                        <label for="userName" class="font-medium text-900"
-                            formControlName="id">User Name<span
-                                style="color: red"> *</span></label>
-                        <input id="userName" type="text" pInputText>
-                    </div>
-                    <div class="field mb-4 col-12 md:col-6">
-                        <label for="avatar" class="font-medium text-900">Avatar</label>
-                        <p-fileUpload id="imageFile" mode="basic"
-                            accept="image/**"
-                            name="imageFile" chooseLabel="Upload Image"
-                            url="./upload.php"
-                            styleClass="p-button-outlined p-button-plain"
-                            [maxFileSize]="1000000"
-                            (onSelect)="onFileSelect($event)"
-                            ngDefaultControl="imageFile"></p-fileUpload>
-                    </div>
-                    <div class="field mb-4 col-12 md:col-6">
-                        <label for="password" class="font-medium text-900">Password<span
-                                style="color: red"> *</span></label>
-                        <input id="password" type="password" pInputText>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="workshiftId" class="font-medium text-900">Workshift_ID<span

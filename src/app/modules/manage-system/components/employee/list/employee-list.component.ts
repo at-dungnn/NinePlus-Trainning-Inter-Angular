@@ -4,6 +4,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 import { Employee } from 'src/app/demo/api/employee';
 import { EmployeeService } from 'src/app/shared';
 import { Genders } from 'src/app/shared/constants/gender';
+import { Table } from 'primeng/table';
 @Component({
     selector: 'app-employee-list',
     templateUrl: './employee-list.component.html',
@@ -31,7 +32,7 @@ export class EmployeeListComponent {
     }
 
     onInitApi() {
-        this._employeeService.getListBackEnd().subscribe(
+        this._employeeService.getListEmployee().subscribe(
             (next) => {
                 if (next.data.length > 0) {
                     this.employees = next.data as Employee[];
@@ -96,5 +97,7 @@ export class EmployeeListComponent {
         this._router.navigate(['manage-employee/edit/' + id]);
     }
 
-    onGlobalFilter(firt: any, event: any) {}
+    onGlobalFilter(table: Table, event: Event) {
+        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+    }
 }

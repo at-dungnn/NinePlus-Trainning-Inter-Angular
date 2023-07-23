@@ -9,13 +9,7 @@ export interface Employee {
     workshiftId?: number;
 }
 
-export interface DataReponse {
-    data: any;
-    messages: [];
-    succeeded: boolean;
-}
-
-export interface EmployeeCreateAndUpdate {
+export interface EmployeeCreate {
     name?: string;
     address?: string;
     birthday?: string;
@@ -25,5 +19,17 @@ export interface EmployeeCreateAndUpdate {
     imageFile?: any;
     password?: string;
     username?: string;
+    workShiftId?: number;
+}
+
+export interface EmployeeUpdate {
+    id?: number;
+    name?: string;
+    address?: string;
+    birthday?: string;
+    email?: string;
+    phoneNumber?: string;
+    gender?: boolean;
+    image?: any;
     workShiftId?: number;
 }

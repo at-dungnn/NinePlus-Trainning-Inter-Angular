@@ -6,6 +6,7 @@
         <div class="col-12 lg:col-2">
             <div class="text-900 font-medium text-xl mb-3">Profile</div>
         </div>
+        <ng-template [ngIf]="form">
         <form [formGroup]="form" (ngSubmit)="createEmployee()">
             <div class="col-12 lg:col-10">
                 <div class="grid formgrid p-fluid">
@@ -135,5 +136,6 @@
                 </div>
             </div>
         </form>
+    </ng-template>
     </div>
 </div>

@@ -47,6 +47,10 @@ export class CrudBaseService extends ApiBaseService {
         return this.httpClient.post(`${this.basePath}`, body);
     }
 
+    updateEmployee(body: any): Observable<any> {
+        return this.httpClient.put(`${this.basePath}`, body);
+    }
+
     delete(id: string, key: string): Observable<any> {
         return this.httpClient.delete(`${this.basePath}?${key}=${id}`);
     }
