@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
+import { isEmpty } from 'lodash';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
 import {
@@ -64,7 +64,7 @@ export class CustomerEditComponent implements OnInit {
     initFormUpdateCustomer() {
         this._customerService.getCustomerById(this.customerId).subscribe({
             next: (data) => {
-                if (!_.isEmpty(data)) {
+                if (!isEmpty(data)) {
                     const customer = data as Customer;
                     this.formUpdateCustomer = this._fb.group({
                         id: [this.customerId],
@@ -103,7 +103,7 @@ export class CustomerEditComponent implements OnInit {
             customer.address = HandleString.trim(customer.address);
         }
         // "The JSON value could not be converted to System.Nullable`1[System.DateTime]
-        if (_.isEmpty(customer.dateOfBirth)) {
+        if (isEmpty(customer.dateOfBirth)) {
             delete customer['dateOfBirth'];
         }
         return customer;
@@ -117,7 +117,7 @@ export class CustomerEditComponent implements OnInit {
             );
             this._customerService.getCustomerById(this.customerId).subscribe({
                 next: (data) => {
-                    if (!_.isEmpty(data)) {
+                    if (!isEmpty(data)) {
                         this.saveCustomer(updateCustomer);
                     }
                 },
