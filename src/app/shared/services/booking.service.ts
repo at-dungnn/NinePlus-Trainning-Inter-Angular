@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { CrudBaseService } from 'src/app/core';
 import { ApiResponse } from 'src/app/core/http/api-response';
+import { Booking } from 'src/app/demo/api/booking';
 
 @Injectable({
     providedIn: 'root',
@@ -30,4 +31,23 @@ export class BookingService extends CrudBaseService {
         return this._httpClient.get(`${this.basePath}/customer/${id}`);
     }
 
+    getListBooking(): Observable<ApiResponse> {
+        return this.list();
+    }
+
+    addBooking(booking: Booking): Observable<ApiResponse> {
+        return this.create(booking);
+    }
+
+    getBookingById(id: string): Observable<ApiResponse> {
+        return this.get(id);
+    }
+
+    updateBooking(booking: Booking): Observable<ApiResponse> {
+        return this._httpClient.put(`${this.basePath}`, booking);
+    }
+
+    deleteBooking(id: string): Observable<ApiResponse> {
+        return this.delete(id, 'id');
+    }
 }

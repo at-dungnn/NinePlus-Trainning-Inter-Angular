@@ -77,7 +77,15 @@ const routes: Routes = [
                     import('./demo/components/apps/apps.module').then(
                         (m) => m.AppsModule
                     ),
-            }
+            },
+            {
+                path: 'booking',
+                data: { breadcrumb: 'Manage Booking' },
+                loadChildren: () =>
+                    import('./modules/manage-system/components/booking/booking.module').then(
+                        (m) => m.BookingModule
+                    ),
+            },
         ],
     },
     {

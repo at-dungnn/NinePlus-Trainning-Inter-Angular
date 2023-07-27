@@ -1,8 +1,7 @@
 <div class="card">
-    <p-toast [key]="keyToast"></p-toast>
     <p-table
         #dt
-        [value]="customers"
+        [value]="bookings"
         [paginator]="true"
         [rows]="5"
         [showCurrentPageReport]="true"
@@ -29,11 +28,18 @@
                     />
                 </span>
                 <button
-                    (click)="navigateToCreateCustomer()"
+                  
                     pButton
                     class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1"
-                    icon="pi pi-user-plus"
-                    label="Add New"
+                    icon="pi pi-calendar"
+                    label="Calender"
+                ></button>
+                <button
+                    (click)="navigateToCreateBooking()"
+                    pButton
+                    class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1"
+                    icon="pi pi-plus-circle"
+                    label="Create Booking"
                 ></button>
             </div>
         </ng-template>
@@ -43,50 +49,49 @@
                 <th
                     pSortableColumn="id"
                     class="white-space-nowrap"
-                    style="width: 25%"
+                    style="width: 15%"
                 >
                     ID<p-sortIcon field="id"></p-sortIcon>
                 </th>
                 <th
                     pSortableColumn="customerName"
                     class="white-space-nowrap"
-                    style="width: 25%"
+                    style="width: 20%"
                 >
-                    Name <p-sortIcon field="customerName"></p-sortIcon>
+                    Customer Name <p-sortIcon field="customerName"></p-sortIcon>
                 </th>
                 <th
                     pSortableColumn="phone_number"
                     class="white-space-nowrap"
-                    style="width: 25%"
+                    style="width: 15%"
                 >
                     Phone<p-sortIcon field="phone_number"></p-sortIcon>
                 </th>
                 <th
-                    pSortableColumn="address"
+                    pSortableColumn="bookingDate"
                     class="white-space-nowrap"
-                    style="width: 25%"
+                    style="width: 20%"
                 >
-                    Address <p-sortIcon field="address"></p-sortIcon>
+                    Booking Date <p-sortIcon field="bookingDate"></p-sortIcon>
                 </th>
                 <th
                     pSortableColumn="date_of_birth"
                     class="white-space-nowrap"
                     style="width: 25%"
                 >
-                    BirthDay<p-sortIcon field="date_of_birth"></p-sortIcon>
+                    From-To Time<p-sortIcon></p-sortIcon>
                 </th>
                 <th
-                    pSortableColumn="total_money"
+                    pSortableColumn="status"
                     class="white-space-nowrap"
                     style="width: 25%"
-                >
-                    Total Money<p-sortIcon field="total_money"></p-sortIcon>
-                </th>
-                <th class="white-space-nowrap" style="width: 25%"></th>
+                ></th>
+                <th></th>
+                <th></th>
             </tr>
         </ng-template>
 
-        <ng-template pTemplate="body" let-customer>
+        <ng-template pTemplate="body" let-booking>
             <ng-container *ngIf="isSkeleton; else elseTemplate">
                 <tr>
                     <td><p-skeleton></p-skeleton></td>
@@ -100,17 +105,21 @@
             </ng-container>
             <ng-template #elseTemplate>
                 <tr>
-                    <td>{{ customer.id }}</td>
-                    <td>{{ customer.customerName }}</td>
-                    <td>{{ customer.phoneNumber }}</td>
-                    <td>{{ customer.address }}</td>
-                    <td>{{ customer.dateOfBirth  }}</td>
-                    <td>{{ customer.totalMoney | currency : "VND" }}</td>
+                    <td  (click)="navigateToDetailBooking(booking)">{{ booking.id }}</td>
+                    <td (click)="navigateToDetailBooking(booking)">{{ booking.customerName }}</td>
+                    <td>{{ booking.phoneNumber }}</td>
+                    <td>{{ booking.bookingDate | date : "dd/MM/yyyy" }}</td>
+                    <td>
+                        {{ booking.fromTime | date : "hh:mm" }} -
+                        {{ booking.totime | date : "hh:mm" }}
+                        {{ booking.fromTime | date : "dd/MM/yyyy" }}
+                    </td>
+                    <td>{{ booking.status }}</td>
                     <td class="text-center">
                         <div class="flex justify-content-center">
                             <p-confirmDialog
-                                header="Delete customer with name = {{
-                                    customer.name
+                                header="Delete booking with name = {{
+                                    booking.name
                                 }}"
                                 key="confirm"
                                 icon="pi pi-exclamation-triangle"
@@ -122,20 +131,11 @@
                             <button
                                 pButton
                                 pRipple
-                                icon="pi pi-eye"
-                                tooltipPosition="top"
-                                pTooltip="Detail"
-                                class="p-button-rounded p-button-secondary mr-2"
-                                (click)="navigateToDeatailCustomer(customer)"
-                            ></button>
-                            <button
-                                pButton
-                                pRipple
                                 icon="pi pi-pencil"
                                 tooltipPosition="top"
                                 pTooltip="Edit"
                                 class="p-button-rounded p-button-success mr-2"
-                                (click)="navigateToEditCustomer(customer)"
+                                (click)="navigateToEditBooking(booking)"
                             ></button>
                             <button
                                 pButton
@@ -144,7 +144,7 @@
                                 tooltipPosition="top"
                                 pTooltip="Delete"
                                 class="p-button-rounded p-button-warning"
-                                (click)="showConfirmDelete(customer)"
+                                (click)="showConfirmDelete(booking)"
                             ></button>
                         </div>
                     </td>
