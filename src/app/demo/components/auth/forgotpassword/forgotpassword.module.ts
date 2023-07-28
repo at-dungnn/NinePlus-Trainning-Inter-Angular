@@ -6,6 +6,9 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { RippleModule } from 'primeng/ripple';
 import { AppConfigModule } from 'src/app/layout/config/config.module';
+import { FormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { FooterLoginTypesModule } from '../footer-login-types/footer-login-types.module';
 
 @NgModule({
     imports: [
@@ -13,9 +16,13 @@ import { AppConfigModule } from 'src/app/layout/config/config.module';
         ButtonModule,
         InputTextModule,
         ForgotPasswordRoutingModule,
+        FooterLoginTypesModule,
         AppConfigModule,
-        RippleModule
+        RippleModule,
+        FormsModule,
+        ToastModule,
     ],
-    declarations: [ForgotPasswordComponent]
+    declarations: [ForgotPasswordComponent],
+    providers: [],
 })
-export class ForgotPasswordModule { }
+export class ForgotPasswordModule {}

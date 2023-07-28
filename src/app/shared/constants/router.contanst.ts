@@ -8,4 +8,10 @@ export enum ROUTER {
     LIST_BOOKING = 'booking/list',
     DETAIL_BOOKING = 'booking/detail',
     EDIT_BOOKING = 'booking/edit',
+    FORGOT_PASSWORD = 'auth/forgotpassword',
+    CHANGE_PASSWORD = 'auth/changepassword',
+    RESET_PASSWORD = 'auth/reset-password',
+    SIGNUP = 'auth/register',
+    LANDING = 'landing',
+    AUTH_ERROR = 'auth/error',
 }

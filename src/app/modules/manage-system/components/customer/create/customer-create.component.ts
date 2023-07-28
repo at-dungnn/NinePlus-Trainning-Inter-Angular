@@ -8,12 +8,12 @@ import {
     MESSAGE_ERROR_INPUT,
     MESSAGE_TITLE,
     ROUTER,
-    Toast,
+    TOAST,
 } from 'src/app/shared';
-import * as _ from 'lodash';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { isEmpty } from 'lodash';
 
 @Component({
     selector: 'app-customer-create',
@@ -29,7 +29,7 @@ export class CustomerCreateComponent implements OnInit {
 
     formAddNewCustomer!: FormGroup;
 
-    keyToast: string = '';
+    keyToast = TOAST.KEY_BC;
 
     constructor(
         private _customerService: CustomerService,
@@ -40,12 +40,8 @@ export class CustomerCreateComponent implements OnInit {
 
     ngOnInit(): void {
         this.initFormAddNewCustomer();
-        this.initKeyToast();
     }
 
-    initKeyToast() {
-        this.keyToast = Toast.KEY_BC;
-    }
 
     initFormAddNewCustomer() {
         this.formAddNewCustomer = this._fb.group({
@@ -100,7 +96,7 @@ export class CustomerCreateComponent implements OnInit {
             customer.address = HandleString.trim(customer.address);
         }
         // "The JSON value could not be converted to System.Nullable`1[System.DateTime]
-        if (_.isEmpty(customer.dateOfBirth)) {
+        if (isEmpty(customer.dateOfBirth)) {
             delete customer['dateOfBirth'];
         }
         return customer;
@@ -113,7 +109,7 @@ export class CustomerCreateComponent implements OnInit {
         const password = customer?.password;
         const username = customer?.username;
 
-        if ((!username && password) || (username && !password)) {
+        if (!username && password || username && !password) {
             this._toastService.showError(
                 MESSAGE_ERROR_INPUT.PASSWORD_OR_USERNAME_EMPTY,
                 this.keyToast

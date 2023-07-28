@@ -1,15 +1,15 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { TranslationService } from '../modules/manage-system/components/i18n';
-import { LanguageFlag, LANGUAGES } from '../shared';
-import { LayoutService } from "./service/app.layout.service";
+import { LanguageFlag, LANGUAGES, ROUTER } from '../shared';
+import { LayoutService } from './service/app.layout.service';
+import { AuthenticateService } from '../core';
 
 @Component({
     selector: 'app-topbar',
-    templateUrl: './app.topbar.component.html'
+    templateUrl: './app.topbar.component.html',
 })
 export class AppTopBarComponent {
-
     menu: MenuItem[] = [];
 
     @ViewChild('searchinput') searchInput!: ElementRef;
@@ -19,13 +19,21 @@ export class AppTopBarComponent {
     searchActive: boolean = false;
     language: LanguageFlag | undefined;
     langs = LANGUAGES;
-    constructor(public layoutService: LayoutService,     private _translationService: TranslationService,) {}
+    constructor(
+        public layoutService: LayoutService,
+        private _translationService: TranslationService,
+        private _authenticateService: AuthenticateService,
+    ) {}
 
     ngOnInit(): void {
         this.setLanguage(this._translationService.getSelectedLanguage());
     }
     onMenuButtonClick() {
         this.layoutService.onMenuToggle();
+    }
+
+    logout() {
+        this._authenticateService.logOut();
     }
 
     activateSearch() {
@@ -54,7 +62,12 @@ export class AppTopBarComponent {
 
     get logo(): string {
         const path = 'assets/layout/images/logo-';
-        const logo = this.layoutTheme === 'primaryColor' ? 'light.png' : (this.colorScheme === 'light' ? 'dark.png' : 'light.png');
+        const logo =
+            this.layoutTheme === 'primaryColor'
+                ? 'light.png'
+                : this.colorScheme === 'light'
+                ? 'dark.png'
+                : 'light.png';
         return path + logo;
     }
 

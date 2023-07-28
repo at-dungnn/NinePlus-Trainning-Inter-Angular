@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
+import { isEmpty } from 'lodash';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Customer } from 'src/app/demo/api/customer';
 import { ROUTER } from 'src/app/shared';
@@ -38,7 +38,7 @@ export class CustomerDetailComponent {
 
     getCustomerById(id: string) {
         this._customerService.getCustomerById(id).subscribe((data) => {
-            if (!_.isEmpty(data)) {
+            if (!isEmpty(data)) {
                 this.customer = data as Customer;
             }
         });

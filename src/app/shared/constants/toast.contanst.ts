@@ -1,3 +1,3 @@
-export enum Toast {
+export enum TOAST {
     KEY_BC = 'bc',
 }

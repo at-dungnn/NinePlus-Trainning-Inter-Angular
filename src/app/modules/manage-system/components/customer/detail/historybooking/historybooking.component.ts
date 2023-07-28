@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import * as _ from 'lodash';
+import { isEmpty } from 'lodash';
 import { BookingDetail } from 'src/app/demo/api/booking-detail';
 import { BookingService } from 'src/app/shared/services/booking.service';
 
@@ -31,8 +31,8 @@ export class HistorybookingComponent implements OnInit {
         this._bookingService
             .getHistoryBooking(this.customerId)
             .subscribe((res) => {
-                if (res.succeeded && _.isEmpty(res.data)) {
-                    alert('Ok');
+                if (!isEmpty(res.data) && res.data) {
+                    // pending API BE
                 }
             });
     }

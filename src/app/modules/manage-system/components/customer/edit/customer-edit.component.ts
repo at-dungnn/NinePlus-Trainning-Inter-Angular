@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
+import {isEmpty } from 'lodash';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
 import {
@@ -10,7 +10,7 @@ import {
     MESSAGE_ERROR_INPUT,
     MESSAGE_TITLE,
     ROUTER,
-    Toast,
+    TOAST,
 } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
@@ -31,7 +31,7 @@ export class CustomerEditComponent implements OnInit {
 
     isLoadingSubmit: boolean = false;
 
-    keyToast: string = '';
+    keyToast = TOAST.KEY_BC;
 
     phoneNumberParttern: string = '[()0-9]{10,12}';
 
@@ -48,7 +48,6 @@ export class CustomerEditComponent implements OnInit {
     ngOnInit(): void {
         this.getIdParamRequest();
         this.initFormUpdateCustomer();
-        this.initKeyToast();
     }
 
     getIdParamRequest() {
@@ -57,14 +56,10 @@ export class CustomerEditComponent implements OnInit {
         });
     }
 
-    initKeyToast() {
-        this.keyToast = Toast.KEY_BC;
-    }
-
     initFormUpdateCustomer() {
         this._customerService.getCustomerById(this.customerId).subscribe({
             next: (data) => {
-                if (!_.isEmpty(data)) {
+                if (!isEmpty(data)) {
                     const customer = data as Customer;
                     this.formUpdateCustomer = this._fb.group({
                         id: [this.customerId],
@@ -103,7 +98,7 @@ export class CustomerEditComponent implements OnInit {
             customer.address = HandleString.trim(customer.address);
         }
         // "The JSON value could not be converted to System.Nullable`1[System.DateTime]
-        if (_.isEmpty(customer.dateOfBirth)) {
+        if (isEmpty(customer.dateOfBirth)) {
             delete customer['dateOfBirth'];
         }
         return customer;
@@ -117,7 +112,7 @@ export class CustomerEditComponent implements OnInit {
             );
             this._customerService.getCustomerById(this.customerId).subscribe({
                 next: (data) => {
-                    if (!_.isEmpty(data)) {
+                    if (!isEmpty(data)) {
                         this.saveCustomer(updateCustomer);
                     }
                 },

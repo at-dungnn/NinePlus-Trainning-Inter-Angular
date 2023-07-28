@@ -46,6 +46,9 @@ export enum MESSAGE_ERROR_INPUT {
     ID_ALREADY_EXISTS = 'Id already exists',
     ID_DOES_NOT_EXISTS = "Id doesn't exist",
     EMAIL_ALREADY_EXISTS = 'Email already exists',
+    EMAIL_INVALID = 'Invalid email',
+    INCORRECT_ACCOUNT = 'Incorrect account',
+    MATCH_PASSWORD = 'Password does not match',
 }
 
 export const MESSAGE_ERROR = [

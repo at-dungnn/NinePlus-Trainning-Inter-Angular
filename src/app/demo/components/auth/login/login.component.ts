@@ -1,38 +1,106 @@
-import { Component } from '@angular/core';
-import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import { TranslationService } from 'src/app/modules/manage-system/components/i18n';
-import { LanguageFlag, LANGUAGES } from 'src/app/shared';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { MessageService } from 'primeng/api';
+import { AuthenticateService } from 'src/app/core';
+import { ToastService } from 'src/app/shared/services/toast.service';
+import {
+    MESSAGE_ERROR_INPUT,
+    MESSAGE_TITLE,
+    ROUTER,
+    TOAST,
+} from 'src/app/shared';
+import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ROLE } from 'src/app/shared/constants/role';
 
 @Component({
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.scss'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    providers: [MessageService, ToastService],
 })
 export class LoginComponent {
-	language: LanguageFlag | undefined;
-	langs = LANGUAGES;
-	constructor(
-		private layoutService: LayoutService , 
-		private _translationService: TranslationService,) {}
+    @Input() isPopupLogin = false;
 
-	get filledInput(): boolean {
-		return this.layoutService.config.inputStyle === 'filled';
-	}
-	ngOnInit(): void {
-        this.setLanguage(this._translationService.getSelectedLanguage());
-    }
-    selectLanguage(lang: string) {
-        this._translationService.setLanguage(lang);
-        this.setLanguage(lang);
+    @Output() hiddenPopup: EventEmitter<any> = new EventEmitter();
+
+    @Output() getRole: EventEmitter<any> = new EventEmitter();
+
+    username = '';
+
+    password = '';
+
+    isLoadingSubmit = false;
+
+    keyToast = TOAST.KEY_BC;
+
+    constructor(
+        private _authenticateService: AuthenticateService,
+        private _toastService: ToastService,
+        private _router: Router
+    ) {}
+
+    submit() {
+        this.loadingSubmit();
+        if (!this.username || !this.password) {
+            this._toastService.showError(
+                MESSAGE_ERROR_INPUT.INCORRECT_ACCOUNT,
+                this.keyToast
+            );
+        } else {
+            this._authenticateService
+                .login(this.username, this.password)
+                .subscribe({
+                    next: (res) => {
+                        let role = res.data.role;
+                        this.getRole.emit();
+ 
+                        this._toastService.showSuccess(
+                            MESSAGE_TITLE.LOGIN_SUCC,
+                            this.keyToast
+                        );
+ 
+                        if (role === ROLE.CUSTOMER) {
+                            setTimeout(() => {
+                                this.closeFormLogin();
+                            }, 1000);
+                        } else if (
+                            role === ROLE.EMPLOYEE ||
+                            role === ROLE.SUPERADMIN
+                        ) {
+                            setTimeout(() => {
+                                this._router.navigate(['']);
+                            }, 1000);
+                        }
+                    },
+                    error: (err) => {
+                        this.showErrorResponse(err);
+                    },
+                });
+        }
     }
 
-    setLanguage(lang: string) {
-        this.langs.forEach((language: LanguageFlag) => {
-            if (language.lang === lang) {
-                language.active = true;
-                this.language = language;
-            } else {
-                language.active = false;
-            }
-        });
+    showErrorResponse(err: HttpErrorResponse): void {
+        if (err.status === 400 && err.error?.messages?.length > 0) {
+            err.error.messages?.forEach((ms: string) => {
+                this._toastService.showError(ms, this.keyToast);
+            });
+        }
+    }
+
+    closeFormLogin() {
+        // child call parent
+        this.hiddenPopup.emit();
+    }
+
+    loadingSubmit() {
+        this.isLoadingSubmit = true;
+        setTimeout(() => (this.isLoadingSubmit = false), 1300);
+    }
+
+    navigateToForgotPassword() {
+        this._router.navigate([ROUTER.FORGOT_PASSWORD]);
+    }
+    navigateSignup() {
+        this._router.navigate([ROUTER.SIGNUP]);
     }
 }

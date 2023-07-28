@@ -1,58 +1,82 @@
-<div class="surface-ground h-screen w-screen flex align-items-center justify-content-center" [ngClass]="{'p-input-filled': filledInput}">
-    <div class="surface-card py-7 px-5 sm:px-7 shadow-2 flex flex-column w-11 sm:w-30rem" style="border-radius:14px">
-        <h1 class="font-bold text-2xl mt-0 mb-2">VERONA</h1>
-        <p class="text-color-secondary mb-4">Welcome to the <strong>Verona Community</strong>, where the magic happens, sign in to continue.</p>
+<div *ngIf="isPopupLogin === true" class="p-component-overlay"></div>
+<form
+    (submit)="submit()"
+    class="form-login surface-ground flex align-items-center justify-content-center overflow-hidden md:w-6 sm:w-9 lg:w-4 animate-width"
+    *ngIf="isPopupLogin === true"
+>
+    <p-toast [key]="keyToast"></p-toast>
+    <div
+        class="px-5 pb-5 flex flex-column justify-content-center h-full w-full relative"
+    >
+        <span class="icon-close" (click)="closeFormLogin()">
+            <i class="pi pi-times" style="font-size: 1.5rem"></i>
+        </span>
+        <div class="text-xl text-right">
+            <span>Don't have an account? </span>
+            <span
+                class="text-blue-600 cursor-pointer sign-up ml-2"
+                (click)="navigateSignup()"
+                >Sign up</span
+            >
+        </div>
+        <div class="flex justify-content-center mt-5">
+            <button
+                pButton
+                pRipple
+                icon="pi pi-key"
+                class="btn-key p-button-rounded p-button-primary mr-2 mb-2"
+                style="
+                    box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #d4aafb,
+                        0 1px 2px 0 black;
+                "
+            ></button>
+        </div>
+        <h3
+            class="font-bold text-2xl mb-7 text-center text-5xl text-color-secondary"
+        >
+            Login
+        </h3>
 
         <span class="p-input-icon-left mb-4">
             <i class="pi pi-user"></i>
-            <input type="text" pInputText placeholder="Email" class="w-full">         
+            <input
+                type="text"
+                pInputText
+                required
+                placeholder="Username"
+                [(ngModel)]="username"
+                name="username"
+                class="w-full border-round-2xl"
+            />
         </span>
 
-        <span class="p-input-icon-left mb-4">
+        <span class="p-input-icon-left mb-3">
             <i class="pi pi-key"></i>
-            <input type="password" pInputText placeholder="Email" class="w-full">         
+            <input
+                type="password"
+                pInputText
+                placeholder="Password"
+                required
+                [(ngModel)]="password"
+                name="password"
+                class="w-full border-round-2xl"
+            />
         </span>
-
-        <button [routerLink]="['/']" pButton pRipple label='{{ "TRANSLATOR.SIGN_IN" | translate }}' class="mb-4"></button>
-
-        <span class="text-color-secondary text-center mb-4">or sign in with below</span>
-        <div class="row flex flag-languge-wrap">
-            <div class="flag-title">
-                <span>Language:</span>
-            </div>
-            <div class="flag-languge-inner flex">
-                <div
-                    *ngFor="let l of langs"
-                    class="flag-languge cursor-pointer"
-                    (click)="selectLanguage(l.lang)"
-                    [ngClass]="l.lang === language?.lang ? 'active' : ''"
-                >
-                    <a
-                        class="menu-link flex"
-                    >
-                        <span class="symbol symbol-20px me-4">
-                            <img class="rounded-1" [src]="l.flag" alt="" style="width: 1.1rem;"/>
-                        </span>
-                        {{ l.name }}
-                    </a>
-                </div>
-            </div>
+        <div class="mb-4 text-right">
+            <span
+                class="cursor-pointer forgot-password underline text-blue-600 text-lg"
+                (click)="navigateToForgotPassword()"
+                >Forgot password?</span
+            >
         </div>
-        <div class="flex gap-4 align-items-center justify-content-center">
-            <a href="https://www.facebook.com" class="inline-flex flex-shrink-0 w-3rem h-3rem justify-content-center align-items-center surface-ground border-circle">
-                <i class="pi pi-facebook text-2xl text-color"></i>
-            </a>
-            <a href="https://www.twitter.com" class="inline-flex flex-shrink-0 w-3rem h-3rem justify-content-center align-items-center surface-ground border-circle">
-                <i class="pi pi-twitter text-2xl text-color"></i>
-            </a>
-            <a href="https://www.google.com" class="inline-flex flex-shrink-0 w-3rem h-3rem justify-content-center align-items-center surface-ground border-circle">
-                <i class="pi pi-google text-2xl text-color"></i>
-            </a>
-            <a href="https://www.github.com" class="inline-flex flex-shrink-0 w-3rem h-3rem justify-content-center align-items-center surface-ground border-circle">
-                <i class="pi pi-github text-2xl text-color"></i>
-            </a>
-        </div>
+        <button
+            type="submit"
+            [loading]="isLoadingSubmit"
+            pButton
+            pRipple
+            label="Login"
+            class="mb-5 border-round-2xl text-xl"
+        ></button>
+        <app-footer-login-types></app-footer-login-types>
     </div>
-</div>
-
-<app-config [minimal]="true"></app-config>
+</form>

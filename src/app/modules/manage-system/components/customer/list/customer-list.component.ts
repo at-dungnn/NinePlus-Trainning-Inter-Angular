@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 import { Router } from '@angular/router';
 import { DialogService } from 'primeng/dynamicdialog';
 import { Component, OnInit } from '@angular/core';
@@ -6,8 +5,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { Customer } from 'src/app/demo/api/customer';
 import { CustomerService } from 'src/app/shared/services/customer.service';
-import { MESSAGE_TITLE, ROUTER, Toast } from 'src/app/shared';
+import { MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { isEmpty } from 'lodash';
 
 @Component({
     templateUrl: './customer-list.component.html',
@@ -27,7 +27,7 @@ export class CustomerListComponent implements OnInit {
 
     resetPageOnSort: boolean = false;
 
-    keyToast: string = '';
+    keyToast = TOAST.KEY_BC;
 
     constructor(
         private _router: Router,
@@ -40,7 +40,6 @@ export class CustomerListComponent implements OnInit {
     ngOnInit() {
         this.showSkeleton();
         this.getListCustomer();
-        this.initKeyToast();
     }
 
     showSkeleton() {
@@ -58,21 +57,17 @@ export class CustomerListComponent implements OnInit {
         });
     }
 
-    initKeyToast() {
-        this.keyToast = Toast.KEY_BC;
-    }
-
     handleDeleteCustomer(id: string) {
         this._customerService.getCustomerById(id).subscribe({
             next: (data) => {
-                if (!_.isEmpty(data)) {
+                if (!isEmpty(data)) {
                     this._customerService
                         .deleteCustomer(id)
-                        .subscribe( (res) => {
+                        .subscribe((res) => {
                             if (res.succeeded) {
                                 this.resetPageOnSort = true;
                                 this.getListCustomer();
-                                if (_.isEmpty(res.messages)) {
+                                if (!isEmpty(res.messages)) {
                                     res.messages?.forEach((string: string) => {
                                         this._toastService.showSuccess(
                                             string,
