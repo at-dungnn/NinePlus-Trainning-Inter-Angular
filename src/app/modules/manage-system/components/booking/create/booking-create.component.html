@@ -1,1 +1,126 @@
-<p>booking-create works!</p>
+<div class="card">
+    <p-toast key="bc"></p-toast>
+    <span class="text-90 text-xl font-bold mb-4 block">Create Booking</span>
+    <div class="grid">
+        <div class="col-12 lg:col-10">
+            <ng-template >
+                <!-- <ng-template [ngIf]="formAddNewBooking"> -->
+                <form [formGroup]="formAddNewBooking" (ngSubmit)="onSubmit()">
+                    <div class="grid formgrid p-fluid">
+                        <div class="field mb-4 col-12">
+                            <label class="font-medium text-900">ID </label>
+                            <input type="text" pInputText [disabled]="true" />
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label for="name" class="font-medium text-900"
+                                >Name Customer: 
+                                <span class="text-red-500 text-900"
+                                    >*</span
+                                ></label
+                            >
+                            <input
+                                id="name"
+                                type="text"
+                                formControlName="customerName"
+                                pInputText
+                                required
+                            />
+                            <div
+                                *ngIf="
+                                    f['customerName'].invalid &&
+                                    submitted &&
+                                    f['customerName'].errors
+                                "
+                                class="text-red-500 mt-2 block"
+                            >
+                                <div
+                                    *ngIf="f['customerName'].errors['required']"
+                                >
+                                    Name is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="field mb-4 col-12">
+                            <label
+                                for="phone-number"
+                                class="font-medium text-900"
+                                >Phone Number
+                                <span class="text-red-500 text-900"
+                                    >*</span
+                                ></label
+                            >
+                            <input
+                                id="phone-number"
+                                type="text"
+                                formControlName="phoneNumber"
+                                pInputText
+                                (keypress)="keyPressPhoneNumber($event)"
+                                required
+                            />
+                            <div
+                                *ngIf="
+                                    f['phoneNumber'].invalid &&
+                                    submitted &&
+                                    f['phoneNumber'].errors
+                                "
+                                class="text-red-500 mt-2 block"
+                            >
+                                <div
+                                    *ngIf="f['phoneNumber'].errors['required']"
+                                >
+                                    Phone number is required.
+                                </div>
+
+                                <div *ngIf="f['phoneNumber'].errors['pattern']">
+                                    Phone number does not exist
+                                </div>
+                            </div>
+                        </div>
+                      
+                        <div class="field mb-4 col-7">
+                            <label class="font-medium text-900">Bookig Date</label>
+                            <p-calendar
+                                dateFormat="dd/mm/yy"
+                                [showIcon]="true"
+                                formControlName="bookingDate"
+                                [readonlyInput]="true"
+                            >
+                            </p-calendar>
+                        </div>
+                        <div class="field mb-4 col-7">
+                            <label class="font-medium text-900">From Time</label>
+                            <p-calendar
+                                dateFormat="dd/mm/yy"
+                                [showIcon]="true"
+                                formControlName="fromTime"
+                                [readonlyInput]="true"
+                            >
+                            </p-calendar>
+                        </div>
+                        <div class="field mb-4 col-7">
+                            <label class="font-medium text-900">To Time</label>
+                            <p-calendar
+                                dateFormat="dd/mm/yy"
+                                [showIcon]="true"
+                                formControlName="toTime"
+                                [readonlyInput]="true"
+                            >
+                            </p-calendar>
+                        </div>
+
+                        <div class="col-12">
+                            <button
+                                type="submit"
+                                [loading]="isLoadingSubmit"
+                                pButton
+                                pRipple
+                                label="Add New"
+                                class="w-auto mt-3"
+                            ></button>
+                        </div>
+                    </div>
+                </form>
+            </ng-template>
+        </div>
+    </div>
+</div>

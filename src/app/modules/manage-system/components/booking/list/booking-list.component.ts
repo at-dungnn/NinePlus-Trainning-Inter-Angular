@@ -7,7 +7,8 @@ import { Table } from 'primeng/table';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { MESSAGE_TITLE, ROUTER, Toast } from 'src/app/shared';
+import { MESSAGE_TITLE, ROUTER } from 'src/app/shared';
+import { Toast } from 'primeng/toast';
 
 @Component({
     templateUrl: './booking-list.component.html',
@@ -36,14 +37,11 @@ export class BookingListComponent implements OnInit {
         private _confirmationService: ConfirmationService,
         private _router: Router,
         public _dialogService: DialogService
-    ) {
-        this.formatFormTo;
-    }
+    ) {}
 
     ngOnInit() {
         // this.showSkeleton();
         this.getAllBooking();
-        this.initKeyToast();
     }
 
     // showSkeleton() {
@@ -61,9 +59,6 @@ export class BookingListComponent implements OnInit {
         });
     }
 
-    initKeyToast() {
-        this.keyToast = Toast.KEY_BC;
-    }
 
     handleDeleteBooking(id: string) {
         this._bookingService.getBookingById(id).subscribe({
@@ -124,14 +119,6 @@ export class BookingListComponent implements OnInit {
             (event.target as HTMLInputElement).value,
             'contains'
         );
-    }
-
-    formatFormTo({from, to}: any) {
-        const dateParse1 = from?.split(" ");
-        const dateParse2 = to?.split(" ");
-        const result = `${dateParse1[0] - dateParse2[0]} ${dateParse1[1]}`;
-        console.log(result);
-        return result;
     }
 
 }

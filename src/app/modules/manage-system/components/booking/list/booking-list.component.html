@@ -28,7 +28,6 @@
                     />
                 </span>
                 <button
-                  
                     pButton
                     class="p-button-outlined w-full sm:w-auto flex-order-0 sm:flex-order-1"
                     icon="pi pi-calendar"
@@ -79,7 +78,7 @@
                     class="white-space-nowrap"
                     style="width: 25%"
                 >
-                    From-To Time<p-sortIcon></p-sortIcon>
+                    From - To Time<p-sortIcon></p-sortIcon>
                 </th>
                 <th
                     pSortableColumn="status"
@@ -105,8 +104,12 @@
             </ng-container>
             <ng-template #elseTemplate>
                 <tr>
-                    <td  (click)="navigateToDetailBooking(booking)">{{ booking.id }}</td>
-                    <td (click)="navigateToDetailBooking(booking)">{{ booking.customerName }}</td>
+                    <td (click)="navigateToDetailBooking(booking)">
+                        {{ booking.id }}
+                    </td>
+                    <td (click)="navigateToDetailBooking(booking)">
+                        {{ booking.customerName }}
+                    </td>
                     <td>{{ booking.phoneNumber }}</td>
                     <td>{{ booking.bookingDate | date : "dd/MM/yyyy" }}</td>
                     <td>
@@ -114,7 +117,16 @@
                         {{ booking.totime | date : "hh:mm" }}
                         {{ booking.fromTime | date : "dd/MM/yyyy" }}
                     </td>
-                    <td>{{ booking.status }}</td>
+                    <td>
+                        <ng-container *ngIf="booking?.status === 1"><button class="btn btn-outline-secondary"> Waiting</button></ng-container
+                        >
+                        <ng-container *ngIf="booking?.status === 2"
+                            ><button class="btn btn-outline-warning"> Inprogress</button></ng-container
+                        >
+                        <ng-container *ngIf="booking?.status === 3"
+                            ><button class="btn btn-outline-success"> Done</button></ng-container
+                        >
+                    </td>
                     <td class="text-center">
                         <div class="flex justify-content-center">
                             <p-confirmDialog

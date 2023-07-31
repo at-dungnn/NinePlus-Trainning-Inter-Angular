@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ROUTER } from 'src/app/shared';
 import { BookingService } from 'src/app/shared/services/booking.service';
-import { Booking } from 'src/app/demo/api/booking';
+import { BookingDetail} from 'src/app/demo/api/booking-detail';
 
 @Component({
     selector: 'app-booking-detail',
@@ -12,8 +12,8 @@ import { Booking } from 'src/app/demo/api/booking';
     styleUrls: ['./booking-detail.component.scss'],
 })
 export class BookingDetailComponent {
-    booking: Booking= {};
-
+    bookingDetail: BookingDetail = {};
+    serviceName : string = '';
     bookingId: string = '';
 
     constructor(
@@ -22,9 +22,18 @@ export class BookingDetailComponent {
         private _bookingService: BookingService
     ) {}
     ngOnInit() {
-      this.getIdRequestParam();
-      this.getBookingById(this.bookingId);
-  }
+        this.getIdRequestParam();
+        this.getBookingById(this.bookingId);
+    }
+
+    getNameServices(bookingDetail : BookingDetail) {
+        let names: any = [];
+        bookingDetail.services?.forEach((item, index) => {
+            names[index] = item.name;
+        });
+        this.serviceName = names.join(' , ');
+        console.log(this.serviceName);
+    }
 
     getIdRequestParam() {
         this._activatedRoute.paramMap.subscribe((params) => {
@@ -34,9 +43,9 @@ export class BookingDetailComponent {
 
     getBookingById(id: string) {
         this._bookingService.getBookingById(id).subscribe((data) => {
-          console.log(data);
             if (!_.isEmpty(data)) {
-                this.booking = data as Booking;
+                this.bookingDetail = data as BookingDetail;
+                this.getNameServices(this.bookingDetail);
             }
         });
     }

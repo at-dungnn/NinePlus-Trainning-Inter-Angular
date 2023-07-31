@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
         RouterModule.forChild([
             {
                 path: '',
-                data: { breadcrumb: 'Dashboard' },
+                data: { breadcrumb: '' },
                 loadChildren: () =>
                     import('./saas/saas.dashboard.module').then(
                         (m) => m.SaaSDashboardModule

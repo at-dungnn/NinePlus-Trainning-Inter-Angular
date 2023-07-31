@@ -6,7 +6,7 @@
             class="col-12 lg:col-9 pl-8 flex flex-column justify-content-start"
         >
             <div class="field w-field mb-4 col-12 flex align-items-center">
-                <label for="name" class="font-medium text-900 mr-3">ID:</label>
+                <label for="name" class="font-medium text-900 mr-3">Id:</label>
                 <input
                     id="name"
                     type="text"
@@ -18,12 +18,32 @@
             </div>
             <div class="field w-field mb-4 col-12 flex align-items-center">
                 <label for="name" class="font-medium text-900 mr-3"
-                    >Customer
+                    >Name:
                 </label>
                 <input
                     id="name"
                     type="text"
-                    [value]="booking.customerName"
+                
+                    [value]="bookingDetail.cutomerName"
+                    class="w-6"
+                    pInputText
+                    [disabled]="true"
+                />
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="name" class="font-medium text-900 mr-3"
+                    >Status:
+                </label>
+                <input
+                    id="name"
+                    type="text"
+                    [value]="
+                        bookingDetail.status === 1
+                            ? 'Waiting'
+                            : bookingDetail.status === 2
+                            ? 'Inprogress'
+                            : 'Done'
+                    "
                     class="w-6"
                     pInputText
                     [disabled]="true"
@@ -31,39 +51,12 @@
             </div>
             <div class="field w-field mb-4 col-12 flex align-items-center">
                 <label for="phone-number" class="font-medium text-900 mr-3"
-                    >Phone: </label
-                >
+                    >Phone:
+                </label>
                 <input
                     id="phone-number"
                     type="text"
-                    [value]="booking.phoneNumber"
-                    class="w-6"
-                    pInputText
-                    [disabled]="true"
-                />
-            </div>
-
-            <div class="field w-field mb-4 col-12 flex align-items-center">
-                <label for="phone-number" class="font-medium text-900 mr-3"
-                    >Booking Date: </label
-                >
-                <input
-                    id="phone-number"
-                    type="text"
-                    value="{{ booking.bookingDate | date : 'dd/MM/yyyy' }}"
-                    class="w-6"
-                    pInputText
-                    [disabled]="true"
-                />
-            </div>
-            <div class="field w-field mb-4 col-12 flex align-items-center">
-                <label for="phone-number" class="font-medium text-900 mr-3"
-                    >From Time: </label
-                >
-                <input
-                    id="phone-number"
-                    type="text"
-                    value="{{ booking.fromTime | date : 'hh: mm' }}"
+                    [value]="bookingDetail.phoneNumber"
                     class="w-6"
                     pInputText
                     [disabled]="true"
@@ -72,12 +65,14 @@
 
             <div class="field w-field mb-4 col-12 flex align-items-center">
                 <label for="phone-number" class="font-medium text-900 mr-3"
-                    >To Time: </label
-                >
+                    >Booking Date:
+                </label>
                 <input
                     id="phone-number"
                     type="text"
-                    value="{{ booking.toTime | date : 'hh: mm' }}"
+                    value="{{
+                        bookingDetail.bookingDate | date : 'dd/MM/yyyy'
+                    }}"
                     class="w-6"
                     pInputText
                     [disabled]="true"
@@ -85,12 +80,26 @@
             </div>
             <div class="field w-field mb-4 col-12 flex align-items-center">
                 <label for="phone-number" class="font-medium text-900 mr-3"
-                    >Service: </label
-                >
+                    >From Time:
+                </label>
                 <input
                     id="phone-number"
                     type="text"
-                    [value]=""
+                    value="{{ bookingDetail.fromTime | date : 'hh: mm' }}"
+                    class="w-6"
+                    pInputText
+                    [disabled]="true"
+                />
+            </div>
+
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="phone-number" class="font-medium text-900 mr-3"
+                    >To Time:
+                </label>
+                <input
+                    id="phone-number"
+                    type="text"
+                    value="{{ bookingDetail.toTime | date : 'hh: mm' }}"
                     class="w-6"
                     pInputText
                     [disabled]="true"
@@ -98,12 +107,25 @@
             </div>
             <div class="field w-field mb-4 col-12 flex align-items-center">
                 <label for="phone-number" class="font-medium text-900 mr-3"
-                    >Note: </label
-                >
+                    >Service:
+                </label>
                 <input
                     id="phone-number"
                     type="text"
-                    [value]="booking.note"
+                    [value]="serviceName"
+                    class="w-6"
+                    pInputText
+                    [disabled]="true"
+                />
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="phone-number" class="font-medium text-900 mr-3"
+                    >Note:
+                </label>
+                <input
+                    id="phone-number"
+                    type="text"
+                    [value]="bookingDetail.note"
                     class="w-6"
                     pInputText
                     [disabled]="true"

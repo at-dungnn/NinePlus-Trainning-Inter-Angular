@@ -1,4 +1,4 @@
-export interface Booking {
+export interface  Booking {
     id?: number;
     customerName?: string;
     phoneNumber?: string;
@@ -7,12 +7,12 @@ export interface Booking {
     toTime?: string;
     status?: number;
     note?: string;
-    services?: Service;
+    services: Services;
 }
 
 
-export interface Service {
+export interface Services {
     id?: number;
     name?: string;
-    price: number;
+    price?: number;
 }

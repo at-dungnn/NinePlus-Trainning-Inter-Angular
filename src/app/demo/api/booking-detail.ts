@@ -1,11 +1,18 @@
 export interface BookingDetail {
-    customerId?: number;
-    bookingId?: number;
+    id?: number;
+    cutomerName?: string;
+    phoneNumber?: string;
     bookingDate?: string;
-    formTime: string;
-    toTime: string;
-    status: number;
-    serviceId?: number;
-    serviceName?: string;
+    fromTime?: string;
+    toTime?: string;
+    status?: number;
+    note?: string;
+    services?: Services[];
+}
+
+export interface Services {
+    id?: number;
+    name?: string;
     price?: number;
+    serviceTime?: number;
 }
