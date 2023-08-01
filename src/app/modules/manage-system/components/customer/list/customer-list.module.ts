@@ -9,9 +9,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { FormsModule } from '@angular/forms';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TooltipModule } from 'primeng/tooltip';
-
+import { CurrencyVND } from 'src/app/shared/pipe/currencyVND.pipe';
 @NgModule({
-    declarations: [CustomerListComponent],
+    declarations: [CustomerListComponent, CurrencyVND],
     imports: [
         CommonModule,
         CustomerlistRoutingModule,

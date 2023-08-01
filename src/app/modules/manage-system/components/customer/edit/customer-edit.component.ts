@@ -2,16 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import {isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
-import {
-    HandleString,
-    MESSAGE_ERROR_INPUT,
-    MESSAGE_TITLE,
-    ROUTER,
-    TOAST,
-} from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 
@@ -63,29 +57,16 @@ export class CustomerEditComponent implements OnInit {
                     const customer = data as Customer;
                     this.formUpdateCustomer = this._fb.group({
                         id: [this.customerId],
-                        customerName: [
-                            customer?.customerName,
-                            [Validators.required, Validators.minLength(4)],
-                        ],
-                        phoneNumber: [
-                            customer?.phoneNumber,
-                            [
-                                Validators.required,
-                                Validators.pattern(this.phoneNumberParttern),
-                            ],
-                        ],
+                        customerName: [customer?.customerName, [Validators.required, Validators.minLength(4)]],
+                        phoneNumber: [customer?.phoneNumber, [Validators.required, Validators.pattern(this.phoneNumberParttern)]],
                         address: [customer?.address],
-                        dateOfBirth: [
-                            customer?.dateOfBirth
-                                ? new Date(customer.dateOfBirth)
-                                : '',
-                        ],
+                        dateOfBirth: [customer?.dateOfBirth ? new Date(customer.dateOfBirth) : ''],
                         totalMoney: [customer?.totalMoney],
                     });
                 }
             },
             error: (err) => {
-                console.log(err);
+                this._router.navigate([ROUTER.LIST_CUSTOMER]);
             },
         });
     }
@@ -98,8 +79,10 @@ export class CustomerEditComponent implements OnInit {
             customer.address = HandleString.trim(customer.address);
         }
         // "The JSON value could not be converted to System.Nullable`1[System.DateTime]
-        if (isEmpty(customer.dateOfBirth)) {
+        if (!customer.dateOfBirth) {
             delete customer['dateOfBirth'];
+        } else {
+            customer.dateOfBirth = this.convertDateOfBirth(customer);
         }
         return customer;
     }
@@ -107,9 +90,7 @@ export class CustomerEditComponent implements OnInit {
         this.loadingSubmit();
         this.submitted = true;
         if (this.formUpdateCustomer.valid) {
-            let updateCustomer = this.trimValueCustomer(
-                this.valueFormUpdateCustomer
-            );
+            let updateCustomer = this.trimValueCustomer(this.valueFormUpdateCustomer);
             this._customerService.getCustomerById(this.customerId).subscribe({
                 next: (data) => {
                     if (!isEmpty(data)) {
@@ -117,18 +98,11 @@ export class CustomerEditComponent implements OnInit {
                     }
                 },
                 error: (err) => {
-                    console.log(err);
-                    this._toastService.showError(
-                        MESSAGE_ERROR.CHECK_ID_CUSTOMER,
-                        this.keyToast
-                    );
+                    this._toastService.showError(MESSAGE_ERROR.CHECK_ID_CUSTOMER, this.keyToast);
                 },
             });
         } else {
-            this._toastService.showError(
-                MESSAGE_ERROR_INPUT.VALID,
-                this.keyToast
-            );
+            this._toastService.showError(MESSAGE_ERROR_INPUT.VALID, this.keyToast);
         }
     }
 
@@ -136,21 +110,14 @@ export class CustomerEditComponent implements OnInit {
         this._customerService.updateCustomer(customer).subscribe({
             next: (res) => {
                 if (res.succeeded && res.data) {
-                    this._toastService.showSuccess(
-                        MESSAGE_TITLE.EDIT_SUCC,
-                        this.keyToast
-                    );
+                    this._toastService.showSuccess(MESSAGE_TITLE.EDIT_SUCC, this.keyToast);
                     setTimeout(() => {
                         this.navigateToListCustomer();
                     }, 1500);
                 }
             },
             error: (err) => {
-                console.log(err);
-                this._toastService.showError(
-                    MESSAGE_TITLE.EDIT_ERR,
-                    this.keyToast
-                );
+                this._toastService.showError(MESSAGE_TITLE.EDIT_ERR, this.keyToast);
             },
         });
     }
@@ -169,6 +136,17 @@ export class CustomerEditComponent implements OnInit {
         if (event.keyCode != 8 && !pattern.test(inputChar)) {
             event.preventDefault();
         }
+    }
+
+    convertDateOfBirth(customer: Customer) {
+        const originalDate = new Date(customer?.dateOfBirth + '');
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        const hours = String(originalDate.getHours()).padStart(2, '0');
+        const minutes = String(originalDate.getMinutes()).padStart(2, '0');
+        const seconds = String(originalDate.getSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     }
 
     loadingSubmit() {

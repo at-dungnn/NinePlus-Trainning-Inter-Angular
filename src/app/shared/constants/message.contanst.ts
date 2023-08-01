@@ -34,6 +34,7 @@ export enum MESSAGE_TITLE {
     ADD_NEW_BRANCH_ERR = 'Add new branch error',
     EDIT_BRANCH_ERR = 'Edit branch error',
     CONFIRM_DELETE = 'Are you sure you want to delete customer: ',
+    ADD_NEW_EMPLOYEE = 'Add new successful',
 }
 
 export enum MESSAGE_ERROR_INPUT {
@@ -320,20 +321,14 @@ export const MESSAGE_TRANS_COMMON = [
 export const MESSAGE_NAME = [
     {
         id: 'NP001B',
-        message_VN:
-            'Phòng họp đã được đặt trong thời gian này. Vui lòng nhập thời gian khác !',
-        message_EN:
-            'Meeting rooms were booked during this time. Please enter another time !',
-        message_JP:
-            'この時間帯に会議室が予約されました。別の時間を入力してください !',
+        message_VN: 'Phòng họp đã được đặt trong thời gian này. Vui lòng nhập thời gian khác !',
+        message_EN: 'Meeting rooms were booked during this time. Please enter another time !',
+        message_JP: 'この時間帯に会議室が予約されました。別の時間を入力してください !',
     },
     {
         id: 'NP001A',
-        message_VN:
-            'Phòng họp đã được đặt trong thời gian này. Vui lòng nhập thời gian khác !',
-        message_EN:
-            'Meeting rooms were booked during this time. Please enter another time !',
-        message_JP:
-            'この時間帯に会議室が予約されました。別の時間を入力してください !',
+        message_VN: 'Phòng họp đã được đặt trong thời gian này. Vui lòng nhập thời gian khác !',
+        message_EN: 'Meeting rooms were booked during this time. Please enter another time !',
+        message_JP: 'この時間帯に会議室が予約されました。別の時間を入力してください !',
     },
 ];

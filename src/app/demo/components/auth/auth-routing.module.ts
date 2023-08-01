@@ -6,71 +6,35 @@ import { RouterModule } from '@angular/router';
         RouterModule.forChild([
             {
                 path: 'error',
-                loadChildren: () =>
-                    import('./error/error.module').then((m) => m.ErrorModule),
+                loadChildren: () => import('./error/error.module').then((m) => m.ErrorModule),
             },
             {
                 path: 'access',
-                loadChildren: () =>
-                    import('./accessdenied/accessdenied.module').then(
-                        (m) => m.AccessdeniedModule
-                    ),
+                loadChildren: () => import('./accessdenied/accessdenied.module').then((m) => m.AccessdeniedModule),
             },
             {
                 path: 'forgotpassword',
-                loadChildren: () =>
-                    import('./forgotpassword/forgotpassword.module').then(
-                        (m) => m.ForgotPasswordModule
-                    ),
+                loadChildren: () => import('./forgotpassword/forgotpassword.module').then((m) => m.ForgotPasswordModule),
             },
             {
                 path: 'register',
-                loadChildren: () =>
-                    import('./register/register.module').then(
-                        (m) => m.RegisterModule
-                    ),
+                loadChildren: () => import('./register/register.module').then((m) => m.RegisterModule),
             },
             {
                 path: 'newpassword',
-                loadChildren: () =>
-                    import('./newpassword/newpassword.module').then(
-                        (m) => m.NewPasswordModule
-                    ),
+                loadChildren: () => import('./newpassword/newpassword.module').then((m) => m.NewPasswordModule),
             },
             {
                 path: 'verification',
-                loadChildren: () =>
-                    import('./verification/verification.module').then(
-                        (m) => m.VerificationModule
-                    ),
+                loadChildren: () => import('./verification/verification.module').then((m) => m.VerificationModule),
             },
             {
                 path: 'lockscreen',
-                loadChildren: () =>
-                    import('./lockscreen/lockscreen.module').then(
-                        (m) => m.LockScreenModule
-                    ),
-            },
-            {
-                path: 'lockscreen',
-                loadChildren: () =>
-                    import('./lockscreen/lockscreen.module').then(
-                        (m) => m.LockScreenModule
-                    ),
-            },
-            {
-                path: 'changepassword',
-                loadChildren: () =>
-                    import('./changepassword/changepassword.module').then(
-                        (m) => m.ChangePasswordModule
-                    ),
+                loadChildren: () => import('./lockscreen/lockscreen.module').then((m) => m.LockScreenModule),
             },
             {
                 path: 'reset-password',
-                loadChildren: () =>
-                    import('./resetpassword/resetpassword.module').then(
-                        (m) => m.ResetPasswordModule
-                    ),
+                loadChildren: () => import('./resetpassword/resetpassword.module').then((m) => m.ResetPasswordModule),
             },
             { path: '**', redirectTo: '/notfound' },
         ]),

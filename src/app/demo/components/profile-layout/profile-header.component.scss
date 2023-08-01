@@ -1,0 +1,8 @@
+.layout-topbar {
+    height: 5rem !important;
+}
+@media (max-width: 992px) {
+    .layout-topbar {
+        height: 3rem !important;
+    }
+}

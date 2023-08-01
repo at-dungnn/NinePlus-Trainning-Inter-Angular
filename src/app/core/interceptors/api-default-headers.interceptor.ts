@@ -23,7 +23,7 @@ export class ApiDefaultHeaderInterceptor implements HttpInterceptor {
                 setHeaders: {
                     ...(needAcceptHeader && { Accept: 'application/json' }),
                     ...(needContentTypeHeader && {
-                        'Content-Type': 'application/json',
+                        // 'Content-Type': 'application/json',
                         'Access-Control-Allow-Headers': 'Content-Type',
                         'Access-Control-Allow-Methods': 'GET',
                         'Access-Control-Allow-Origin': '*',

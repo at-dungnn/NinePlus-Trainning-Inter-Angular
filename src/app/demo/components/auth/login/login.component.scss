@@ -9,7 +9,7 @@ body {
     left: 0;
     margin: auto;
     width: 30%;
-    height: 80%;
+    height: 90%;
     border-radius: 25px;
     z-index: 9999;
     background-color: #fff !important;
@@ -51,4 +51,13 @@ body {
         right: 5px !important;
     }
 }
-// sm : dien thoai , md :may tinh ban , lg : PC thường
+@media (min-width: 768px) and (max-width: 992px) {
+    .form-login {
+        width: 60% !important;
+    }
+}
+@media (min-width: 992px) {
+    .form-login {
+        width: 50% !important;
+    }
+}

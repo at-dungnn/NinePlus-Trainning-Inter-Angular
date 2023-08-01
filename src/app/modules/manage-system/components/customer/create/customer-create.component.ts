@@ -3,17 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
-import {
-    HandleString,
-    MESSAGE_ERROR_INPUT,
-    MESSAGE_TITLE,
-    ROUTER,
-    TOAST,
-} from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { isEmpty } from 'lodash';
 
 @Component({
     selector: 'app-customer-create',
@@ -31,28 +24,16 @@ export class CustomerCreateComponent implements OnInit {
 
     keyToast = TOAST.KEY_BC;
 
-    constructor(
-        private _customerService: CustomerService,
-        private _router: Router,
-        private _toastService: ToastService,
-        private _fb: FormBuilder
-    ) {}
+    constructor(private _customerService: CustomerService, private _router: Router, private _toastService: ToastService, private _fb: FormBuilder) {}
 
     ngOnInit(): void {
         this.initFormAddNewCustomer();
     }
 
-
     initFormAddNewCustomer() {
         this.formAddNewCustomer = this._fb.group({
             customerName: ['', [Validators.required, Validators.minLength(4)]],
-            phoneNumber: [
-                '',
-                [
-                    Validators.required,
-                    Validators.pattern(this.phoneNumberParttern),
-                ],
-            ],
+            phoneNumber: ['', [Validators.required, Validators.pattern(this.phoneNumberParttern)]],
             address: [''],
             dateOfBirth: [''],
             username: [''],
@@ -65,26 +46,16 @@ export class CustomerCreateComponent implements OnInit {
         this.submitted = true;
         this.loadingSubmit();
         if (this.formAddNewCustomer.valid) {
-            let newCustomer = this.trimValueCustomer(
-                this.valueFormAddNewCustomer
-            );
+            let newCustomer = this.trimValueCustomer(this.valueFormAddNewCustomer);
             this._customerService.getListCustomer().subscribe((res) => {
                 if (res.data && res.data.length > 0) {
-                    if (
-                        this.isValidUsernameAndPassword(
-                            newCustomer,
-                            res.data as Customer[]
-                        ) === true
-                    ) {
+                    if (this.isValidUsernameAndPassword(newCustomer, res.data as Customer[]) === true) {
                         this.saveCustomer(newCustomer);
                     }
                 }
             });
         } else {
-            this._toastService.showError(
-                MESSAGE_ERROR_INPUT.VALID,
-                this.keyToast
-            );
+            this._toastService.showError(MESSAGE_ERROR_INPUT.VALID, this.keyToast);
         }
     }
 
@@ -96,39 +67,30 @@ export class CustomerCreateComponent implements OnInit {
             customer.address = HandleString.trim(customer.address);
         }
         // "The JSON value could not be converted to System.Nullable`1[System.DateTime]
-        if (isEmpty(customer.dateOfBirth)) {
+        // "The JSON value could not be co  nverted to System.Nullable`1[System.DateTime]
+        if (!customer.dateOfBirth) {
             delete customer['dateOfBirth'];
+        } else {
+            customer.dateOfBirth = this.convertDateOfBirth(customer);
         }
         return customer;
     }
 
-    isValidUsernameAndPassword(
-        customer: Customer,
-        customers: Customer[]
-    ): boolean {
+    isValidUsernameAndPassword(customer: Customer, customers: Customer[]): boolean {
         const password = customer?.password;
         const username = customer?.username;
 
-        if (!username && password || username && !password) {
-            this._toastService.showError(
-                MESSAGE_ERROR_INPUT.PASSWORD_OR_USERNAME_EMPTY,
-                this.keyToast
-            );
+        if ((!username && password) || (username && !password)) {
+            this._toastService.showError(MESSAGE_ERROR_INPUT.PASSWORD_OR_USERNAME_EMPTY, this.keyToast);
             return false;
         } else if (username && password) {
             if (username && username.length < 8) {
-                this._toastService.showError(
-                    MESSAGE_ERROR_INPUT.MIN_LENGTH_USERNAME,
-                    this.keyToast
-                );
+                this._toastService.showError(MESSAGE_ERROR_INPUT.MIN_LENGTH_USERNAME, this.keyToast);
                 return false;
             }
 
             if (password && password.length < 8) {
-                this._toastService.showError(
-                    MESSAGE_ERROR_INPUT.MIN_LENGTH_PASSWORD,
-                    this.keyToast
-                );
+                this._toastService.showError(MESSAGE_ERROR_INPUT.MIN_LENGTH_PASSWORD, this.keyToast);
                 return false;
             }
 
@@ -138,10 +100,7 @@ export class CustomerCreateComponent implements OnInit {
             });
 
             if (index > -1) {
-                this._toastService.showError(
-                    MESSAGE_ERROR_INPUT.USERNAME_EXISTS,
-                    this.keyToast
-                );
+                this._toastService.showError(MESSAGE_ERROR_INPUT.USERNAME_EXISTS, this.keyToast);
                 return false;
             }
         }
@@ -152,17 +111,13 @@ export class CustomerCreateComponent implements OnInit {
         this._customerService.postCustomer(newCustomer).subscribe({
             next: (res) => {
                 if (res.succeeded) {
-                    this._toastService.showSuccess(
-                        MESSAGE_TITLE.ADD_SUCCESS,
-                        this.keyToast
-                    );
+                    this._toastService.showSuccess(MESSAGE_TITLE.ADD_SUCCESS, this.keyToast);
                     setTimeout(() => {
                         this._router.navigate([ROUTER.LIST_CUSTOMER]);
                     }, 1500);
                 }
             },
             error: (err) => {
-                console.log(err);
                 this.showErrorResponse(err);
             },
         });
@@ -198,6 +153,17 @@ export class CustomerCreateComponent implements OnInit {
         if (event.keyCode != 8 && !pattern.test(inputChar)) {
             event.preventDefault();
         }
+    }
+
+    convertDateOfBirth(customer: Customer) {
+        const originalDate = new Date(customer?.dateOfBirth + '');
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        const hours = String(originalDate.getHours()).padStart(2, '0');
+        const minutes = String(originalDate.getMinutes()).padStart(2, '0');
+        const seconds = String(originalDate.getSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     }
 
     loadingSubmit() {

@@ -31,8 +31,8 @@ export class HistorybookingComponent implements OnInit {
         this._bookingService
             .getHistoryBooking(this.customerId)
             .subscribe((res) => {
-                if (!isEmpty(res.data) && res.data) {
-                    // pending API BE
+                if (!isEmpty(res.data)) {
+                    this.historyBookings = res.data as BookingDetail[];
                 }
             });
     }

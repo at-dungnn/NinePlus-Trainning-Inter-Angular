@@ -1,0 +1,19 @@
+.layout-container {
+    .layout-content-wrapper {
+        padding-top: 5rem !important;
+        overflow: hidden;
+        background-color: #92c884;
+        .layout-content {
+            border-top-right-radius: 30px;
+            background-color: #fff !important;
+        }
+    }
+}
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+    .outlet {
+        width: 100%;
+    }
+}

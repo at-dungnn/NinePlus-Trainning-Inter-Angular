@@ -4,10 +4,7 @@ import { AuthenticateService } from './services/authenticate.service';
 import { AuthGuard } from './guards';
 import { SessionService } from './services';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import {
-    ApiDefaultHeaderInterceptor,
-    AuthTokenHeaderInterceptor,
-} from './interceptors';
+import { ApiDefaultHeaderInterceptor, AuthTokenHeaderInterceptor } from './interceptors';
 import { ExternalApiInterceptor } from './interceptors/external-api.interceptor';
 
 const interceptors = [
@@ -31,12 +28,6 @@ const interceptors = [
 @NgModule({
     declarations: [],
     imports: [CommonModule],
-    providers: [
-        AuthenticateService,
-        AuthGuard,
-        SessionService,
-        AuthTokenHeaderInterceptor,
-        ...interceptors,
-    ],
+    providers: [AuthenticateService, AuthGuard, SessionService, AuthTokenHeaderInterceptor, ...interceptors],
 })
 export class CoreModule {}

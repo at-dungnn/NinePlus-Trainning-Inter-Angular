@@ -1,0 +1,30 @@
+.surface-ground {
+    background-color: #fff !important;
+}
+body {
+    overflow-x: hidden !important;
+}
+@media (min-width: 768px) and (max-width: 992px) {
+    .form-register {
+        width: 80% !important;
+    }
+    .signin {
+        span {
+            display: none;
+        }
+    }
+}
+@media (max-width: 768px) {
+    .surface-ground {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        .form-register {
+            width: 100% !important;
+        }
+        .signin {
+            span {
+                display: none;
+            }
+        }
+    }
+}

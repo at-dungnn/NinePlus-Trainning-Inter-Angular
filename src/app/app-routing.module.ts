@@ -1,106 +1,94 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { AppLayoutComponent } from './layout/app.layout.component';
+import { AuthGuard } from './core';
+import { ProfileLayoutComponent } from './demo/components/profile-layout/profile-layout.component';
 
 const routes: Routes = [
     {
         path: '',
         component: AppLayoutComponent,
+        canActivate: [AuthGuard],
         children: [
             {
                 path: '',
-                loadChildren: () =>
-                    import(
-                        './demo/components/dashboards/dashboards.module'
-                    ).then((m) => m.DashboardsModule),
+                loadChildren: () => import('./demo/components/dashboards/dashboards.module').then((m) => m.DashboardsModule),
             },
             {
                 path: 'uikit',
                 data: { breadcrumb: 'UI Kit' },
-                loadChildren: () =>
-                    import('./demo/components/uikit/uikit.module').then(
-                        (m) => m.UIkitModule
-                    ),
+                loadChildren: () => import('./demo/components/uikit/uikit.module').then((m) => m.UIkitModule),
             },
             {
                 path: 'utilities',
                 data: { breadcrumb: 'Utilities' },
-                loadChildren: () =>
-                    import('./demo/components/utilities/utilities.module').then(
-                        (m) => m.UtilitiesModule
-                    ),
+                loadChildren: () => import('./demo/components/utilities/utilities.module').then((m) => m.UtilitiesModule),
             },
             {
                 path: 'pages',
                 data: { breadcrumb: 'Pages' },
-                loadChildren: () =>
-                    import('./demo/components/pages/pages.module').then(
-                        (m) => m.PagesModule
-                    ),
+                loadChildren: () => import('./demo/components/pages/pages.module').then((m) => m.PagesModule),
+            },
+            {
+                path: 'employee',
+                data: { breadcrumb: 'Manage Employee' },
+                loadChildren: () => import('./modules/manage-system/components/employee/employee.module').then((m) => m.EmployeeModule),
             },
             {
                 path: 'customer',
                 data: { breadcrumb: 'Manage Customer' },
-                loadChildren: () =>
-                    import('./modules/manage-system/components/customer/customer.module').then(
-                        (m) => m.CustomerModule
-                    ),
+                loadChildren: () => import('./modules/manage-system/components/customer/customer.module').then((m) => m.CustomerModule),
             },
             {
                 path: 'documentation',
                 data: { breadcrumb: 'Documentation' },
-                loadChildren: () =>
-                    import(
-                        './demo/components/documentation/documentation.module'
-                    ).then((m) => m.DocumentationModule),
+                loadChildren: () => import('./demo/components/documentation/documentation.module').then((m) => m.DocumentationModule),
             },
             {
                 path: 'blocks',
                 data: { breadcrumb: 'Prime Blocks' },
-                loadChildren: () =>
-                    import(
-                        './demo/components/primeblocks/primeblocks.module'
-                    ).then((m) => m.PrimeBlocksModule),
+                loadChildren: () => import('./demo/components/primeblocks/primeblocks.module').then((m) => m.PrimeBlocksModule),
             },
             {
                 path: 'ecommerce',
                 data: { breadcrumb: 'E-Commerce' },
-                loadChildren: () =>
-                    import('./demo/components/ecommerce/ecommerce.module').then(
-                        (m) => m.EcommerceModule
-                    ),
+                loadChildren: () => import('./demo/components/ecommerce/ecommerce.module').then((m) => m.EcommerceModule),
             },
             {
                 path: 'apps',
                 data: { breadcrumb: 'Apps' },
-                loadChildren: () =>
-                    import('./demo/components/apps/apps.module').then(
-                        (m) => m.AppsModule
-                    ),
-            }
+                loadChildren: () => import('./demo/components/apps/apps.module').then((m) => m.AppsModule),
+            },
+            {
+                path: 'booking',
+                data: { breadcrumb: 'Manage Booking' },
+                loadChildren: () => import('./modules/manage-system/components/booking/booking.module').then((m) => m.BookingModule),
+            },
         ],
     },
     {
         path: 'auth',
         data: { breadcrumb: 'Auth' },
-        loadChildren: () =>
-            import('./demo/components/auth/auth.module').then(
-                (m) => m.AuthModule
-            ),
+        loadChildren: () => import('./demo/components/auth/auth.module').then((m) => m.AuthModule),
     },
     {
         path: 'landing',
-        loadChildren: () =>
-            import('./demo/components/landing/landing.module').then(
-                (m) => m.LandingModule
-            ),
+        loadChildren: () => import('./demo/components/landing/landing.module').then((m) => m.LandingModule),
+    },
+    {
+        path: 'profile',
+        component: ProfileLayoutComponent,
+        canActivate: [AuthGuard],
+        children: [
+            {
+                path: 'changepassword',
+                loadChildren: () => import('./demo/components/auth/changepassword/changepassword.module').then((m) => m.ChangePasswordModule),
+            },
+        ],
     },
     {
         path: 'notfound',
-        loadChildren: () =>
-            import('./demo/components/notfound/notfound.module').then(
-                (m) => m.NotfoundModule
-            ),
+        loadChildren: () => import('./demo/components/notfound/notfound.module').then((m) => m.NotfoundModule),
     },
     { path: '**', redirectTo: '/notfound' },
 ];

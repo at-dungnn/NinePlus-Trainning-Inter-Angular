@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserAuthenticate } from 'src/app/shared';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+
 export class SessionKey {
     static CURRENT_SELECT_LANG = 'CURRENT_SELECT_LANG';
     static UKEY = 'UKEY';
@@ -18,9 +18,7 @@ export class SessionService {
     userAuthenticate: UserAuthenticate;
 
     constructor() {
-        this.userAuthenticate = JSON.parse(
-            localStorage.getItem(SessionKey.USER)!
-        ) as UserAuthenticate;
+        this.userAuthenticate = JSON.parse(localStorage.getItem(SessionKey.USER)!) as UserAuthenticate;
         this._currentUserSubject = new BehaviorSubject<UserAuthenticate>(this.userAuthenticate);
         this._currentLangSubject = new BehaviorSubject<string>('vn');
         this.currentUser$ = this._currentUserSubject.asObservable();
