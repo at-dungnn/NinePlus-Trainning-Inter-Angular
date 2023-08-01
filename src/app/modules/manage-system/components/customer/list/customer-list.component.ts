@@ -11,12 +11,7 @@ import { isEmpty } from 'lodash';
 
 @Component({
     templateUrl: './customer-list.component.html',
-    providers: [
-        ConfirmationService,
-        DialogService,
-        ToastService,
-        MessageService,
-    ],
+    providers: [ConfirmationService, DialogService, ToastService, MessageService],
 })
 export class CustomerListComponent implements OnInit {
     customers: Customer[] = [];
@@ -61,26 +56,20 @@ export class CustomerListComponent implements OnInit {
         this._customerService.getCustomerById(id).subscribe({
             next: (data) => {
                 if (!isEmpty(data)) {
-                    this._customerService
-                        .deleteCustomer(id)
-                        .subscribe((res) => {
-                            if (res.succeeded) {
-                                this.resetPageOnSort = true;
-                                this.getListCustomer();
-                                if (!isEmpty(res.messages)) {
-                                    res.messages?.forEach((string: string) => {
-                                        this._toastService.showSuccess(
-                                            string,
-                                            this.keyToast
-                                        );
-                                    });
-                                }
+                    this._customerService.deleteCustomer(id).subscribe((res) => {
+                        if (res.succeeded) {
+                            this.resetPageOnSort = true;
+                            this.getListCustomer();
+                            if (!isEmpty(res.messages)) {
+                                res.messages?.forEach((string: string) => {
+                                    this._toastService.showSuccess(string, this.keyToast);
+                                });
                             }
-                        });
+                        }
+                    });
                 }
             },
             error: (err) => {
-                console.log(err);
                 this.getListCustomer();
             },
         });
@@ -115,9 +104,6 @@ export class CustomerListComponent implements OnInit {
     }
 
     onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal(
-            (event.target as HTMLInputElement).value,
-            'contains'
-        );
+        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
 }

@@ -66,7 +66,7 @@ export class CustomerEditComponent implements OnInit {
                 }
             },
             error: (err) => {
-                console.log(err);
+                this._router.navigate([ROUTER.LIST_CUSTOMER]);
             },
         });
     }
@@ -79,8 +79,10 @@ export class CustomerEditComponent implements OnInit {
             customer.address = HandleString.trim(customer.address);
         }
         // "The JSON value could not be converted to System.Nullable`1[System.DateTime]
-        if (isEmpty(customer.dateOfBirth)) {
+        if (!customer.dateOfBirth) {
             delete customer['dateOfBirth'];
+        } else {
+            customer.dateOfBirth = this.convertDateOfBirth(customer);
         }
         return customer;
     }
@@ -96,7 +98,6 @@ export class CustomerEditComponent implements OnInit {
                     }
                 },
                 error: (err) => {
-                    console.log(err);
                     this._toastService.showError(MESSAGE_ERROR.CHECK_ID_CUSTOMER, this.keyToast);
                 },
             });
@@ -116,7 +117,6 @@ export class CustomerEditComponent implements OnInit {
                 }
             },
             error: (err) => {
-                console.log(err);
                 this._toastService.showError(MESSAGE_TITLE.EDIT_ERR, this.keyToast);
             },
         });
@@ -136,6 +136,17 @@ export class CustomerEditComponent implements OnInit {
         if (event.keyCode != 8 && !pattern.test(inputChar)) {
             event.preventDefault();
         }
+    }
+
+    convertDateOfBirth(customer: Customer) {
+        const originalDate = new Date(customer?.dateOfBirth + '');
+        const year = originalDate.getFullYear();
+        const month = String(originalDate.getMonth() + 1).padStart(2, '0');
+        const day = String(originalDate.getDate()).padStart(2, '0');
+        const hours = String(originalDate.getHours()).padStart(2, '0');
+        const minutes = String(originalDate.getMinutes()).padStart(2, '0');
+        const seconds = String(originalDate.getSeconds()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;
     }
 
     loadingSubmit() {
