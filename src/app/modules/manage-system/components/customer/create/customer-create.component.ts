@@ -42,7 +42,6 @@ export class CustomerCreateComponent implements OnInit {
         this.initFormAddNewCustomer();
     }
 
-
     initFormAddNewCustomer() {
         this.formAddNewCustomer = this._fb.group({
             customerName: ['', [Validators.required, Validators.minLength(4)]],
@@ -109,7 +108,7 @@ export class CustomerCreateComponent implements OnInit {
         const password = customer?.password;
         const username = customer?.username;
 
-        if (!username && password || username && !password) {
+        if ((!username && password) || (username && !password)) {
             this._toastService.showError(
                 MESSAGE_ERROR_INPUT.PASSWORD_OR_USERNAME_EMPTY,
                 this.keyToast

@@ -1,0 +1,28 @@
+.img-container {
+    position: relative;
+    width: 70px;
+    height: 70px;
+}
+
+.img-container img {
+    display: block;
+}
+
+.img-container .pi-times {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+}
+
+.hoverClick {
+    cursor: pointer;
+}
+
+img {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border: 1px solid black;
+}

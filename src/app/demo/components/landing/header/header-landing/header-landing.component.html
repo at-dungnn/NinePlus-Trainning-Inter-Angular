@@ -1,107 +1,165 @@
-<div class="bg-no-repeat bg-cover bg-bottom">
-    <div
-        class="navbarr flex align-items-center justify-content-between"
-        style="position: fixed; width: 100%; height: 15%; top: 0; z-index: 999"
-    >
-        <a style="height: inherit" class="app-logo" [routerLink]="['/']">
-            <img alt="app logo" [src]="logo" />
-            <span class="typewriter text-color">
-                <h1>Natural Spa</h1>
-            </span>
-        </a>
-        <div class="relative">
-            <nav class="navbar navbar-expand-md">
-                <div class="navbar-top">
-                    <a class="navbar-brand font-bold text-color-secondary">
-                        <!-- <i  class="pi pi-bars"></i> -->
-                    </a>
-                    <button
-                        class="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarNav"
-                        aria-controls="navbarNav"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation"
-                    >
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul
-                            class="flex flex-column lg:flex-row m-0 p-0 list-none text-2xl lg:text-base"
-                            style="justify-content: space-between"
-                        >
-                            <li>
-                                <a
-                                    class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color"
-                                    pStyleClass="#landing-menu"
-                                    leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >HOME</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
-                                    pStyleClass="#landing-menu"
-                                    leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >ABOUT US</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
-                                    pStyleClass="#landing-menu"
-                                    leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >SERVICE</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
-                                    pStyleClass="#landing-menu"
-                                    leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >THERAPITS</a
-                                >
-                            </li>
-                            <li>
-                                <a
-                                    class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
-                                    pStyleClass="#landing-menu"
-                                    leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >BOOK NOW</a
-                                >
-                            </li>
-
-                            <li>
-                                <a
-                                    class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
-                                    pStyleClass="#landing-menu"
-                                    leaveActiveClass="fadeout"
-                                    leaveToClass="hidden"
-                                    >SHORTCODES</a
-                                >
-                            </li>
-                            <li *ngIf="isAuth === false">
-                                <a
-                                    class="block p-5 cursor-pointer font-bold text-color-secondary hover:text-color transition-colors transition-duration-300"
-                                    (click)="showPopupLogin()"
-                                    >SIGN IN</a
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="layout-topbar2">
+        <div>
+            <ul class="navbar-nav me-auto mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" style="color: #1b785c">REGISTER FOR CONSULTATIONS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#">New-Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Voucher</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Feedback</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"> Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Recruitment</a>
+                </li>
+            </ul>
+        </div>
+        <div class="d-flex">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2 mb-2" type="search" placeholder="Search" aria-label="Search" />
+                <button class="btn btn-outline-success mb-2" type="submit">Search</button>
+            </form>
+            <div class="mx-1 dropdown">
+                <button
+                    class="btn btn-outline-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                >
+                    EN
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton" style="min-width: 40px">
+                    <li>
+                        <a class="dropdown-item" style="font-size: 13px" href="#">VN</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
+</nav>
+
+<div class="centered-hr">
+    <hr class="gradient-hr" />
 </div>
-<app-login
-    [isPopupLogin]="isPopupLogin"
-    (hiddenPopup)="hidePopupLogin()"
-    (getRole)="getRole()"
-></app-login>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="layout-topbar1">
+        <div>
+            <a class="navbar-brand">
+                <img class="app1-logo" src="https://naturespa.wpengine.com/wp-content/themes/naturalspa/images/logo.png" alt="" />
+            </a>
+        </div>
+        <div>
+            <input type="checkbox" name="" id="nav_input" hidden />
+            <label for="nav_input" class="overlay"></label>
+            <div class="navbar-collapse">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link hover:text-red-500 font-thin" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Abouts Us
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#"> About Us</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Vision, Mission, Core Values</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#"> About the president</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Team of doctors</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Achievement</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link hover:text-red-500 font-thin" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Service
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#"> Skin Care treatment</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Body treatment</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Facial treatment</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Hair care</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Nail</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link hover:text-red-500 font-thin" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Products
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#"> Cosmetics</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Health protection products</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Hair Care</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link hover:text-red-500 font-thin">Blog</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- <nav class="mobile">
+                <label for="nav_input" class="btn-close"></label>
+                <ul class="list">
+                    <li><a href="" class="link">HOME</a></li>
+                    <li><a href="" class="link">SERVICE</a></li>
+                    <li><a href="" class="link">THERAPITS</a></li>
+                    <li><a href="" class="link">SHORTCODES</a></li>
+                    <li><a href="" class="link">ABOUT</a></li>
+                </ul>
+            </nav> -->
+        </div>
+        <div>
+            <a class="nav-link">
+                <button class="btn btn-lg btn-md btn-success">BOOKING NOW</button>
+            </a>
+        </div>
+
+        <ng-container *ngIf="isAuth === false; else user">
+            <div>
+                <a class="nav-link" (click)="showPopupLogin()">
+                    <button class="btn btn-primary btn-lg btn-md">
+                        <i class="pi pi-user-plus"></i>
+                        LOG IN
+                    </button>
+                </a>
+            </div>
+        </ng-container>
+        <ng-template #user>
+            <div class="profile">
+                <app-topbar-profile></app-topbar-profile>
+            </div>
+        </ng-template>
+    </div>
+</nav>
+
+<app-login [isPopupLogin]="isPopupLogin" (hiddenPopup)="hidePopupLogin()"></app-login>

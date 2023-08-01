@@ -18,6 +18,8 @@ export class ForgotPasswordComponent {
 
     keyToast = TOAST.KEY_BC;
 
+    isLoading = false;
+
     constructor(
         private _layoutService: LayoutService,
         private _authenticateService: AuthenticateService,
@@ -30,6 +32,7 @@ export class ForgotPasswordComponent {
     }
 
     sendMail() {
+        this.isLoading = true;
         if (this.isCheckEmail(this.email)) {
             const payload = {
                 email: this.email,
@@ -48,11 +51,11 @@ export class ForgotPasswordComponent {
                 },
             });
         } else {
-            this._toastService.showError(
-                MESSAGE_ERROR_INPUT.EMAIL_INVALID,
-                this.keyToast
-            );
+            this._toastService.showError(MESSAGE_ERROR_INPUT.EMAIL_INVALID, this.keyToast);
         }
+        setTimeout(() => {
+            this.isLoading = false;
+        }, 1000);
     }
 
     isCheckEmail(email: string): boolean {

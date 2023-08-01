@@ -1,37 +1,100 @@
-<div class="surface-ground h-screen w-screen flex align-items-center justify-content-center" [ngClass]="{'p-input-filled': filledInput}">
-    <div class="surface-card py-7 px-5 sm:px-7 shadow-2 flex flex-column w-11 sm:w-30rem" style="border-radius:14px">
-        <h1 class="font-bold text-2xl mt-0 mb-2">VERONA</h1>
-        <p class="text-color-secondary mb-4">Welcome to the <strong>Verona Community</strong>, where the magic happens, sign up to continue.</p>
+<p-toast [key]="keyToast"></p-toast>
+<div
+    class="surface-ground flex align-items-center justify-content-center overflow-x-hidden py-7"
+    [ngClass]="{ 'p-input-filled': filledInput }"
+>
+    <ng-template [ngIf]="formCreateCustomer">
+        <form
+            class="surface-card py-4 px-5 sm:px-7 shadow-2 flex flex-column w-7 form-register"
+            style="border-radius: 14px"
+            [formGroup]="formCreateCustomer"
+            (ngSubmit)="onSubmit()"
+        >
+            <div class="flex justify-content-between align-items-center">
+                <h5 class="font-bold mr-auto block mb-1 text-4xl">Create Account</h5>
+                <div class="align-items-center flex signin">
+                    <span class="text-color-secondary title-no-account"> Already have an account? </span>
+                    <button type="'button" class="btn btn-secondary ml-3" (click)="navigateToLanding()">Sign In</button>
+                </div>
+            </div>
+            <hr style="border-top: 1px solid #99a6b3" />
+            <div class="p-fluid mt-5">
+                <div class="p-formgrid grid">
+                    <div class="field col">
+                        <label htmlFor="name">Name<span class="text-red-500 ml-1 text-900">*</span></label>
+                        <input pInputText id="name" formControlName="customerName" type="text" />
+                        <div *ngIf="f['customerName'].invalid && submitted && f['customerName'].errors" class="text-red-500 mt-2 block">
+                            <div *ngIf="f['customerName'].errors['required']">Name is required.</div>
+                        </div>
+                    </div>
+                    <div class="field col">
+                        <label>Birthday</label>
+                        <p-calendar
+                            dateFormat="dd/mm/yy"
+                            [showIcon]="true"
+                            [readonlyInput]="true"
+                            formControlName="dateOfBirth"
+                            class="p-button-secondary"
+                        >
+                        </p-calendar>
+                    </div>
+                </div>
+            </div>
+            <div class="p-fluid">
+                <div class="field mb-5">
+                    <label htmlFor="phoneNumber">Phone number<span class="text-red-500 ml-1 text-900">*</span></label>
+                    <input pInputText id="phoneNumber" formControlName="phoneNumber" (keypress)="keyPressPhoneNumber($event)" required type="text" />
+                    <div *ngIf="f['phoneNumber'].invalid && submitted && f['phoneNumber'].errors" class="text-red-500 mt-2 block">
+                        <div *ngIf="f['phoneNumber'].errors['required']">Phone number is required.</div>
 
-        <span class="p-input-icon-left mb-4">
-            <i class="pi pi-user"></i>
-            <input type="text" pInputText placeholder="Email" class="w-full">         
-        </span>
+                        <div *ngIf="f['phoneNumber'].errors['pattern']">Phone number does not exist</div>
+                    </div>
+                </div>
 
-        <span class="p-input-icon-left mb-4">
-            <i class="pi pi-key"></i>
-            <input type="password" pInputText placeholder="Password" class="w-full">         
-        </span>
+                <div class="field mb-5">
+                    <label>Username<span class="text-red-500 ml-1 text-900">*</span></label>
+                    <input pInputText formControlName="username" type="text" required />
+                    <div *ngIf="f['username'].invalid && submitted && f['username'].errors" class="text-red-500 mt-2 block">
+                        <div *ngIf="f['username'].errors['required']">Username is required.</div>
+                        <div *ngIf="f['username'].hasError('minlength')">Password enter at least 8 characters.</div>
+                    </div>
+                </div>
 
-        <button [routerLink]="['/']" pButton pRipple label="Sign Up" class="mb-4"></button>
-
-        <span class="text-color-secondary text-center mb-4">or sign up with below</span>
-
-        <div class="flex gap-4 align-items-center justify-content-center">
-            <a href="https://www.facebook.com" class="inline-flex flex-shrink-0 w-3rem h-3rem justify-content-center align-items-center surface-ground border-circle">
-                <i class="pi pi-facebook text-2xl text-color"></i>
-            </a>
-            <a href="https://www.twitter.com" class="inline-flex flex-shrink-0 w-3rem h-3rem justify-content-center align-items-center surface-ground border-circle">
-                <i class="pi pi-twitter text-2xl text-color"></i>
-            </a>
-            <a href="https://www.google.com" class="inline-flex flex-shrink-0 w-3rem h-3rem justify-content-center align-items-center surface-ground border-circle">
-                <i class="pi pi-google text-2xl text-color"></i>
-            </a>
-            <a href="https://www.github.com" class="inline-flex flex-shrink-0 w-3rem h-3rem justify-content-center align-items-center surface-ground border-circle">
-                <i class="pi pi-github text-2xl text-color"></i>
-            </a>
-        </div>
-    </div>
+                <div class="field mb-5">
+                    <label>Password<span class="text-red-500 ml-1 text-900">*</span></label>
+                    <input pInputText formControlName="password" type="password" required />
+                    <span *ngIf="submitted === false"
+                        >Use 8 or more characters with a mix of letters, numbers and symboys. Must not contain your name or username
+                    </span>
+                    <div *ngIf="f['password'].invalid && submitted && f['password'].errors" class="text-red-500 mt-2 block">
+                        <div *ngIf="f['password'].errors['required']">Password is required.</div>
+                        <div *ngIf="f['password'].hasError('minlength')">Password enter at least 8 characters.</div>
+                    </div>
+                </div>
+                <div class="field mb-5">
+                    <label for="address" class="font-medium text-900">Address</label>
+                    <textarea id="address" type="text" formControlName="address" pInputTextarea rows="2" [autoResize]="true"></textarea>
+                </div>
+            </div>
+            <div>
+                <div class="w-11 flex justify-content-center m-auto pt-4" style="border-top: 1px solid #d8e3ed">
+                    <button
+                        type="submit"
+                        [loading]="isLoadingSubmit"
+                        pButton
+                        pRipple
+                        label="Create Account & continue"
+                        class="mb-2 p-button-success"
+                    ></button>
+                </div>
+                <span class="block text-center">or</span>
+                <hr style="border-top: 1px solid #99a6b3" />
+                <span class="text-color-secondary text-center mb-2 block">Sign up with</span>
+                <app-footer-login-types></app-footer-login-types>
+                <hr style="border-top: 1px solid #99a6b3" />
+            </div>
+        </form>
+    </ng-template>
 </div>
 
 <app-config [minimal]="true"></app-config>

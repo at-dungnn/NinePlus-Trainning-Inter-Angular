@@ -4,15 +4,16 @@ import { Router } from '@angular/router';
 import { cloneDeep } from 'lodash';
 import { MessageService } from 'primeng/api';
 import { AuthenticateService } from 'src/app/core';
-import { ResetPassword } from 'src/app/demo/api/reset-password';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
-import {
-    MESSAGE_ERROR_INPUT,
-    MatchPassword,
-    ROUTER,
-    TOAST,
-} from 'src/app/shared';
+import { MESSAGE_ERROR_INPUT, MatchPassword, ROUTER, TOAST } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
+
+interface ResetPassword {
+    token?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+}
 
 @Component({
     selector: 'app-resetpassword',
@@ -25,6 +26,8 @@ export class ResetPasswordComponent {
     submitted: boolean = false;
 
     isSuccessReset = false;
+
+    isLoading = false;
 
     patternEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
 
@@ -57,30 +60,19 @@ export class ResetPasswordComponent {
     initFormResetPassword() {
         this.formReset = this._fb.group(
             {
-                email: [
-                    '',
-                    [
-                        Validators.pattern(this.patternEmail),
-                        Validators.required,
-                    ],
-                ],
+                email: ['', [Validators.pattern(this.patternEmail), Validators.required]],
                 password: ['', [Validators.minLength(8), Validators.required]],
-                confirmPassword: [
-                    '',
-                    [Validators.minLength(8), Validators.required],
-                ],
+                confirmPassword: ['', [Validators.minLength(8), Validators.required]],
             },
             {
-                validator: MatchPassword.confirmedValidator(
-                    'password',
-                    'confirmPassword'
-                ),
+                validator: MatchPassword.confirmedValidator('password', 'confirmPassword'),
             }
         );
     }
 
     reset() {
         this.submitted = true;
+        this.isLoading = true;
         const resetPassword: ResetPassword = cloneDeep(this.valueFormReset);
         resetPassword['token'] = this.token;
         if (this.formReset.valid) {
@@ -98,6 +90,9 @@ export class ResetPasswordComponent {
                 },
             });
         }
+        setTimeout(() => {
+            this.isLoading = false;
+        }, 1000);
     }
 
     get filledInput(): boolean {

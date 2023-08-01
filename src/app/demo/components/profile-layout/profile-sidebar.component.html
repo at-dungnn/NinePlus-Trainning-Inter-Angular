@@ -1,0 +1,22 @@
+<div class="layout-menu-container">
+    <div class="flex flex-column justify-content-center">
+        <div *ngFor="let menu of menus; let i = index" class="mt-5">
+            <div class="flex align-items-center hover">
+                <i class="{{ menu.icon }} text-2xl cursor-pointer" (click)="toggleMenuItem(menu, i)"></i>
+                <span class="block ml-3 font-medium text-xl cursor-pointer" (click)="toggleMenuItem(menu, i)">{{ menu.label }}</span>
+            </div>
+            <div *ngIf="menuToggle[i].toggle === true" class="flex flex-column" style="margin-left: 14%">
+                <div class="mt-3" *ngFor="let item of menu.items; let j = index">
+                    <a>
+                        <span
+                            class="text-base font-normal cursor-pointer hover menu-item inline py-1 px-2"
+                            [ngClass]="{ active: (menu.items && menu.items.length > 0 && menu.items[j].visible) === true }"
+                            (click)="navigateAndToggleMenuItem(item.routerLink, i, j)"
+                            >{{ item.label }}</span
+                        >
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -12,6 +12,7 @@ import { SharedModule } from 'src/app/shared';
 import { LoginComponent } from '../auth/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { FooterLoginTypesModule } from '../auth/footer-login-types/footer-login-types.module';
+import { TopbarProfileModule } from '../profile-layout/topbar-profile/topbar-profile.module';
 
 @NgModule({
     imports: [
@@ -23,14 +24,9 @@ import { FooterLoginTypesModule } from '../auth/footer-login-types/footer-login-
         SharedModule,
         FormsModule,
         FooterLoginTypesModule,
+        TopbarProfileModule,
     ],
-    declarations: [
-        LandingComponent,
-        HeaderLandingComponent,
-        FooterLandingComponent,
-        BodyLandingComponent,
-        LoginComponent,
-    ],
+    declarations: [LandingComponent, HeaderLandingComponent, FooterLandingComponent, BodyLandingComponent, LoginComponent],
 })
 export class LandingModule {
     constructor(private router: Router) {}
