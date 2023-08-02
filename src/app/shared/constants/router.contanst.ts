@@ -7,16 +7,12 @@ export enum ROUTER {
     CREATE_BOOKING = 'booking/create',
     LIST_BOOKING = 'booking/list',
     DETAIL_BOOKING = 'booking/detail',
-
-    CREATE_BOOKING = 'booking/create',
-    LIST_BOOKING = 'booking/list',
-    DETAIL_BOOKING = 'booking/detail',
     EDIT_BOOKING = 'booking/edit',
     LIST_EMPLOYEE = 'employee/list',
     EDIT_EMPLOYEE = 'employee/edit/',
     CREATE_EMPLOYEE = 'employee/create',
     PROFILE = 'profile',
-    CHANGE_PASSWORD = 'profile/changepassword
+    CHANGE_PASSWORD = 'profile/changepassword',
     FORGOT_PASSWORD = 'auth/forgotpassword',
     RESET_PASSWORD = 'auth/reset-password',
     SIGNUP = 'auth/register',
