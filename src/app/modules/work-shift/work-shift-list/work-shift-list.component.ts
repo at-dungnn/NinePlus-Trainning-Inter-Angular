@@ -8,6 +8,7 @@ import { ROUTER } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { MESSAGE_TITLE } from 'src/app/shared';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+
 @Component({
   selector: 'app-work-shift-list',
   templateUrl: './work-shift-list.component.html',
@@ -20,7 +21,7 @@ export class WorkShiftListComponent {
   isSkeleton: boolean = true;
   selectedObjects: number[] = [];
   deleteProductsDialog: boolean = false;
-  keyToast: string = 'bc'
+
 
   constructor(private _workShiftService: WorkShiftService,
     private _router: Router,
@@ -89,14 +90,17 @@ export class WorkShiftListComponent {
   deleteConfirmed() {
     if (this.workshift.id) {
       this._workShiftService.deleteWorkShiftById(this.workshift.id.toString()).subscribe({
-        next: () => {
+        next: (res) => {
           this._toastService.showSuccessNoKey(MESSAGE_TITLE.DELETE_SUCC);
           this.getListWorkShift();
           this.deleteProductsDialog = false;
           this.workshift = {};
         },
-        error: () => {
-          this._toastService.showErrorNoKey(MESSAGE_TITLE.DELETE_ERR);
+        error: (error) => {
+          error.error.messages.forEach((item: string) => {
+            this._toastService.showErrorNoKey(item);
+          });
+          this.deleteProductsDialog = false;
         },
       });
     }
@@ -105,4 +109,5 @@ export class WorkShiftListComponent {
   isSelected(id: number): boolean {
     return this.selectedObjects.indexOf(id) !== -1;
   }
+
 }

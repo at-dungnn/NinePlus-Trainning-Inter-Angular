@@ -9,22 +9,22 @@ const routes: Routes = [];
             {
                 path: 'list',
                 data: { breadcrumb: 'List' },
-                loadChildren: () => import('./list/work-shift-list.module').then((m) => m.WorkShiftListModule),
+                loadChildren: () => import('./work-shift-list/work-shift-list.module').then((m) => m.WorkShiftListModule),
             },
             {
                 path: 'detail/:id/:nameWorkshift',
                 data: { breadcrumb: 'Detail' },
-                loadChildren: () => import('./detail/workshift-detail.module').then((m) => m.WorkshiftDetailModule),
+                loadChildren: () => import('./work-shift-detail/workshift-detail.module').then((m) => m.WorkshiftDetailModule),
             },
             {
                 path: 'edit/:id',
                 data: { breadcrumb: 'Edit' },
-                loadChildren: () => import('./edit/workshift-edit.module').then((m) => m.WorkshiftEditModule),
+                loadChildren: () => import('./work-shift-edit/workshift-edit.module').then((m) => m.WorkshiftEditModule),
             },
             {
                 path: 'create',
                 data: { breadcrumb: 'Create' },
-                loadChildren: () => import('./create/workshift-create.module').then((m) => m.WorkshiftCreateModule),
+                loadChildren: () => import('./work-shift-create/workshift-create.module').then((m) => m.WorkshiftCreateModule),
             },
         ]),
     ],

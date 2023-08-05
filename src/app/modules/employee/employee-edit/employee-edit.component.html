@@ -1,25 +1,20 @@
 <div class="card">
     <p-toast [key]="keyToast"></p-toast>
-    <span class="text-900 text-xl font-bold mb-4 block">Chỉnh sửa thông tin nhân
-        viên</span>
+    <span class="text-900 text-xl font-bold mb-4 block">{{ "TRANSLATOR.EDIT" | translate }}</span>
     <div class="grid">
-        <div class="col-12 lg:col-2">
-            <div class="text-900 font-medium text-xl mb-3">Profile</div>
-        </div>
         <form [formGroup]="form" (ngSubmit)="updateEmployeeById()">
-            <div class="col-12 lg:col-10">
+            <div class="col-12 lg:col-12">
                 <div class="grid formgrid p-fluid">
                     <div class="field mb-4 col-12 md:col-6">
                         <label for="id" class="font-medium text-900">ID<span
                                 style="color: red"> *</span></label>
-                        <input id="id" type="text" pInputText
-                            formControlName="id">
+                        <input id="id" type="text" pInputText [value]="idEmployeeInit" [disabled]="true">
                         <p style="color: red"
                             *ngIf="form.get('id')?.errors?.['required'] && form.get('id')?.touched">*
                             Không được để trống</p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="name" class="font-medium text-900">Name<span
+                        <label for="name" class="font-medium text-900">{{ "FIELDS.NAME" | translate }}<span
                                 style="color: red"> *</span></label>
                         <input id="name" type="text" pInputText
                             formControlName="name">
@@ -43,7 +38,7 @@
                             Email chưa đúng định dạng. Ex: abc12@gmail.com</p>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="phone" class="font-medium text-900">Phone<span
+                        <label for="phone" class="font-medium text-900">{{ "FIELDS.PHONE" | translate }}<span
                                 style="color: red"> *</span></label>
                         <input id="phone" type="text" pInputText
                             formControlName="phoneNumber">
@@ -57,7 +52,7 @@
                     <div class="col-12 md:col-6">
                         <div class="grid field">
                             <div class="field col-12 md:col-5">
-                                <label for="gender" class="font-medium text-900">Gender</label>
+                                <label for="gender" class="font-medium text-900">{{ "FIELDS.GENDER" | translate }}</label>
                                 <p-dropdown inputId="gender" [options]="genders"
                                     optionLabel="name" [filter]="true"
                                     filterBy="name"
@@ -75,7 +70,7 @@
                             </div>
                             <div class="field col-12 md:col-7">
                                 <label for="birthday"
-                                    class="font-medium text-900">Birthday</label>
+                                    class="font-medium text-900">{{ "FIELDS.BIRTH_DAY" | translate }}</label>
                                 <p-calendar [(ngModel)]="birthdayInit"
                                     id="birthday"
                                     [showTime]="true"
@@ -86,14 +81,13 @@
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="avatar" class="font-medium text-900">Avatar</label>
+                        <label for="avatar" class="font-medium text-900">{{ "FIELDS.AVATAR" | translate }}</label>
                         <div class="flex align-items-center">
                             <div class="img-container mr-4">
                                 <img
-                                    [src]=fileUrl alt="Trống" />
+                                    [src]=imageDisplay alt="Trống" />
                                 <span *ngIf="imageDisplay"
-                                    class="pi pi-times hoverClick"
-                                    (click)="setImageDefault()"></span>
+                                    class="pi pi-times hoverClick" (click)="removeImage()"></span>
                             </div>
                             <p-fileUpload id="image" mode="basic"
                                 accept="image/**"
@@ -105,12 +99,7 @@
                         </div>
                     </div>
                     <div class="field mb-4 col-12 md:col-6">
-                        <label for="address" class="font-medium text-900">Address</label>
-                        <input id="address" type="text" pInputText
-                            formControlName="address">
-                    </div>
-                    <div class="field mb-4 col-12 md:col-6">
-                        <label for="workshiftId" class="font-medium text-900">Workshift_ID<span
+                        <label for="workshiftId" class="font-medium text-900">{{ "FIELDS.WORKSHIFT_ID" | translate }}<span
                                 style="color: red"> *</span></label>
                         <input id="workshiftId" type="text" pInputText
                             formControlName="workShiftId">
@@ -118,14 +107,19 @@
                             *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">*
                             Không được để trống</p>
                     </div>
+                    <div class="field mb-4 col-12 md:col-6">
+                        <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
+                        <input id="address" type="text" pInputText
+                            formControlName="address">
+                    </div>
                     <div class="col-12 md:col-6 lg:col-5 mt-3">
                         <div class="grid">
                             <div class="col-6 md:col-5 lg:col-6">
-                                <button pButton pRipple label="Save"
+                                <button pButton pRipple label="{{ 'BTN.SAVE' | translate }}"
                                     icon="pi pi-check" type="submit"></button>
                             </div>
                             <div class="col-6 md:col-6 lg:col-6">
-                                <button pButton pRipple label="Cancel"
+                                <button pButton pRipple label="{{ 'BTN.RETURN' | translate }}"
                                     icon="pi pi-times"
                                     (click)="navigateBackEmployeeList()"
                                     class="p-button-outlined"></button>

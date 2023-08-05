@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Table } from 'primeng/table';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, ValidatorFn, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ROUTER } from 'src/app/shared';
 import { MessageService } from 'primeng/api';
@@ -11,6 +10,7 @@ import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
 import { MESSAGE_TITLE } from 'src/app/shared';
 import { Workshift } from 'src/app/demo/api/work-shift';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+
 @Component({
     selector: 'app-workshift-edit',
     templateUrl: './workshift-edit.component.html',
@@ -19,13 +19,14 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 })
 export class WorkshiftEditComponent {
     form!: FormGroup;
-    keyToast: string = 'bc';
     workshift: Workshift[] = [];
     workdays: any[] = WORKDAY;
     workdaySelected: number[] = [];
     submitted: boolean = false;
     formattedFromTime: string = '';
     formattedToTime: string = '';
+    keyToast: string = 'bc';
+
     constructor(private _fb: FormBuilder,
         private _router: Router,
         private _workShiftService: WorkShiftService,
@@ -60,10 +61,9 @@ export class WorkshiftEditComponent {
                     this.navigateBackToListWorkshift();
                 },
                 error: (error) => {
-                    // error.error.messages.forEach((item: string) => {
-                    //     this._toastService.showError(item, this.keyToast);
-                    // });
-                    console.log(error)
+                    error.error.messages.forEach((item: string) => {
+                        this._toastService.showError(item, this.keyToast);
+                    });
                 }
             })
         } else {
@@ -74,7 +74,6 @@ export class WorkshiftEditComponent {
     getWorkshiftById() {
         this._activatedRoute.paramMap.subscribe((next) => {
             const idWorkshift = next.get('id');
-            console.log(next.get('id'))
             if (idWorkshift) {
                 this._workShiftService.getWorkshiftById(idWorkshift.toString()).subscribe({
                     next: (res) => {
@@ -137,4 +136,5 @@ export class WorkshiftEditComponent {
     navigateBackToListWorkshift() {
         this._router.navigate([ROUTER.LIST_WORK_SHIFT]);
     }
+
 }

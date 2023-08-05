@@ -14,13 +14,13 @@
                         <i class="pi pi-search"></i>
                         <input pInputText type="text"
                             (input)="onGlobalFilter(dt, $event)"
-                            placeholder="Search" class="w-full" />
+                            placeholder="{{ 'TRANSLATOR.SEARCH' | translate }}" class="w-full" />
                     </span>
                 </div>
                 <span>
                     <button pButton
                         class="sm:w-auto flex-order-0 sm:flex-order-1"
-                        icon="pi pi-plus-circle" label="Tạo mới ca"
+                        icon="pi pi-plus-circle" label="{{ 'TRANSLATOR.ADD_NEW' | translate }}"
                         (click)="navigateToCreateWorkshift()"></button>
                 </span>
             </div>
@@ -28,23 +28,22 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id" class="white-space-nowrap"
-                    style="width:10%">STT <p-sortIcon field="id"></p-sortIcon></th>
+                    style="width:10%">{{ "FIELDS.NAME" | translate }} <p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="fromTime" class="white-space-nowrap"
-                    style="width:20%">Tên ca làm việc <p-sortIcon
+                    style="width:20%">{{ 'FIELDS.NAME' | translate }} <p-sortIcon
                         field="country.name"></p-sortIcon></th>
                 <th pSortableColumn="date" class="white-space-nowrap"
-                    style="width:20%">Khung giờ làm việc</th>
+                    style="width:20%">{{ 'FIELDS.TIME_WORK' | translate }}</th>
                 <th pSortableColumn="timeWord"
-                    class="white-space-nowrap" style="width:20%">Thời gian làm
-                    việc</th>
+                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.TIME' | translate }}</th>
                 <th pSortableColumn="numberEmployee"
-                    class="white-space-nowrap" style="width:20%">Số nhân viên
+                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.NUMBER_EMPLOYEE' | translate }}
                 </th>
                 <th pSortableColumn="description"
-                    class="white-space-nowrap" style="width:20%">Mô tả
+                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.DESRIPTION' | translate }}
                 </th>
                 <th pSortableColumn="isDefault"
-                    class="white-space-nowrap" style="width:20%">Mặc định
+                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.DEFAULT' | translate }}
                 </th>
                 <th style="width:25%"></th>
             </tr>
@@ -96,7 +95,7 @@
         [style]="{width:'450px'}">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span *ngIf="workshift"> Are you sure you want to delete <b>{{workshift.name}}</b>?</span>
+            <span *ngIf="workshift"> {{ 'TRANSLATOR.CONFIRM_DELETE' | translate }} <b>{{workshift.name}}</b>?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"

@@ -12,7 +12,7 @@ import { Workshift } from 'src/app/demo/api/work-shift';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NotificationService } from 'src/app/shared/services/notification.service';
 const MESSAGE_WARNING = {
-    EMPTY_LIST_EMPLOYEE: 'The list of employees in the shift is empty',
+    EMPTY_LIST_EMPLOYEE: 'Danh sách nhân viên của ca làm việc này trống',
 };
 
 @Component({
@@ -24,7 +24,6 @@ const MESSAGE_WARNING = {
 export class WorkshiftDetailComponent {
     form!: FormGroup;
     isSkeleton: boolean = true;
-    keyToast: string = 'bc';
     employees: Employee[] = [];
     nameWorkshift: any = '';
     selectedObjects: number[] = [];
@@ -148,4 +147,5 @@ export class WorkshiftDetailComponent {
             workShiftId: [''],
         });
     }
+
 }

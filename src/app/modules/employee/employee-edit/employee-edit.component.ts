@@ -5,12 +5,15 @@ import { MESSAGE_TITLE } from 'src/app/shared';
 import { EmployeeService } from 'src/app/shared';
 import { MessageService } from 'primeng/api';
 import { Validators } from '@angular/forms';
-import { EmployeeUpdate } from 'src/app/demo/api/employee';
 import { Genders } from 'src/app/shared/constants/gender';
 import { ROUTER } from 'src/app/shared';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { Workshift } from 'src/app/demo/api/work-shift';
 import { UploadService } from 'src/app/shared/services/upload.service';
+import { NotificationService } from 'src/app/shared/services/notification.service';
+const MESSAGE_WARNING = {
+    REQUIRED_VALIDATION: 'Kiểm tra lại thông tin các trường bắt buộc nhập (*)',
+};
 @Component({
     selector: 'app-employee-edit',
     templateUrl: './employee-edit.component.html',
@@ -23,9 +26,11 @@ export class EmployeeEditComponent {
     birthdayInit!: Date;
     defaultGender!: boolean;
     imageDisplay: string = '';
-    keyToast: string = 'bc';
     workShifts: Workshift[] = [];
     fileUrl: string = '';
+    idEmployeeInit: number = 0;
+    keyToast = 'bc';
+
     constructor(
         private _router: Router,
         private _activatedRoute: ActivatedRoute,
@@ -33,7 +38,8 @@ export class EmployeeEditComponent {
         private _messageService: MessageService,
         private _fb: FormBuilder,
         private _toastService: ToastService,
-        private _uploadService: UploadService
+        private _uploadService: UploadService,
+        private _notificationService: NotificationService,
     ) { }
 
     ngOnInit() {
@@ -42,10 +48,10 @@ export class EmployeeEditComponent {
     }
 
     initFormUpdateEmployee() {
-        const phone = /^(?:\+?84|0)(?:\d{9,10})$/;
+        const phone = /^(?:\+?84|0)(?:\d{9})$/;
         const email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
         this.form = this._fb.group({
-            id: [{ value: '', disabled: true }],
+            id: [''],
             name: ['', Validators.compose([Validators.required])],
             gender: [null],
             birthday: [null],
@@ -64,10 +70,15 @@ export class EmployeeEditComponent {
                 this._employeeService.getEmployeeById(id).subscribe({
                     next: (res) => {
                         this.form.patchValue(res);
-                        console.log(this.form.value);
+                        console.log(res);
+                        this.idEmployeeInit = this.form.get('id')?.value;
                         this.defaultGender = this.form.get('gender')?.value;
                         this.birthdayInit = res.birthday ? new Date(res.birthday) : this.birthdayInit;
-                        this.imageDisplay = res.image;
+                        this.imageDisplay = res.imageLink;
+                        this.form.patchValue({
+                            imageFile: res.image
+                        })
+                        console.log(this.form.get('imageFile')?.value)
                     },
                     error: (error) => {
                         error.error.Messages.forEach((item: string) => {
@@ -88,10 +99,12 @@ export class EmployeeEditComponent {
                 this.form.patchValue({
                     imageFile: res.data.filePath
                 })
-                this.fileUrl = res.data.fileUrl;
+                this.imageDisplay = res.data.fileUrl;
+                console.log(this.form.value)
+                console.log(this.form.get('imageFile')?.value)
             }, error: (error) => {
                 error.error.Messages.forEach((item: string) => {
-                    this._toastService.showErrorNoKey(item);
+                    this._toastService.showError(item, this.keyToast);
                 });
             }
         })
@@ -99,20 +112,17 @@ export class EmployeeEditComponent {
 
     updateEmployeeById() {
         if (this.form.valid) {
-            this.convertDataBeforeUpdate();
-            const formData = new FormData();
-            Object.keys(this.form.controls).forEach((key) => {
-                const control = this.form.get(key);
-                if (control) {
-                    formData.append(key, control.value);
-                }
-            });
-            this._employeeService.updateEmployeeById(formData as EmployeeUpdate).subscribe({
+            if (this.form.get('birthday')?.value) {
+                this.convertDataBeforeUpdate();
+            }
+            console.log(this.form.value)
+            this._employeeService.updateEmployeeById(this.form.value).subscribe({
                 next: (res) => {
+                    this._notificationService.addMessage(MESSAGE_TITLE.EDIT_SUCC);
                     this.navigateBackEmployeeList();
-                    this._toastService.showSuccess(MESSAGE_TITLE.EDIT_SUCC, this.keyToast);
                 },
                 error: (error) => {
+                    console.log(error)
                     this.birthdayInit = new Date(this.birthdayInit);
                     if (error.error.messages) {
                         error.error.messages.forEach((item: string) => {
@@ -126,15 +136,27 @@ export class EmployeeEditComponent {
                 },
             });
         } else {
-            this._toastService.showError('Kiểm tra lại thông tin các trường (*)', this.keyToast);
+            this._toastService.showError(MESSAGE_WARNING.REQUIRED_VALIDATION, this.keyToast);
         }
     }
 
-    setImageDefault() {
-        this.imageDisplay = '';
-        this.form.patchValue({
-            imageFile: undefined,
-        });
+    removeImage() {
+        const formData = new FormData();
+        // console.log(this.form.get('imageFile')?.value.replace(/\\/g, '\\\\'))
+        formData.append("filePath", this.form.get('imageFile')?.value);
+        for (const value of formData.values()) {
+            console.log(value);
+        }
+        this._uploadService.deleteImage(formData).subscribe({
+            next: (res) => {
+                this.form.patchValue({
+                    imageFile: '',
+                })
+                this.imageDisplay = '';
+            }, error: (error) => {
+                this._toastService.showErrorNoKey('Xoá lỗi');
+            }
+        })
     }
 
     navigateBackEmployeeList() {
@@ -145,7 +167,6 @@ export class EmployeeEditComponent {
         const birthdayPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
         if (!birthdayPattern.test(this.form.get('birthday')?.value)) this.convertBirthdayFormat();
         this.form.patchValue({
-            gender: this.form.get('gender')?.value ?? '',
             address: this.form.get('address')?.value ?? ' ',
         });
     }

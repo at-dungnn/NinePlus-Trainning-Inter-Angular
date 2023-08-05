@@ -13,4 +13,4 @@ import { SharedModule } from 'src/app/shared';
     declarations: [EmployeeCreateComponent],
     imports: [CommonModule, EmployeeCreateRoutingModule, InputTextareaModule, CalendarModule, FileUploadModule, SharedModule, FormsModule],
 })
-export class EmployeeCreateModule {}
+export class EmployeeCreateModule { }

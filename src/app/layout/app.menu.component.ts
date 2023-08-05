@@ -49,6 +49,11 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-list',
                         routerLink: [ROUTER.LIST_WORK_SHIFT],
                     },
+                    {
+                        label: 'Tạo',
+                        icon: 'pi pi-plus',
+                        routerLink: [ROUTER.CREATE_WORKSHIFT],
+                    },
                 ],
             },
             {

@@ -17,14 +17,15 @@ import { NotificationService } from 'src/app/shared/services/notification.servic
 })
 export class WorkshiftCreateComponent {
   form!: FormGroup;
-  keyToast: string = 'bc';
   workdays: any[] = WORKDAY;
   workdaySelected: number[] = [];
   submitted: boolean = false;
+  keyToast: string = 'bc';
+
   constructor(private _fb: FormBuilder,
     private _router: Router,
     private _workShiftService: WorkShiftService,
-    private _toastService: ToastService, 
+    private _toastService: ToastService,
     private _notificationService: NotificationService) { }
 
   ngOnInit() {
@@ -51,7 +52,7 @@ export class WorkshiftCreateComponent {
         },
         error: (error) => {
           error.error.messages.forEach((item: string) => {
-            this._toastService.showErrorNoKey(item);
+            this._toastService.showError(item, this.keyToast);
           });
         }
       })
@@ -92,4 +93,5 @@ export class WorkshiftCreateComponent {
   navigateBackToListWorkshift() {
     this._router.navigate([ROUTER.LIST_WORK_SHIFT]);
   }
+
 }

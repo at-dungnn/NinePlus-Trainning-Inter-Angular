@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { WorkShiftService } from 'src/app/shared/services/work-shift.service';
 import { Workshift } from 'src/app/demo/api/work-shift';
 import { NotificationService } from 'src/app/shared/services/notification.service';
+
 @Component({
     selector: 'app-employee-list',
     templateUrl: './employee-list.component.html',
@@ -24,10 +25,10 @@ export class EmployeeListComponent {
     employees: Employee[] = [];
     deleteProductsDialog: boolean = false;
     resetPassDialog: boolean = false;
-    keyToast: string = 'bc';
     userNameToResetPass = '';
     formFilter!: FormGroup;
     workshifts: Workshift[] = [];
+
     constructor(
         private _employeeService: EmployeeService,
         private _messageService: MessageService,
@@ -36,17 +37,14 @@ export class EmployeeListComponent {
         private _toastService: ToastService,
         private _fb: FormBuilder,
         private _workShiftService: WorkShiftService,
-        private _notificationService: NotificationService
+        private _notificationService: NotificationService,
     ) { }
 
     ngOnInit() {
         this.onInitApi();
         this.loadSkeletonTable();
         this.getListWorkShift();
-        this.formFilter = this._fb.group({
-            WorkShiftId: [''],
-            Gender: [''],
-        });
+        this.initFormFilter();
     }
 
     onInitApi() {
@@ -57,6 +55,8 @@ export class EmployeeListComponent {
                 } else {
                     this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
                 }
+                this.toastFormAnotherScreen();
+                this.initFormFilter();
             },
             error: (error) => {
                 error.error.messages.forEach((item: string) => {
@@ -73,7 +73,6 @@ export class EmployeeListComponent {
                 if (this.workshifts.length === 0) {
                     this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
                 }
-                this.toastFormAnotherScreen();
             },
             error: (error) => {
                 error.error.messages.forEach((item: string) => {
@@ -84,6 +83,8 @@ export class EmployeeListComponent {
     }
 
     filterEmployee() {
+        this.formFilter.get('WorkShiftId')?.setValue(this.formFilter.get('WorkShiftId')?.value === null ? '' : this.formFilter.get('WorkShiftId')?.value);
+        this.formFilter.get('Gender')?.setValue(this.formFilter.get('Gender')?.value === null ? '' : this.formFilter.get('Gender')?.value);
         this._employeeService.filterEmployee(this.formFilter.value).subscribe({
             next: (res: any) => {
                 this.employees = res.data as Employee[];
@@ -101,10 +102,10 @@ export class EmployeeListComponent {
     toastFormAnotherScreen() {
         const message = this._notificationService.getMessage();
         if (message) {
-          this._toastService.showSuccessNoKey(message.toString());
-          this._notificationService.clearMessage();
+            this._toastService.showSuccessNoKey(message.toString());
+            this._notificationService.clearMessage();
         }
-      }
+    }
 
     confirmDelete(employee: Employee) {
         if (employee.id != -1 && employee.id != undefined) {
@@ -132,18 +133,27 @@ export class EmployeeListComponent {
 
     deleteConfirmed() {
         if (this.employee.id) {
+            console.log(this.employee.id)
             this._employeeService.deleteEmployeeById(this.employee.id.toString()).subscribe({
-                next: () => {
+                next: (next) => {
                     this._toastService.showSuccessNoKey(MESSAGE_TITLE.DELETE_SUCC);
                     this.onInitApi();
                     this.deleteProductsDialog = false;
                     this.employee = {};
                 },
-                error: () => {
+                error: (error) => {
+                    console.log(error)
                     this._toastService.showErrorNoKey(MESSAGE_TITLE.DELETE_ERR);
                 },
             });
         }
+    }
+
+    initFormFilter() {
+        this.formFilter = this._fb.group({
+            WorkShiftId: [''],
+            Gender: [''],
+        });
     }
 
     resetConfirmed() {
@@ -155,7 +165,7 @@ export class EmployeeListComponent {
                     this.employee = {};
                 },
                 error: (error) => {
-                    this._toastService.showErrorNoKey(MESSAGE_TITLE.RESET_PASS_SUCC);
+                    this._toastService.showErrorNoKey(MESSAGE_TITLE.RESET_PASS_ERR);
                 },
             });
         }
@@ -168,7 +178,6 @@ export class EmployeeListComponent {
     }
 
     toggle() {
-    
         this.overlayVisible = !this.overlayVisible;
     }
 

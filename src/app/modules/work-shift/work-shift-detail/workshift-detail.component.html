@@ -20,12 +20,10 @@
                 <span>
                     <button pButton (click)="navigateBackToListWorkshift()"
                         class="sm:w-auto flex-order-0 sm:flex-order-1 mr-2 p-button-info  p-button-outlined"><i
-                            class="pi pi-angle-left"></i><span>Quay
-                            lại</span></button>
+                            class="pi pi-angle-left"></i><span>{{ 'TRANSLATOR.RETURN' | translate }}</span></button>
                     <button pButton (click)="showDialog()"
                         [disabled]="selectedObjects.length ===0"
-                        class="sm:w-auto flex-order-0 sm:flex-order-1 p-button-info  p-button-outlined"><span>Di
-                            chuyển</span> <i class="pi pi-angle-right"></i></button>
+                        class="sm:w-auto flex-order-0 sm:flex-order-1 p-button-info  p-button-outlined"><span>{{ 'TRANSLATOR.MOVE' | translate }}</span> <i class="pi pi-angle-right"></i></button>
                 </span>
             </div>
         </ng-template>
@@ -38,16 +36,16 @@
                         (change)="toggleAllChecked()" class="custom-checkbox"></th>
                 <th
                     pSortableColumn="id" class="white-space-nowrap"
-                    style="width:15%">STT <p-sortIcon field="id"></p-sortIcon></th>
+                    style="width:15%">{{ "FIELDS.NAME" | translate }} <p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="fromTime" class="white-space-nowrap"
-                    style="width:20%">Tên nhân viên <p-sortIcon
+                    style="width:20%">{{ 'FIELDS.NAME' | translate }} <p-sortIcon
                         field="country.name"></p-sortIcon></th>
                 <th pSortableColumn="date" class="white-space-nowrap"
                     style="width:25%">Email </th>
                 <th pSortableColumn="timeWord"
-                    class="white-space-nowrap" style="width:20%">Số điện thoại</th>
+                    class="white-space-nowrap" style="width:20%">{{ "FIELDS.PHONE" | translate }}</th>
                 <th pSortableColumn="timeWord"
-                    class="white-space-nowrap" style="width:30%">Ca hiện tại</th>
+                    class="white-space-nowrap" style="width:30%">{{ "FIELDS.CURRENT_SHIFT" | translate }}</th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-employees let-rowIndex="rowIndex">
@@ -77,7 +75,7 @@
         </ng-template>
     </p-table>
 
-    <p-dialog header="Di chuyển nhân viên" [(visible)]="visible" [modal]="true"
+    <p-dialog header="{{ 'TRANSLATOR.MOVE' | translate }}" [(visible)]="visible" [modal]="true"
         [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
         <p-table #dt [paginator]="true" [value]="workshifts" [rows]="5"
             [showCurrentPageReport]="true" responsiveLayout="scroll"
@@ -88,15 +86,14 @@
                 <tr>
                     <th
                         pSortableColumn="id" class="white-space-nowrap"
-                        style="width:25%">STT <p-sortIcon field="id"></p-sortIcon></th>
+                        style="width:25%">{{ "FIELDS.NAME" | translate }} <p-sortIcon field="id"></p-sortIcon></th>
                     <th pSortableColumn="fromTime" class="white-space-nowrap"
-                        style="width:25%">Tên ca làm việc <p-sortIcon
+                        style="width:25%">{{ 'FIELDS.NAME' | translate }} <p-sortIcon
                             field="country.name"></p-sortIcon></th>
                     <th pSortableColumn="date" class="white-space-nowrap"
-                        style="width:25%">Khung giờ làm việc </th>
+                        style="width:25%">{{ 'FIELDS.TIME_WORK' | translate }} </th>
                     <th pSortableColumn="timeWord"
-                        class="white-space-nowrap" style="width:13%">Số nhân
-                        viên</th>
+                        class="white-space-nowrap" style="width:13%">{{ 'FIELDS.NUMBER_EMPLOYEE' | translate }}</th>
                     <th style="width:25%"></th>
                 </tr>
             </ng-template>
@@ -116,7 +113,9 @@
                         <td>{{workshifts.name}}</td>
                         <td>{{workshifts.fromTime}} - {{workshifts.toTime}}</td>
                         <td style="text-align: center;">{{workshifts.numberEmployee}}</td>
-                        <td> <button pButton pRipple type="submit" (click)="changeWorkshiftByIdEmployee(workshifts.id)">Chuyển<i class="pi pi-angle-right"></i></button></td>
+                        <td> <button pButton pRipple type="submit"
+                                (click)="changeWorkshiftByIdEmployee(workshifts.id)">{{ 'TRANSLATOR.MOVE' | translate }}<i
+                                    class="pi pi-angle-right"></i></button></td>
                     </tr>
                 </ng-template>
             </ng-template>

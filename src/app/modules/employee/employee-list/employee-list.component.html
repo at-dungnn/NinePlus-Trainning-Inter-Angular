@@ -14,24 +14,21 @@
                         <i class="pi pi-search"></i>
                         <input pInputText type="text"
                             (input)="onGlobalFilter(dt, $event)"
-                            placeholder="Search" class="w-full" />
+                            placeholder="{{ 'TRANSLATOR.SEARCH' | translate }}" class="w-full" />
                     </span>
-                    <button pButton
-                        class=" sm:w-auto flex-order-0"
-                        icon="pi pi-file-export" label="Export Excel"
-                        (click)="toggle()"></button>
                 </div>
                 <span>
                     <button pButton
                         class="sm:w-auto flex-order-0 mr-3 p-button-success"
-                        icon="pi pi-filter" label="Filter" (click)="toggle()"></button>
-                    <p-overlay [(visible)]="overlayVisible" [formGroup]="formFilter" (ngSubmit)="filterEmployee()"
+                        icon="pi pi-filter" label="{{ 'TRANSLATOR.FILTER' | translate }}" (click)="toggle()"></button>
+                    <p-overlay [(visible)]="overlayVisible" 
                         [responsive]="{ breakpoint: '640px', direction: 'top', contentStyleClass: 'h-20rem'}"
                         contentStyleClass="p-4 surface-overlay shadow-2 border-round">
+                        <form [formGroup]="formFilter" (ngSubmit)="filterEmployee()">
                         <div>
                             <div>
                                 <label for="country"
-                                    class="font-medium text-900">Gender</label>
+                                    class="font-medium text-900">{{ "FIELDS.GENDER" | translate }}</label>
                             </div>
                             <p-dropdown inputId="country" [options]="genders"
                                 optionLabel="name" [filter]="true"
@@ -49,14 +46,14 @@
                         <div class="mt-4">
                             <div>
                                 <label for="country"
-                                    class="font-medium text-900">Workshift</label>
+                                    class="font-medium text-900">{{ "FIELDS.WORKSHIFT" | translate }}</label>
                             </div>
                             <p-dropdown inputId="country" [options]="workshifts"
                                 optionLabel="name" [filter]="true"
                                 filterBy="name"
                                 optionValue="id"
                                 formControlName="WorkShiftId"
-                                [showClear]="true" placeholder="Select a Gender">
+                                [showClear]="true" placeholder="Select a Workshitf">
                                 <ng-template let-workshifts pTemplate="item">
                                     <div class="flex align-items-center">
                                         <div>{{ workshifts.name}}</div>
@@ -65,29 +62,29 @@
                             </p-dropdown>
                         </div>
                         <div class="mt-4">
-                            <p-button label="Primary" styleClass="p-button-rounded p-button-sm ml-5" label="Apply" (onClick)="filterEmployee()"></p-button>
-                            <p-button label="Primary" styleClass="p-button-rounded ml-3 p-button-raised  p-button-text p-button-sm" label="Clear" (onClick)="onInitApi()"></p-button>
+                            <p-button label="Primary" styleClass="p-button-rounded p-button-sm ml-5" label="{{ 'TRANSLATOR.SAVE' | translate }}" type="submit"></p-button>
+                            <p-button label="Primary" styleClass="p-button-rounded ml-3 p-button-raised  p-button-text p-button-sm" label="{{ 'TRANSLATOR.RETURN' | translate }}" (onClick)="onInitApi()"></p-button>
                         </div>
+                    </form>
                     </p-overlay>
                     <button pButton
                         class="sm:w-auto flex-order-0 sm:flex-order-1"
-                        icon="pi pi-user-plus" label="Add New"
-                        (click)="navigateToCreateEmployee()"></button>
+                        (click)="navigateToCreateEmployee()"><i class="pi pi-user-plus"></i><span class="ml-1">{{ "TRANSLATOR.ADD_NEW" | translate }}</span></button>
                 </span>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id" class="white-space-nowrap"
-                    style="width:25%">ID <p-sortIcon field="id"></p-sortIcon></th>
+                    style="width:25%">{{ "FIELDS.NO" | translate }} <p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="name" class="white-space-nowrap"
-                    style="width:25%">Name <p-sortIcon field="name"></p-sortIcon></th>
+                    style="width:25%">{{ "FIELDS.NAME" | translate }} <p-sortIcon field="name"></p-sortIcon></th>
                 <th pSortableColumn="country.name" class="white-space-nowrap"
-                    style="width:25%">Gender <p-sortIcon field="country.name"></p-sortIcon></th>
+                    style="width:25%">{{ "FIELDS.GENDER" | translate }} <p-sortIcon field="country.name"></p-sortIcon></th>
                 <th pSortableColumn="date" class="white-space-nowrap"
-                    style="width:25%">Birthday <p-sortIcon field="date"></p-sortIcon></th>
+                    style="width:25%">{{ "FIELDS.BIRTH_DAY" | translate }} <p-sortIcon field="date"></p-sortIcon></th>
                 <th pSortableColumn="representative.name"
-                    class="white-space-nowrap" style="width:25%">Phone
+                    class="white-space-nowrap" style="width:25%">{{ "FIELDS.PHONE" | translate }}
                     <p-sortIcon field="representative.name"></p-sortIcon></th>
                 <th style="width:25%"></th>
             </tr>
@@ -107,8 +104,8 @@
                 <tr>
                     <td>{{employeeTest.id}}</td>
                     <td>{{employeeTest.name}}</td>
-                    <td>{{employeeTest.gender ? "Nam" :
-                        employeeTest.gender===false ? "Nữ" : "Trống"}}</td>
+                    <td>{{employeeTest.gender ? "{{ 'FIELDS.MALE' | translate }}" :
+                        employeeTest.gender===false ? "{{ 'FIELDS.FEMALE' | translate }}" : "Trống"}}</td>
                     <td>{{employeeTest.createdOn | date: 'MM/dd/yyyy, h:mm a'}}</td>
                     <td>{{employeeTest.phoneNumber}}</td>
                     <td>
@@ -133,7 +130,7 @@
         [style]="{width:'450px'}">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span *ngIf="employee"> Are you sure you want to delete <b>{{employee.name}}</b>?</span>
+            <span *ngIf="employee"> {{ 'TRANSLATOR.CONFIRM_DELETE' | translate }} <b>{{employee.name}}</b>?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"
@@ -147,14 +144,14 @@
         [style]="{width:'450px'}">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span *ngIf="employee"> Are you sure you want to reset password to <b>{{employee.name}}</b>?</span>
+            <span *ngIf="employee"> {{ 'TRANSLATOR.CONFIRM_DELETE' | translate }} <b>{{employee.name}}</b>?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"
-                label="No" (click)="resetPassDialog = false"></button>
+                label="{{ 'TRANSLATOR.RETURN' | translate }}" (click)="resetPassDialog = false"></button>
             <button pButton pRipple icon="pi pi-check" class="p-button-text"
                 (click)="resetConfirmed()"
-                label="Yes"></button>
+                label="{{ 'TRANSLATOR.SAVE' | translate }}"></button>
         </ng-template>
     </p-dialog>
 </div>
