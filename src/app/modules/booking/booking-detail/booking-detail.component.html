@@ -1,0 +1,76 @@
+<div class="card">
+    <div class="grid">
+        <div class="col-12 lg:col-6"></div>
+        <div class="col-12">
+            <button
+                pButton
+                icon="pi pi-angle-left"
+                pRipple
+                label=" {{ 'BTN.RETURN' | translate }}"
+                class="w-auto"
+                (click)="navigateToListBooking()"
+            ></button>
+        </div>
+        <div class="col-10 lg:col-9 pl-8 flex flex-column justify-content-center">
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="name" class="font-medium text-900 mr-3"> {{ "MANAGE_BRANCH.CODE" | translate }}:</label>
+                <input id="name" type="text" [value]="bookingId" class="w-6" pInputText [disabled]="true" />
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="name" class="font-medium text-900 mr-3">{{ "FIELDS.NAME" | translate }}: </label>
+                <input id="name" type="text" [value]="bookingDetail.cutomerName" class="w-6" pInputText [disabled]="true" />
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="name" class="font-medium text-900 mr-3">{{ "FIELDS.STATUS" | translate }}: </label>
+                <input
+                    id="name"
+                    type="text"
+                    [value]="bookingDetail.status === 1 ? 'Waiting' : bookingDetail.status === 2 ? 'Inprogress' : 'Done'"
+                    class="w-6"
+                    pInputText
+                    [disabled]="true"
+                />
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="phone-number" class="font-medium text-900 mr-3">{{ "FIELDS.PHONE" | translate }}: </label>
+                <input id="phone-number" type="text" [value]="bookingDetail.phoneNumber" class="w-6" pInputText [disabled]="true" />
+            </div>
+
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="phone-number" class="font-medium text-900 mr-3">{{ "FIELDS.BOOKING_DATE" | translate }}: </label>
+                <input
+                    id="phone-number"
+                    type="text"
+                    value="{{ bookingDetail.bookingDate | date : 'dd/MM/yyyy' }}"
+                    class="w-6"
+                    pInputText
+                    [disabled]="true"
+                />
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="fromTime" class="font-medium text-900 mr-3">{{ "FIELDS.FROM" | translate }}: </label>
+                <input
+                    id="fromTime"
+                    type="text"
+                    value="{{ bookingDetail.fromTime | date : 'hh: mm' }}"
+                    class="w-6"
+                    pInputText
+                    [disabled]="true"
+                />
+            </div>
+
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="toTime" class="font-medium text-900 mr-3">{{ "FIELDS.TO" | translate }}: </label>
+                <input id="toTime" type="text" value="{{ bookingDetail.toTime | date : 'hh: mm' }}" class="w-6" pInputText [disabled]="true" />
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="serviceName" class="font-medium text-900 mr-3">{{ "FIELDS.SERVICE" | translate }}: </label>
+                <input id="serviceName" type="text" [value]="serviceName" class="w-6" pInputText [disabled]="true" />
+            </div>
+            <div class="field w-field mb-4 col-12 flex align-items-center">
+                <label for="note" class="font-medium text-900 mr-3">{{ "FIELDS.NOTE" | translate }}: </label>
+                <input id="note" type="text" [value]="bookingDetail.note" class="w-6" pInputText [disabled]="true" />
+            </div>
+        </div>
+    </div>
+</div>

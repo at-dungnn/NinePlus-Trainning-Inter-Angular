@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BookingListRoutingModule } from './booking-list-routing.module';
 import { BookingListComponent } from './booking-list.component';
-import { SharedModule } from 'primeng/api';
+import { SharedModule } from 'src/app/shared';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { CalendarModule } from 'primeng/calendar';

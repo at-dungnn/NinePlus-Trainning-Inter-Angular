@@ -7,7 +7,6 @@ import * as _ from 'lodash';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { BookingService } from 'src/app/shared/services/booking.service';
-import { BookingCreate } from 'src/app/demo/api/booking-create';
 import { Services } from 'src/app/demo/api/booking-detail';
 import { ServicesService } from 'src/app/shared/services/service.service';
 
@@ -50,25 +49,24 @@ export class BookingCreateComponent implements OnInit {
             if (res.data && res.data.length) {
                 this.service = res.data as Services[];
             }
-            console.log(this.service);
         });
     }
+
     createBooking() {
         if (this.form.valid) {
-            const formData = new FormData();
-            Object.keys(this.form.controls).forEach((key) => {
-                const control = this.form.get(key);
-                if (control) {
-                    formData.append(key, control.value);
+
+            const bookingClone = _.cloneDeep(this.form.value)
+            if(this.form.value.serviceId.length > 0) {
+                for (let i = 0; i < this.form.value.serviceId.length; i++) {
+                    bookingClone.serviceId[i] = this.form.value.serviceId[i].id                    
                 }
-            });
-            this._bookingService.addBooking(formData as BookingCreate).subscribe({
+            }
+            this._bookingService.addBooking(bookingClone).subscribe({
                 next: (res) => {
                     this.navigateBackAllBooking();
                     this._toastService.showSuccess(MESSAGE_TITLE.ADD_SUCCESS, this.keyToast);
                 },
                 error: (error) => {
-                    this.form.patchValue({ birthday: '' });
                     if (error.error.messages) {
                         error.error.messages.forEach((item: string) => {
                             this._toastService.showError(item, this.keyToast);

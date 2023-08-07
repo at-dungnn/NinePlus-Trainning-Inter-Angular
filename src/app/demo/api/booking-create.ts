@@ -6,5 +6,5 @@ export interface BookingCreate{
     fromTime?: string;
     totime?: string;
     note?: string;
-    servicesId?: Services[];
+    servicesId?: number[];
 }

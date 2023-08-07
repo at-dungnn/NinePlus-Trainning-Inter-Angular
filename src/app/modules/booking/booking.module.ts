@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { BookingRoutingModule } from './booking-routing.module';
 import { BookingComponent } from './booking.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [

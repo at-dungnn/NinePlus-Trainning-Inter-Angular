@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 import { Component } from '@angular/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
-import { ROUTER } from 'src/app/shared';
+import { ROUTER, SharedModule } from 'src/app/shared';
 import { BookingService } from 'src/app/shared/services/booking.service';
 import { BookingDetail} from 'src/app/demo/api/booking-detail';
 

@@ -7,7 +7,9 @@ import { Table } from 'primeng/table';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
-import { MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
+import { MESSAGE_TITLE, ROUTER, TOAST, LanguageFlag, LANGUAGES } from 'src/app/shared';
+import { TranslationService } from '../../i18n';
+
 
 @Component({
     templateUrl: './booking-list.component.html',
@@ -20,6 +22,8 @@ import { MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
     ],
 })
 export class BookingListComponent implements OnInit {
+    language: LanguageFlag | undefined;
+    langs = LANGUAGES;
     bookings: Booking[] = [];
 
     isSkeleton: boolean = false;
@@ -38,23 +42,25 @@ export class BookingListComponent implements OnInit {
         private _toastService: ToastService,
         private _confirmationService: ConfirmationService,
         private _router: Router,
-        public _dialogService: DialogService
+        public _dialogService: DialogService,
+        private _translationService: TranslationService,
     ) {
         this.formatFormTo;
     }
 
     ngOnInit() {
-        // this.showSkeleton();
+        this.showSkeleton();
         this.getAllBooking();
         this.initKeyToast();
+      
     }
 
-    // showSkeleton() {
-    //     this.isSkeleton = true;
-    //     setTimeout(() => {
-    //         this.isSkeleton = false;
-    //     }, 1000);
-    // }
+    showSkeleton() {
+        this.isSkeleton = true;
+        setTimeout(() => {
+            this.isSkeleton = false;
+        }, 1000);
+    }
 
     getAllBooking() {
         this._bookingService.getListBooking().subscribe((res) => {
@@ -140,4 +146,5 @@ export class BookingListComponent implements OnInit {
     showDialog() {
         this.visible = true;
     }
+  
 }

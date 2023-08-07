@@ -1,52 +1,50 @@
 <div class="card">
     <p-toast [key]="keyToast"></p-toast>
     <div class="grid">
-        <div class="col-12 lg:col-2">
-            
-        </div>
+        <div class="col-12 lg:col-2"></div>
         <ng-template [ngIf]="form">
             <form [formGroup]="form" (ngSubmit)="createBooking()">
                 <div class="col-12 lg:col-10">
                     <div class="grid formgrid p-fluid">
                         <div class="field mb-4 col-12 md:col-6">
-                            <label for="name" class="font-medium text-900">Customer Id: <span style="color: red"> *</span></label>
+                            <label for="name" class="font-medium text-900">
+                                {{ "FIELDS.NAME" | translate }}: <span style="color: red"> *</span></label
+                            >
                             <input id="customerId" type="text" pInputText formControlName="customerId" />
                             <p style="color: red" *ngIf="form.get('customerId')?.errors?.['required'] && form.get('customerId')?.touched">
                                 * Không được để trống.
                             </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
-                            <label for="bookingDate" class="font-medium text-900">Booking Date: <span style="color: red"> *</span></label>
-                            <p-calendar
-                            dateFormat="dd/mm/yy"
-                            [showIcon]="true"
-                            formControlName="bookingDate"
-                            [readonlyInput]="true"
-                        ></p-calendar>
+                            <label for="bookingDate" class="font-medium text-900">
+                                {{ "FIELDS.BOOKING_DATE" | translate }}: <span style="color: red"> *</span></label
+                            >
+                            <p-calendar dateFormat="dd/mm/yy" [showIcon]="true" formControlName="bookingDate" [readonlyInput]="true"></p-calendar>
                             <p style="color: red" *ngIf="form.get('bookingDate')?.errors?.['required'] && form.get('bookingDate')?.touched">
                                 * Không được để trống
                             </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
-                            <label for="fromTime" class="font-medium text-900">From Time<span style="color: red"> *</span></label>
-                            <input id="fromTime" type="time" pInputText formControlName="fromTime" />
+                            <label for="fromTime" class="font-medium text-900"
+                                >{{ "FIELDS.FROM" | translate }}<span style="color: red"> *</span></label
+                            >
+                            <p-calendar [showTime]="true" [showIcon]="true" formControlName="fromTime" [readonlyInput]="true"></p-calendar>
                             <p style="color: red" *ngIf="form.get('fromTime')?.errors?.['required'] && form.get('fromTime')?.touched">
                                 * Không được để trống
                             </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
-                            <label for="totime" class="font-medium text-900">To Time <span style="color: red"> *</span></label>
-                            <input id="totime" type="time" pInputText formControlName="totime" />
-                            <p style="color: red" *ngIf="form.get('totime')?.errors?.['required'] && form.get('totime')?.touched">
-                                * Không được để trống
-                            </p>
+                            <label for="totime" class="font-medium text-900">{{ "FIELDS.TO" | translate }}<span style="color: red"> *</span></label>
+                            <p-calendar [showTime]="true" [showIcon]="true" formControlName="totime" [readonlyInput]="true"></p-calendar>
                         </div>
                         <div class="field mb-4 col-12">
-                            <label for="serviceId" class="font-medium text-900">Service<span style="color: red"> *</span></label>
+                            <label for="serviceId" class="font-medium text-900"
+                                >{{ "FIELDS.SERVICE" | translate }}<span style="color: red"> *</span></label
+                            >
                             <p-multiSelect
                                 [options]="service"
                                 [(ngModel)]="name"
-                                defaultLabel="Choose name services"
+                               
                                 optionLabel="name"
                                 display="chip"
                                 formControlName="serviceId"
@@ -56,21 +54,21 @@
                             </p>
                         </div>
                         <div class="field mb-4 col-12 md:col-6">
-                            <label for="note" class="font-medium text-900">Note </label>
-                            <input id="note" type="text" pInputText formControlName="note" />   
+                            <label for="note" class="font-medium text-900">{{ "FIELDS.NOTE" | translate }} </label>
+                            <input id="note" type="text" pInputText formControlName="note" />
                         </div>
                         <div class="field mb-4 col-12 md:col-6"></div>
 
                         <div class="col-12 md:col-6 lg:col-5 mt-3">
                             <div class="grid">
                                 <div class="col-6 md:col-5 lg:col-6">
-                                    <button pButton pRipple label="Save" icon="pi pi-check" type="submit"></button>
+                                    <button pButton pRipple label="{{ 'BTN.SAVE' | translate }}" icon="pi pi-check" type="submit"></button>
                                 </div>
                                 <div class="col-6 md:col-6 lg:col-6">
                                     <button
                                         pButton
                                         pRipple
-                                        label="Cancel"
+                                        label="{{ 'BTN.CANCEL' | translate }}"
                                         icon="pi pi-times"
                                         (click)="navigateBackAllBooking()"
                                         class="p-button-outlined"

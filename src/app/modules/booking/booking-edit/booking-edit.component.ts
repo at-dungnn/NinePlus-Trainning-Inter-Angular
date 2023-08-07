@@ -10,7 +10,6 @@ import { BookingService } from 'src/app/shared/services/booking.service';
 import { ServicesService } from 'src/app/shared/services/service.service';
 import { Services } from 'src/app/demo/api/booking-detail';
 import { BookingUpdate } from 'src/app/demo/api/booking-update';
-import { data } from 'jquery';
 
 const MESSAGE_ERROR = {
     CHECK_ID_BOOKING: 'Booking does not exist or recheck internet connection',

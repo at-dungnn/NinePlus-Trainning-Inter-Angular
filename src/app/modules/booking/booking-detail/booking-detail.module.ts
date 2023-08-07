@@ -13,6 +13,7 @@ import { CascadeSelectModule } from "primeng/cascadeselect";
 import { MultiSelectModule } from "primeng/multiselect";
 import { InputTextareaModule } from "primeng/inputtextarea";
 import { InputTextModule } from "primeng/inputtext";
+import { SharedModule } from 'src/app/shared';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { InputTextModule } from "primeng/inputtext";
 		CascadeSelectModule,
 		MultiSelectModule,
 		InputTextareaModule,
-		InputTextModule
+		InputTextModule,
+		SharedModule
   ]
 })
 export class BookingDetailModule { }
