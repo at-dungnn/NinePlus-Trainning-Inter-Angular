@@ -53,7 +53,7 @@ export class WorkshiftEditComponent {
     }
 
     updateWorkshiftById() {
-        if (this.form.valid) {
+        if (this.form.valid && this.workdaySelected.length) {
             this.convertDataBeforeCreate();
             this._workShiftService.updateWorkshiftById(this.form.value).subscribe({
                 next: (res) => {

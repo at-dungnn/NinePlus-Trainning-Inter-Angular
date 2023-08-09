@@ -3,8 +3,8 @@
     <span class="text-900 text-xl font-bold mb-4 block">{{ "TRANSLATOR.ADD_NEW" | translate }}</span>
     <div class="grid">
         <div class="col-12 lg:col-2">
-            <div class="text-900 font-medium text-xl mb-3">Profile</div>
-            <p>Odio euismod lacinia at quis risus sed vulputate odio.</p>
+            <!-- <div class="text-900 font-medium text-xl mb-3">Profile</div>
+            <p>Odio euismod lacinia at quis risus sed vulputate odio.</p> -->
         </div>
         <div class="col-12 lg:col-10">
             <!-- <ng-template [ngIf]="form"> -->
@@ -18,10 +18,10 @@
                                 formControlName="name">
                             <p style="color: red"
                                 *ngIf="submitted && form.controls?.['name']?.errors?.['required']">*
-                                Không được để trống</p>
+                                {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                         </div>
                         <div class="field mb-4 col-12 md:col-12 lg:col-12">
-                            <label for="fromTime" class="font-medium text-900">{{ "FIELDS.TIME_WORK" | translate }}c<span
+                            <label for="fromTime" class="font-medium text-900">{{ "EMPLOYEE_FIELDS.TIME_WORK" | translate }}<span
                                     style="color: red"> *</span></label>
                             <div class="grid flex">
                                 <div class="lg:col-6 md:col-6">
@@ -29,33 +29,32 @@
                                         formControlName="fromTime"></p-calendar>
                                     <p style="color: red"
                                         *ngIf="submitted && form.controls?.['fromTime']?.errors?.['required']">*
-                                        Không được để trống</p>
+                                        {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                                 </div>
                                 <div class="lg:col-6 md:col-6">
                                     <p-calendar [timeOnly]="true"
                                         formControlName="toTime"></p-calendar>
                                     <p style="color: red"
                                         *ngIf="submitted && form.controls?.['toTime']?.errors?.['required']">*
-                                        Không được để trống</p>
+                                        {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="field mb-4 col-12 md:col-12">
-                            <label for="toTime" class="font-medium text-900">{{ "FIELDS.DESRIPTION" | translate }} <span
+                            <label for="toTime" class="font-medium text-900">{{ "EMPLOYEE_FIELDS.DESRIPTION" | translate }} <span
                                     style="color: red"> *</span></label>
                             <input id="toTime" type="text" pInputText
                                 formControlName="description">
                             <p style="color: red"
                                 *ngIf="submitted && form.controls?.['description']?.errors?.['required']">*
-                                Không được để trống</p>
+                                {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}</p>
                             <p style="color: red"
                                 *ngIf=" submitted && form.controls?.['description']?.errors?.['maxLength']">*
-                                Chỉ được chứa nhiều nhất 255 kí tự</p>
+                                {{ "MANAGE_BRANCH.VALID_DESRIPTION" | translate }}</p>
                         </div>
                         <div class="field mb-4 col-12 md:col-12">
                             <label for="description"
-                                class="font-medium text-900">Ngày làm việc của
-                                ca<span style="color: red"> *</span></label>
+                                class="font-medium text-900">{{ "EMPLOYEE_FIELDS.WORKING_DAY_OF_SHIFT" | translate }}<span style="color: red"> *</span></label>
                             <div class="grid">
                                 <div *ngFor="let w of workdays"
                                     class="flex mt-4" style="margin-left: 50px">
@@ -68,18 +67,18 @@
                             </div>
                             <p style="color: red" class="mt-3"
                                 *ngIf="!isSelectedAnyWorkday() && submitted">
-                                Vui lòng chọn ít nhất một ngày làm việc
+                                {{ "MANAGE_BRANCH.VALID_DAY" | translate }}
                             </p>
                         </div>
                         <div class="col-12 md:col-6 lg:col-5 mt-3">
                             <div class="grid">
                                 <div class="col-6 md:col-5 lg:col-7">
-                                    <button pButton pRipple label="{{ 'TRANSLATOR.SAVE' | translate }}"
+                                    <button pButton pRipple label="{{ 'BTN.SAVE' | translate }}"
                                         icon="pi pi-check" type="submit"
                                         [disabled]="!isSelectedAnyWorkday() && submitted"></button>
                                 </div>
                                 <div class="col-6 md:col-4 lg:col-5">
-                                    <button pButton pRipple label="{{ 'TRANSLATOR.RETURN' | translate }}"
+                                    <button pButton pRipple label="{{ 'BTN.RETURN' | translate }}"
                                         icon="pi pi-times"
                                         (click)="navigateBackToListWorkshift()"
                                         class="p-button-outlined"></button>

@@ -13,20 +13,17 @@
                                 >
                                 <input id="name" type="text" pInputText formControlName="name" />
                                 <p style="color: red" *ngIf="form.get('name')?.errors?.['required'] && form.get('name')?.touched">
-                                    * Không được để trống
-                                </p>
-                                <p style="color: red" *ngIf="form.get('name')?.errors?.['pattern'] && form.get('name')?.touched">
-                                    * Chữ cái đầu phải viết hoa
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                                 </p>
                             </div>
                             <div class="field mb-4 col-12 md:col-6">
                                 <label for="email" class="font-medium text-900">Email<span style="color: red"> *</span></label>
                                 <input id="email" type="text" pInputText formControlName="email" />
                                 <p style="color: red" *ngIf="form.get('email')?.errors?.['required'] && form.get('email')?.touched">
-                                    * Không được để trống
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                                 </p>
                                 <p style="color: red" *ngIf="form.get('email')?.errors?.['pattern'] && form.get('email')?.touched">
-                                    * Email chưa đúng định dạng. Ex: abc12@gmail.com
+                                    * {{ "MANAGE_BRANCH.VALID_EMAIL" | translate }}
                                 </p>
                             </div>
                             <div class="col-12 md:col-6">
@@ -63,10 +60,10 @@
                                 >
                                 <input id="phone" type="text" pInputText formControlName="phoneNumber" />
                                 <p style="color: red" *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">
-                                    * Không được để trống
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                                 </p>
                                 <p style="color: red" *ngIf="form.get('phoneNumber')?.errors?.['pattern'] && form.get('phoneNumber')?.touched">
-                                    * Số điện thoại bao gồm 10 số và không được chứ kí tự
+                                    * {{ "MANAGE_BRANCH.VALID_PHONE" | translate }}
                                 </p>
                             </div>
                             <div class="field mb-4 col-12 md:col-6">
@@ -75,7 +72,7 @@
                                 >
                                 <input id="userName" type="text" pInputText formControlName="username" autocomplete="off" />
                                 <p style="color: red" *ngIf="form.get('username')?.errors?.['required'] && form.get('username')?.touched">
-                                    * Không được để trống
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                                 </p>
                             </div>
                             <div class="field mb-4 col-12 md:col-6">
@@ -133,10 +130,10 @@
                                 >
                                 <input id="password" type="password" pInputText autocomplete="passNew" formControlName="password" />
                                 <p style="color: red" *ngIf="form.get('password')?.errors?.['required'] && form.get('password')?.touched">
-                                    * Không được để trống
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                                 </p>
                                 <p style="color: red" *ngIf="form.get('password')?.errors?.['pattern'] && form.get('password')?.touched">
-                                    * Mật khẩu phải dài ít nhất 8 kí tự
+                                    * {{ "MANAGE_BRANCH.VALID_PASSWORD" | translate }}
                                 </p>
                             </div>
                             <div class="field mb-4 col-12 md:col-6">
@@ -145,10 +142,10 @@
                             </div>
                             <div class="field mb-4 col-12 md:col-6">
                                 <label for="workshiftId" class="font-medium text-900"
-                                    >{{ "FIELDS.WORKSHIFT_ID" | translate }}<span style="color: red"> *</span></label
+                                    >{{ "EMPLOYEE_FIELDS.WORKSHIFT_ID" | translate }}<span style="color: red"> *</span></label
                                 >
                                 <p-dropdown
-                                    placeholder="{{ 'FIELDS.TIME_WORK' | translate }}"
+                                    placeholder="{{ 'EMPLOYEE_FIELDS.WORKSHIFT_ID' | translate }}"
                                     formControlName="workShiftId"
                                     optionValue="id"
                                     optionLabel="name"
@@ -161,7 +158,7 @@
                                 >
                                 </p-dropdown>
                                 <p style="color: red" *ngIf="form.get('workShiftId')?.errors?.['required'] && form.get('workShiftId')?.touched">
-                                    * Không được để trống
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
                                 </p>
                             </div>
                             <div class="field mb-4 col-12 md:col-6"></div>

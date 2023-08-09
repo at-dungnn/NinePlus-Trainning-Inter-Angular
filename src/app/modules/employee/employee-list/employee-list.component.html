@@ -21,7 +21,7 @@
             </div>
             <div class="col-12 sm:col-3">
                 <p-dropdown
-                    placeholder="{{ 'FIELDS.TIME_WORK' | translate }}"
+                    placeholder="{{ 'EMPLOYEE_FIELDS.WORKSHIFT_ID' | translate }}"
                     formControlName="workShiftId"
                     optionValue="id"
                     optionLabel="name"
@@ -49,7 +49,7 @@
                 <button
                     pButton
                     pRipple
-                    label="Xóa điều kiện"
+                    label="{{ 'BTN.REMOVE_CONDITION' | translate }}"
                     class="w-auto mr-2 mb-2"
                     (click)="clearFilter()"
                     icon="pi pi-exclamation-triangle"
@@ -87,7 +87,7 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id" class="white-space-nowrap" style="width: 25%">
-                    {{ "FIELDS.NO" | translate }} <p-sortIcon field="id"></p-sortIcon>
+                    {{ "TRANSLATOR.NO" | translate }} <p-sortIcon field="id"></p-sortIcon>
                 </th>
                 <th pSortableColumn="name" class="white-space-nowrap" style="width: 25%">
                     {{ "FIELDS.NAME" | translate }} <p-sortIcon field="name"></p-sortIcon>
@@ -96,7 +96,7 @@
                     {{ "FIELDS.GENDER" | translate }} <p-sortIcon field="country.name"></p-sortIcon>
                 </th>
                 <th pSortableColumn="date" class="white-space-nowrap" style="width: 25%">
-                    {{ "FIELDS.BIRTH_DAY" | translate }} <p-sortIcon field="date"></p-sortIcon>
+                    {{ "EMPLOYEE_FIELDS.CREATE_DATE" | translate }} <p-sortIcon field="date"></p-sortIcon>
                 </th>
                 <th pSortableColumn="representative.name" class="white-space-nowrap" style="width: 25%">
                     {{ "FIELDS.PHONE" | translate }} <p-sortIcon field="representative.name"></p-sortIcon>
@@ -106,7 +106,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-employeeTest>
             <ng-container *ngIf="isSkeleton; else showTable">
-                <tr>
+                <tr [pSelectableRow]="employeeTest">
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
@@ -156,7 +156,7 @@
             </ng-template>
         </ng-template>
     </p-table>
-    <p-dialog [(visible)]="deleteProductsDialog" header="Confirm" [modal]="true" [style]="{ width: '450px' }">
+    <p-dialog [(visible)]="deleteProductsDialog" header="{{'MANAGE_BRANCH.CONFIRM' | translate}}" [modal]="true" [style]="{ width: '450px' }">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
             <span *ngIf="employee">
@@ -165,16 +165,16 @@
             >
         </div>
         <ng-template pTemplate="footer">
-            <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteProductsDialog = false"></button>
-            <button pButton pRipple icon="pi pi-check" class="p-button-text" (click)="deleteConfirmed()" label="Yes"></button>
+            <button pButton pRipple icon="pi pi-times" class="p-button-text" label="{{'BTN.CANCEL' | translate}}" (click)="deleteProductsDialog = false"></button>
+            <button pButton pRipple icon="pi pi-check" class="p-button-text" (click)="deleteConfirmed()" label="{{'BTN.SAVE' | translate}}"></button>
         </ng-template>
     </p-dialog>
-    <p-dialog [(visible)]="resetPassDialog" header="Confirm" [modal]="true" [style]="{ width: '450px' }">
+    <p-dialog [(visible)]="resetPassDialog" header="{{'MANAGE_BRANCH.CONFIRM' | translate}}" [modal]="true" [style]="{ width: '450px' }">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
             <span *ngIf="employee">
-                {{ "TRANSLATOR.CONFIRM_DELETE" | translate }} <b>{{ employee.name }}</b
-                >?</span
+                {{ "TRANSLATOR.CONFIRM_PASSWORD" | translate }} <b>{{ employee.name }}</b
+                > ?</span
             >
         </div>
         <ng-template pTemplate="footer">
@@ -183,7 +183,7 @@
                 pRipple
                 icon="pi pi-times"
                 class="p-button-text"
-                label="{{ 'TRANSLATOR.RETURN' | translate }}"
+                label="{{'BTN.CANCEL' | translate}}"
                 (click)="resetPassDialog = false"
             ></button>
             <button
@@ -192,7 +192,7 @@
                 icon="pi pi-check"
                 class="p-button-text"
                 (click)="resetConfirmed()"
-                label="{{ 'TRANSLATOR.SAVE' | translate }}"
+                label="{{ 'BTN.SAVE' | translate }}"
             ></button>
         </ng-template>
     </p-dialog>

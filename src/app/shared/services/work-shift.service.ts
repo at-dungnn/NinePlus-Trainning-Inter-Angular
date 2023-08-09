@@ -43,4 +43,8 @@ export class WorkShiftService extends CrudBaseService {
     getWorkshiftById(id: string): Observable<ApiResponse> {
         return this.get(id);
     }
+
+    filterWorkshift(body: any): Observable<any[]> {
+        return this.filter(body);
+    }
 }

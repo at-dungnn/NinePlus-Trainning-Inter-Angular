@@ -66,6 +66,7 @@ export class EmployeeListComponent {
                 if (this.workshifts.length === 0) {
                     this._toastService.showWarningNoKey(MESSAGE_TITLE.LIST_EMPTY);
                 }
+                this.toastFormAnotherScreen();
             },
             error: (error) => {
                 error.error.messages.forEach((item: string) => {

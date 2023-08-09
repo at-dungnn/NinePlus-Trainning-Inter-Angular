@@ -1,26 +1,57 @@
+<p-toast></p-toast>
 <div class="card">
-    <p-toast></p-toast>
-    <p-table #dt [paginator]="true" [value]="workshifts" [rows]="5"
-        [showCurrentPageReport]="true" responsiveLayout="scroll"
+    <form [formGroup]="formFilter">
+        <div class="row grid p-fluid">
+            <div class="col-12 sm:col-3">
+                <input pInputText type="text"
+                    placeholder="{{ 'TRANSLATOR.SEARCH' | translate }}"
+                    formControlName="keyword" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 group-button-filter">
+                <button
+                    pButton
+                    pRipple
+                    label="{{ 'TRANSLATOR.SEARCH' | translate }}"
+                    class="w-auto mr-2 mb-2"
+                    icon="pi pi-search"
+                    (click)="filterWorkshift()"></button>
+                <button
+                    pButton
+                    pRipple
+                    label="{{ 'BTN.REMOVE_CONDITION' | translate }}"
+                    class="w-auto mr-2 mb-2"
+                    (click)="clearFilter()"
+                    icon="pi pi-exclamation-triangle"></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="card">
+    <p-table 
+    #dt
+        [value]="workshifts"
+        [paginator]="true"
+        [rows]="5"
+        [lazy]="true"
+        (onLazyLoad)="filter($event)"
+        [totalRecords]="totalRecords"
+        [first]="firstPaging"
+        [showCurrentPageReport]="true"
+        responsiveLayout="scroll"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [rowsPerPageOptions]="[5,15,25]"
-        [globalFilterFields]="['name','fromTime', 'toTime', 'numberEmployee']">
+        [rowsPerPageOptions]="[5, 15, 25]"
+        [globalFilterFields]="['name', 'phoneNumber']">
         <ng-template pTemplate="caption">
             <div
                 class="flex flex-wrap gap-2 align-items-center justify-content-between">
-                <div>
-                    <span
-                        class="p-input-icon-left w-full sm:w-20rem flex-order-1 sm:flex-order-0 mr-3">
-                        <i class="pi pi-search"></i>
-                        <input pInputText type="text"
-                            (input)="onGlobalFilter(dt, $event)"
-                            placeholder="{{ 'TRANSLATOR.SEARCH' | translate }}" class="w-full" />
-                    </span>
-                </div>
+                <div></div>
                 <span>
                     <button pButton
                         class="sm:w-auto flex-order-0 sm:flex-order-1"
-                        icon="pi pi-plus-circle" label="{{ 'TRANSLATOR.ADD_NEW' | translate }}"
+                        icon="pi pi-plus-circle"
+                        label="{{ 'TRANSLATOR.ADD_NEW' | translate }}"
                         (click)="navigateToCreateWorkshift()"></button>
                 </span>
             </div>
@@ -28,22 +59,29 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id" class="white-space-nowrap"
-                    style="width:10%">{{ "FIELDS.NAME" | translate }} <p-sortIcon field="id"></p-sortIcon></th>
+                    style="width:10%">{{ "TRANSLATOR.NO" | translate }}
+                    <p-sortIcon field="id"></p-sortIcon></th>
                 <th pSortableColumn="fromTime" class="white-space-nowrap"
-                    style="width:20%">{{ 'FIELDS.NAME' | translate }} <p-sortIcon
+                    style="width:20%">{{ 'FIELDS.NAME' | translate }}
+                    <p-sortIcon
                         field="country.name"></p-sortIcon></th>
                 <th pSortableColumn="date" class="white-space-nowrap"
-                    style="width:20%">{{ 'FIELDS.TIME_WORK' | translate }}</th>
+                    style="width:20%">{{ "EMPLOYEE_FIELDS.TIME_WORK" | translate
+                    }}</th>
                 <th pSortableColumn="timeWord"
-                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.TIME' | translate }}</th>
+                    class="white-space-nowrap" style="width:20%">{{
+                    "EMPLOYEE_FIELDS.WORKING_HOURS" | translate }}</th>
                 <th pSortableColumn="numberEmployee"
-                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.NUMBER_EMPLOYEE' | translate }}
+                    class="white-space-nowrap" style="width:20%">{{
+                    "EMPLOYEE_FIELDS.NUMBER_EMPLOYEE" | translate }}
                 </th>
                 <th pSortableColumn="description"
-                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.DESRIPTION' | translate }}
+                    class="white-space-nowrap" style="width:20%">{{
+                    "EMPLOYEE_FIELDS.DESRIPTION" | translate }}
                 </th>
                 <th pSortableColumn="isDefault"
-                    class="white-space-nowrap" style="width:20%">{{ 'FIELDS.DEFAULT' | translate }}
+                    class="white-space-nowrap" style="width:20%">{{
+                    "TRANSLATOR.DEFAULT" | translate }}
                 </th>
                 <th style="width:25%"></th>
             </tr>
@@ -91,18 +129,21 @@
         </ng-template>
     </p-table>
 
-    <p-dialog [(visible)]="deleteProductsDialog" header="Confirm" [modal]="true"
+    <p-dialog [(visible)]="deleteProductsDialog"
+        header="{{ 'TRANSLATOR.DETAIL' | translate }}" [modal]="true"
         [style]="{width:'450px'}">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span *ngIf="workshift"> {{ 'TRANSLATOR.CONFIRM_DELETE' | translate }} <b>{{workshift.name}}</b>?</span>
+            <span *ngIf="workshift"> {{ 'TRANSLATOR.CONFIRM_DELETE' | translate
+                }} <b>{{workshift.name}}</b>?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"
-                label="No" (click)="deleteProductsDialog = false"></button>
+                label="{{ 'BTN.RETURN' | translate }}"
+                (click)="deleteProductsDialog = false"></button>
             <button pButton pRipple icon="pi pi-check" class="p-button-text"
                 (click)="deleteConfirmed()"
-                label="Yes"></button>
+                label="{{ 'BTN.SAVE' | translate }}"></button>
         </ng-template>
     </p-dialog>
 </div>
