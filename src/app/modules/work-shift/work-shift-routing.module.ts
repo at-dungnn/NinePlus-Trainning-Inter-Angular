@@ -8,22 +8,22 @@ const routes: Routes = [];
         RouterModule.forChild([
             {
                 path: 'list',
-                data: { breadcrumb: 'List' },
+                data: { breadcrumb: 'Danh sách' },
                 loadChildren: () => import('./work-shift-list/work-shift-list.module').then((m) => m.WorkShiftListModule),
             },
             {
                 path: 'detail/:id/:nameWorkshift',
-                data: { breadcrumb: 'Detail' },
+                data: { breadcrumb: 'Chi tiết' },
                 loadChildren: () => import('./work-shift-detail/workshift-detail.module').then((m) => m.WorkshiftDetailModule),
             },
             {
                 path: 'edit/:id',
-                data: { breadcrumb: 'Edit' },
+                data: { breadcrumb: 'Chỉnh sửa' },
                 loadChildren: () => import('./work-shift-edit/workshift-edit.module').then((m) => m.WorkshiftEditModule),
             },
             {
                 path: 'create',
-                data: { breadcrumb: 'Create' },
+                data: { breadcrumb: 'Thêm mới' },
                 loadChildren: () => import('./work-shift-create/workshift-create.module').then((m) => m.WorkshiftCreateModule),
             },
         ]),

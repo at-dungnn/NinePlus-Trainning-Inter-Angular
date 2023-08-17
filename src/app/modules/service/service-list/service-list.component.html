@@ -9,27 +9,27 @@
             </div>
             <div class="col-12 sm:col-3">
                 <p-dropdown
-                    placeholder="{{ 'FIELDS.GENDER' | translate }}"
-                    formControlName="gender"
-                    optionValue="code"
-                    optionLabel="name"
+                    placeholder="{{ 'FIELDS.TIME' | translate }}"
+                    formControlName="time"
+                    optionValue="time"
+                    optionLabel="time"
                     emptyFilterMessage="Không tìm thấy dữ liệu"
                     emptyMessage="Không tìm thấy dữ liệu"
-                    [options]="genders"
+                    [options]="serviceTimes"
                     [showClear]="true">
                 </p-dropdown>
             </div>
             <div class="col-12 sm:col-3">
                 <p-dropdown
-                    placeholder="{{ 'EMPLOYEE_FIELDS.WORKSHIFT_ID' | translate }}"
-                    formControlName="workShiftId"
-                    optionValue="id"
-                    optionLabel="name"
+                    placeholder="{{ 'FIELDS.REVIEW' | translate }}"
+                    formControlName="review"
+                    optionValue="review"
+                    optionLabel="review"
                     emptyFilterMessage="Không tìm thấy dữ liệu"
                     emptyMessage="Không tìm thấy dữ liệu"
-                    [options]="workshifts"
+                    [options]="reviews"
                     [filter]="true"
-                    filterBy="name"
+                    filterBy="review"
                     [showClear]="true">
                 </p-dropdown>
             </div>
@@ -42,7 +42,7 @@
                     label="{{ 'TRANSLATOR.SEARCH' | translate }}"
                     class="w-auto mr-2 mb-2"
                     icon="pi pi-search"
-                    (click)="filterEmployee()"></button>
+                    (click)="filterService()"></button>
                 <button
                     pButton
                     pRipple
@@ -57,7 +57,7 @@
 <div class="card">
     <p-table
         #dt
-        [value]="employees"
+        [value]="services"
         [paginator]="true"
         [rows]="5"
         [lazy]="true"
@@ -75,8 +75,7 @@
                 <div></div>
                 <span>
                     <button pButton
-                        class="sm:w-auto flex-order-0 sm:flex-order-1"
-                        (click)="navigateToCreateEmployee()">
+                        class="sm:w-auto flex-order-0 sm:flex-order-1">
                         <i class="pi pi-user-plus"></i><span class="ml-1">{{
                             "TRANSLATOR.ADD_NEW" | translate }}</span>
                     </button>
@@ -86,34 +85,40 @@
         <ng-template pTemplate="header">
             <tr>
                 <th pSortableColumn="id" class="white-space-nowrap"
-                    style="width: 25%">
+                    style="width: 10%">
                     {{ "TRANSLATOR.NO" | translate }} <p-sortIcon field="id"></p-sortIcon>
                 </th>
                 <th pSortableColumn="name" class="white-space-nowrap"
-                    style="width: 25%">
+                    style="width: 20%">
                     {{ "FIELDS.NAME" | translate }} <p-sortIcon field="name"></p-sortIcon>
                 </th>
                 <th pSortableColumn="country.name" class="white-space-nowrap"
-                    style="width: 25%">
-                    {{ "FIELDS.GENDER" | translate }} <p-sortIcon
+                    style="width: 20%">
+                    {{ "FIELDS.IMAGE" | translate }} <p-sortIcon
                         field="country.name"></p-sortIcon>
                 </th>
                 <th pSortableColumn="date" class="white-space-nowrap"
-                    style="width: 25%">
-                    {{ "EMPLOYEE_FIELDS.CREATE_DATE" | translate }} <p-sortIcon
+                    style="width: 20%">
+                    {{ "FIELDS.PRICE" | translate }} <p-sortIcon
                         field="date"></p-sortIcon>
                 </th>
                 <th pSortableColumn="representative.name"
-                    class="white-space-nowrap" style="width: 25%">
-                    {{ "FIELDS.PHONE" | translate }} <p-sortIcon
+                    class="white-space-nowrap" style="width: 15%">
+                    {{ "FIELDS.TIME" | translate }} <p-sortIcon
                         field="representative.name"></p-sortIcon>
                 </th>
-                <th style="width: 25%"></th>
+                <th pSortableColumn="representative.name"
+                    class="white-space-nowrap" style="width: 20%">
+                    {{ "FIELDS.REVIEW" | translate }} <p-sortIcon
+                        field="representative.name"></p-sortIcon>
+                </th>
+                <th style="width: 20%"></th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-employees>
+        <ng-template pTemplate="body" let-services>
             <ng-container *ngIf="isSkeleton; else showTable">
-                <tr [pSelectableRow]="employees">
+                <tr>
+                    <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
                     <td><p-skeleton></p-skeleton></td>
@@ -124,32 +129,30 @@
             </ng-container>
             <ng-template #showTable>
                 <tr>
-                    <td>{{ employees.id }}</td>
-                    <td>{{ employees.name }}</td>
-                    <td>
-                        {{
-                        employees.gender
-                        ? ("FIELDS.MALE" | translate)
-                        : employees.gender === false
-                        ? ("FIELDS.FEMALE" | translate)
-                        : "Trống"
-                        }}
+                    <td>{{ services.id }}</td>
+                    <td>{{ services.name }}</td>
+                    <td class="image-container">
+                        <img #image
+                            (error)="image.src = 'assets/layout/images/empty-default.png'"
+                            [src]="services.image ? services.image : 'assets/layout/images/blank.png'"
+                            alt="Trống" />
                     </td>
-                    <td>{{ employees.createdOn | date : "MM/dd/yyyy" }}</td>
-                    <td>{{ employees.phoneNumber }}</td>
+                    <td>{{ services.price | number }}₫</td>
+                    <td>{{ services.time}} {{ "FIELDS.MINUTE" | translate }}</td>
+                    <td> <p-rating [ngModel]="services.review" [readonly]="true"
+                            [cancel]="false"></p-rating></td>
                     <td>
                         <div class="flex">
                             <button
                                 pButton
                                 pRipple
                                 icon="pi pi-pencil"
-                                class="p-button-rounded p-button-success mr-2"
-                                (click)="navigateToEditEmployee(employees.id)"></button>
+                                class="p-button-rounded p-button-success mr-2"></button>
                             <button
                                 pButton
                                 pRipple
                                 icon="pi pi-trash"
-                                (click)="confirmDelete(employees)"
+                                (click)="confirmDelete(services)"
                                 class="p-button-rounded p-button-warning mr-2"></button>
                         </div>
                     </td>
@@ -162,9 +165,9 @@
         [style]="{ width: '450px' }">
         <div class="flex align-items-center justify-content-center">
             <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-            <span *ngIf="employee">
+            <span *ngIf="service">
                 {{ "TRANSLATOR.CONFIRM_DELETE" | translate }} <b>{{
-                    employee.name }}</b>?</span>
+                    service.name }}</b>?</span>
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"

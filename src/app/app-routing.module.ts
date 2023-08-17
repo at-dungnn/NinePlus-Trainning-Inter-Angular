@@ -57,6 +57,11 @@ const routes: Routes = [
                 loadChildren: () => import('./modules/work-shift/work-shift.module').then((m) => m.WorkShiftModule),
             },
             {
+                path: 'service',
+                data: { breadcrumb: 'Quản lý dịch vụ' },
+                loadChildren: () => import('./modules/service/service.module').then((m) => m.ServiceModule),
+            },
+            {
                 path: 'documentation',
                 data: { breadcrumb: 'Tài liệu' },
                 loadChildren: () => import('./demo/components/documentation/documentation.module').then((m) => m.DocumentationModule),

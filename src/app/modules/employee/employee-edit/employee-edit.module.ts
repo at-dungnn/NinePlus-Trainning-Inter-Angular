@@ -9,6 +9,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { SharedModule } from 'src/app/shared';
 import { ImageModule } from 'primeng/image';
+import { InputMaskModule } from 'primeng/inputmask';
 @NgModule({
     declarations: [EmployeeEditComponent],
     imports: [
@@ -20,6 +21,7 @@ import { ImageModule } from 'primeng/image';
         ToggleButtonModule,
         ImageModule,
         SharedModule,
+        InputMaskModule
     ],
 })
-export class EmployeeEditModule {}
+export class EmployeeEditModule { }

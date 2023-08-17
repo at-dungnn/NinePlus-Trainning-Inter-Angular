@@ -1,7 +1,18 @@
 <div class="card">
     <p-toast [key]="keyToast"></p-toast>
-    <span class="text-900 text-xl font-bold mb-4 block">{{ "TRANSLATOR.EDIT" |
-        translate }}</span>
+    <div class="grid">
+        <div class="col-4"> <span class="text-900 text-xl font-bold mb-4 block">{{
+                "TRANSLATOR.EDIT" |
+                translate }}</span></div>
+        <div class="col-4 col-offset-4" style="text-align: center;">
+            <button
+                type="button"
+                pButton
+                pRipple
+                (click)="resetPassDialog=true"
+                label="{{ 'AUTH.RESET_PASSWORD' | translate }}"
+                class="p-button-outlined p-button-warning"></button></div>
+    </div>
     <div class="grid">
         <form [formGroup]="form" (ngSubmit)="updateEmployeeById()">
             <div class="col-12 lg:col-12">
@@ -39,8 +50,13 @@
                         <label for="phone" class="font-medium text-900">{{
                             "FIELDS.PHONE" | translate }}<span
                                 style="color: red"> *</span></label>
-                        <input id="phone" type="text" pInputText
-                            formControlName="phoneNumber" />
+                        <p-inputMask
+                            mask="9999999999"
+                            slotChar
+                            formControlName="phoneNumber"
+                            [showClear]="true"
+                            [autoClear]="false"
+                            [maxlength]="11"></p-inputMask>
                         <p style="color: red"
                             *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">
                             * {{ "MANAGE_BRANCH.VALID_INPUT" | translate }}
@@ -160,9 +176,10 @@
                             </div>
                             <div class="col-6 md:col-6 lg:col-6">
                                 <button
+                                    type="button"
                                     pButton
                                     pRipple
-                                    label="{{ 'BTN.RETURN' | translate }}"
+                                    label="{{ 'BTN.CANCEL' | translate }}"
                                     icon="pi pi-times"
                                     (click)="navigateBackEmployeeList()"
                                     class="p-button-outlined"></button>
@@ -173,4 +190,30 @@
             </div>
         </form>
     </div>
+    <p-dialog [(visible)]="resetPassDialog"
+        header="{{'MANAGE_BRANCH.CONFIRM' | translate}}" [modal]="true"
+        [style]="{ width: '450px' }">
+        <div class="flex align-items-center justify-content-center">
+            <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+            <span *ngIf="form.get('userName')?.value">
+                {{ "TRANSLATOR.CONFIRM_PASSWORD" | translate }} <b>{{form.get('userName')?.value}}</b>
+                ?</span>
+        </div>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                icon="pi pi-times"
+                class="p-button-text"
+                label="{{'BTN.CANCEL' | translate}}"
+                (click)="resetPassDialog = false"></button>
+            <button
+                pButton
+                pRipple
+                icon="pi pi-check"
+                class="p-button-text"
+                (click)="resetConfirmed()"
+                label="{{ 'BTN.SAVE' | translate }}"></button>
+        </ng-template>
+    </p-dialog>
 </div>

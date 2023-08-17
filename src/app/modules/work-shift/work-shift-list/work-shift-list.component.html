@@ -104,7 +104,7 @@
                     <td>{{ rowIndex + 1 }}</td>
                     <td>{{workshifts.name}}</td>
                     <td>{{workshifts.fromTime}} h - {{workshifts.toTime}} h</td>
-                    <td>{{workshifts.timeWord}} h</td>
+                    <td>{{workshifts.timeWork}} h</td>
                     <td>{{workshifts.numberEmployee}}</td>
                     <td>{{workshifts.description}}</td>
                     <td style="text-align: center;">
@@ -138,7 +138,7 @@
         </div>
         <ng-template pTemplate="footer">
             <button pButton pRipple icon="pi pi-times" class="p-button-text"
-                label="{{ 'BTN.RETURN' | translate }}"
+                label="{{ 'BTN.CANCEL' | translate }}"
                 (click)="deleteProductsDialog = false"></button>
             <button pButton pRipple icon="pi pi-check" class="p-button-text"
                 (click)="deleteConfirmed()"

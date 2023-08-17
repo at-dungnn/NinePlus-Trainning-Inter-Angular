@@ -8,9 +8,17 @@ import { CalendarModule } from 'primeng/calendar';
 import { FileUploadModule } from 'primeng/fileupload';
 import { FormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
     declarations: [EmployeeCreateComponent],
-    imports: [CommonModule, EmployeeCreateRoutingModule, InputTextareaModule, CalendarModule, FileUploadModule, SharedModule, FormsModule],
+    imports: [CommonModule,
+        EmployeeCreateRoutingModule,
+        InputTextareaModule,
+        CalendarModule,
+        FileUploadModule,
+        SharedModule,
+        FormsModule,
+        InputMaskModule],
 })
 export class EmployeeCreateModule { }

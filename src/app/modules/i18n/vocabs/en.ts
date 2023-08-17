@@ -59,7 +59,7 @@ export const locale = {
             VALID_BRANCH: 'Branch is required',
             CONFIRM: 'Confirm',
             VALID_INPUT: 'This field is required',
-            VALID_PHONE: 'Phone number consists of 10 numbers and no characters',
+            VALID_PHONE: 'Phone number is not correct',
             VALID_EMAIL: 'Email is not in the correct format. Ex: abc12@gmail.com',
             VALID_PASSWORD: 'Password must be at least 8 characters long',
             VALID_DESRIPTION: 'This field is no more than 255 characters long',
@@ -109,7 +109,11 @@ export const locale = {
             PRICE: 'Price',
             DATE_TIME: 'Date Time',
             NOTE: 'Note',
-            TOTAL_AMOUNT : "Total Amount"
+            TOTAL_AMOUNT : "Total Amount",
+            IMAGE: 'Image',
+            REVIEW: 'Review',
+            SERVICE_TIME: 'Service time',
+            MINUTE: 'Minute',
         },
         EMPLOYEE_FIELDS: {
             WORKSHIFT_ID: 'Workshift_ID',

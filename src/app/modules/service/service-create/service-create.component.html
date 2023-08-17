@@ -1,0 +1,149 @@
+<div class="card">
+    <span class="text-900 text-xl font-bold mb-4 block">{{ "TRANSLATOR.ADD_NEW"
+        | translate }}</span>
+    <p-toast [key]="keyToast"></p-toast>
+    <div class="grid">
+        <div class="col-12 lg:col-12">
+            <ng-template [ngIf]="form">
+                <form [formGroup]="form" (ngSubmit)="createService()">
+                    <div class="col-12 lg:col-12">
+                        <div class="grid formgrid p-fluid">
+                            <div class="field mb-4 col-12 md:col-10">
+                                <label for="name" class="font-medium text-900">{{
+                                    "FIELDS.NAME" | translate }}<span
+                                        style="color: red"> *</span></label>
+                                <input id="name" type="text" pInputText
+                                    formControlName="name" />
+                                <p style="color: red"
+                                    *ngIf="checkValidInput && form.get('name')?.errors?.['required']">
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
+                                    }}
+                                </p>
+                            </div>
+                            <div class="field mb-4 col-12 md:col-10">
+                                <label for="avatar" class="font-medium text-900">{{
+                                    "FIELDS.AVATAR" | translate }}<span
+                                        style="color: red"> *</span></label>
+                                <div class="flex align-items-center"
+                                    style="position: relative">
+                                    <div class="img-container mr-4">
+                                        <img
+                                            #image
+                                            (error)="image.src = 'assets/layout/images/blank.png'"
+                                            [src]="fileUrl ? fileUrl : 'assets/layout/images/blank.png'"
+                                            alt="Trống" />
+                                    </div>
+                                    <div style="position: relative">
+                                        <input
+                                            id="imageUpload"
+                                            type="file"
+                                            class="w-100 opacity-0 cursor-pointer"
+                                            accept="image/*"
+                                            style="
+                                                position: absolute;
+                                                width: 39px;
+                                                height: 39px;
+                                                right: 50%;
+                                                top: 50%;
+                                                z-index: 20;
+                                                translate: 50% -50%;
+                                            "
+                                            multiple
+                                            (change)="uploadFile($event)" />
+                                        <button
+                                            class="p-button-primary change-input-image w-10rem"
+                                            pButton
+                                            pRipple
+                                            icon="pi pi-check"
+                                            label="Upload file"
+                                            pTooltip="Chọn ảnh đại diện"
+                                            tooltipPosition="top">
+                                            <div
+                                                style="position: absolute"
+                                                class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow">
+                                                <i
+                                                    class="fa fa-pen icon-sm text-muted"></i>
+                                            </div>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p style="color: red"
+                                    *ngIf="checkValidImg">
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
+                                    }}
+                                </p>
+                            </div>
+                            <div class="field mb-4 col-12 md:col-10">
+                                <label for="phone" class="font-medium text-900">{{
+                                    "EMPLOYEE_FIELDS.DESRIPTION" | translate }}</label>
+                                <textarea id="phone" type="text" pInputText
+                                    formControlName="description"></textarea>
+                            </div>
+                            <div class="field mb-4 col-12 md:col-5">
+                                <label for="address"
+                                    class="font-medium text-900">{{
+                                    "FIELDS.PRICE" | translate }}<span
+                                        style="color: red"> *</span></label>
+                                <p-inputMask
+                                    mask="9999999999"
+                                    slotChar
+                                    placeholder="$"
+                                    formControlName="price"
+                                    [showClear]="true"
+                                    [autoClear]="false"
+                                    [maxlength]="11"></p-inputMask>
+                                <p style="color: red"
+                                    *ngIf="checkValidInput && form.get('price')?.errors?.['required'] ">
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
+                                    }}
+                                </p>
+                            </div>
+                            <div class="field mb-4 col-12 md:col-5">
+                                <label for="address"
+                                    class="font-medium text-900">{{
+                                    "FIELDS.SERVICE_TIME" | translate }}<span
+                                        style="color: red"> *</span></label>
+                                <p-dropdown
+                                    placeholder="{{ 'FIELDS.SERVICE_TIME' | translate }} ({{'FIELDS.MINUTE' | translate }})"
+                                    formControlName="serviceTime"
+                                    optionValue="time"
+                                    optionLabel="time"
+                                    emptyFilterMessage="Không tìm thấy dữ liệu"
+                                    emptyMessage="Không tìm thấy dữ liệu"
+                                    [options]="serviceTimes"
+                                    [filter]="true"
+                                    filterBy="name"
+                                    [showClear]="true">
+                                </p-dropdown>
+                                <p style="color: red"
+                                    *ngIf="checkValidInput && form.get('serviceTime')?.errors?.['required']">
+                                    * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
+                                    }}
+                                </p>
+                            </div>
+                            <div class="col-12 md:col-6 lg:col-4 mt-4">
+                                <div class="grid">
+                                    <div class="col-6 md:col-5 lg:col-6">
+                                        <button pButton pRipple
+                                            label="{{ 'BTN.SAVE' | translate }}"
+                                            icon="pi pi-check" type="submit"></button>
+                                    </div>
+                                    <div class="col-6 md:col-6 lg:col-6">
+                                        <button
+                                            type="button"
+                                            pButton
+                                            pRipple
+                                            label="{{ 'BTN.CANCEL' | translate }}"
+                                            icon="pi pi-times"
+                                            (click)="navigateBackServiceList()"
+                                            class="p-button-outlined"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </ng-template>
+        </div>
+    </div>
+</div>

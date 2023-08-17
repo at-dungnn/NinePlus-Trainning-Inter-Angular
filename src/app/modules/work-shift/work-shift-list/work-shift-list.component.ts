@@ -36,7 +36,7 @@ export class WorkShiftListComponent {
 
   ngOnInit() {
     this.initForm();
-    this.getListWorkShift();
+    // this.getListWorkShift();
     this.loadSkeletonTable();
   }
 

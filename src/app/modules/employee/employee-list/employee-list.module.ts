@@ -1,4 +1,4 @@
-import { NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { EmployeeListRoutingModule } from './employee-list-routing.module';
@@ -28,4 +28,4 @@ import { MessagesModule } from 'primeng/messages';
         SharedModule,
     ],
 })
-export class EmployeeListModule {}
+export class EmployeeListModule { }

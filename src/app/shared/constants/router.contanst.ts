@@ -26,4 +26,7 @@ export enum ROUTER {
     EDIT_CLIENT_BOOKING = 'account/edit-booking',
     ACCOUNT = 'account',
     DASHBOARD = 'dashboard',
+    LIST_SERVICE = 'service/list',
+    CREATE_SERVICE = 'service/create',
+    EDIT_SERVICE = 'service/edit'
 }

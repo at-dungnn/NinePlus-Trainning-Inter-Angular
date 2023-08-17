@@ -30,6 +30,8 @@ export class EmployeeEditComponent {
     idEmployeeInit: number = 0;
     keyToast = 'bc';
     fileUpload: any;
+    resetPassDialog: boolean = false;
+
     constructor(
         private _router: Router,
         private _activatedRoute: ActivatedRoute,
@@ -75,6 +77,7 @@ export class EmployeeEditComponent {
             email: ['', Validators.compose([Validators.required, Validators.pattern(email)])],
             image: [''],
             workShiftId: [0, Validators.compose([Validators.required])],
+            userName: [''],
         });
     }
 
@@ -85,7 +88,6 @@ export class EmployeeEditComponent {
                 this._employeeService.getEmployeeById(id).subscribe({
                     next: (res) => {
                         this.form.patchValue(res);
-                        console.log(res);
                         this.idEmployeeInit = this.form.get('id')?.value;
                         this.defaultGender = this.form.get('gender')?.value;
                         this.birthdayInit = res.birthday ? new Date(res.birthday) : this.birthdayInit;
@@ -193,9 +195,6 @@ export class EmployeeEditComponent {
     removeImage() {
         const formData = new FormData();
         formData.append('filePath', this.form.get('image')?.value);
-        for (const value of formData.values()) {
-            console.log(value);
-        }
         this._uploadService.deleteImage(formData).subscribe({
             next: (res) => {
                 this.form.patchValue({
@@ -208,10 +207,32 @@ export class EmployeeEditComponent {
                     error.error.messages.forEach((item: string) => {
                         this._toastService.showError(item, this.keyToast);
                     });
+                } else {
+                    this._toastService.showError(MESSAGE_TITLE.DELETE_SUCC, this.keyToast);
                 }
-                this._toastService.showErrorNoKey('Xoá lỗi');
             },
         });
+    }
+
+    resetConfirmed() {
+        if (this.form.get('userName')?.value) {
+            this._employeeService.resetPasswordEmployee(this.form.get('userName')?.value).subscribe({
+                next: () => {
+                    this._toastService.showSuccess(MESSAGE_TITLE.RESET_PASS_SUCC, this.keyToast);
+                    this.resetPassDialog = false;
+                },
+                error: (error) => {
+                    if (error.error.messages) {
+                        error.error.messages.forEach((item: string) => {
+                            this._toastService.showErrorNoKey(item);
+                        });
+                    }
+                    else {
+                        this._toastService.showErrorNoKey(MESSAGE_TITLE.RESET_PASS_ERR);
+                    }
+                },
+            });
+        }
     }
 
     navigateBackEmployeeList() {

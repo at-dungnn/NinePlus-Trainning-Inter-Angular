@@ -1,3 +1,14 @@
+img {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+}
+
+.image-container {
+    display: flex;
+    align-items: center;
+}
+
 .card {
     .row {
         .group-button-filter {

@@ -59,7 +59,16 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Quản lý dịch vụ',
                 icon: 'pi pi-slack',
-                items: [],
+                items: [ {
+                    label: 'Danh sách',
+                    icon: 'pi pi-fw pi-list',
+                    routerLink: [ROUTER.LIST_SERVICE],
+                },
+                {
+                    label: 'Tạo',
+                    icon: 'pi pi-plus',
+                    routerLink: [ROUTER.CREATE_SERVICE],
+                },],
             },
             {
                 label: 'Quản lý khách hàng',

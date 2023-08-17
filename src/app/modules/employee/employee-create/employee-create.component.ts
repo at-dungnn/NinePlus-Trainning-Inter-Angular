@@ -120,7 +120,6 @@ export class EmployeeCreateComponent {
                                 this.navigateBackEmployeeList();
                             },
                             error: (error) => {
-                                console.log(error);
                                 this.form.patchValue({ birthday: new Date(this.form.get('birthday')?.value) });
                                 if (error.error.messages) {
                                     error.error.messages.forEach((item: string) => {
@@ -139,7 +138,6 @@ export class EmployeeCreateComponent {
                         this.navigateBackEmployeeList();
                     },
                     error: (error) => {
-                        console.log(error);
                         this.form.patchValue({ birthday: new Date(this.form.get('birthday')?.value) });
                         if (error.error.messages) {
                             error.error.messages.forEach((item: string) => {

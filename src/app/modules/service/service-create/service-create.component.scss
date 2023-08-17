@@ -2,17 +2,17 @@
     position: relative;
     width: 70px;
     height: 70px;
-}
 
-.img-container img {
-    display: block;
-}
+    .pi-times {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+    }
 
-.img-container .pi-times {
-    position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(50%, -50%);
+    img {
+        display: block;
+    }
 }
 
 .hoverClick {

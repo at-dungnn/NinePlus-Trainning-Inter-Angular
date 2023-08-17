@@ -75,8 +75,13 @@
                                 <label for="phone" class="font-medium text-900">{{
                                     "FIELDS.PHONE" | translate }}<span
                                         style="color: red"> *</span></label>
-                                <input id="phone" type="text" pInputText
-                                    formControlName="phoneNumber" />
+                                <p-inputMask
+                                    mask="9999999999"
+                                    slotChar
+                                    formControlName="phoneNumber"
+                                    [showClear]="true"
+                                    [autoClear]="false"
+                                    [maxlength]="11"></p-inputMask>
                                 <p style="color: red"
                                     *ngIf="form.get('phoneNumber')?.errors?.['required'] && form.get('phoneNumber')?.touched">
                                     * {{ "MANAGE_BRANCH.VALID_INPUT" | translate
@@ -131,7 +136,6 @@
                                                 translate: 50% -50%;
                                             "
                                             (change)="uploadFile($event)" />
-
                                         <button
                                             class="p-button-primary change-input-image w-10rem"
                                             pButton
@@ -165,7 +169,8 @@
                                 </p>
                                 <p style="color: red"
                                     *ngIf="form.get('password')?.errors?.['pattern'] && form.get('password')?.touched">
-                                    * {{ "MANAGE_BRANCH.VALID_PASSWORD" | translate }}
+                                    * {{ "MANAGE_BRANCH.VALID_PASSWORD" |
+                                    translate }}
                                 </p>
                             </div>
                             <div class="field mb-4 col-12 md:col-6">
@@ -210,7 +215,7 @@
                                         <button
                                             pButton
                                             pRipple
-                                            label="{{ 'BTN.RETURN' | translate }}"
+                                            label="{{ 'BTN.CANCEL' | translate }}"
                                             icon="pi pi-times"
                                             (click)="navigateBackEmployeeList()"
                                             class="p-button-outlined"></button>
