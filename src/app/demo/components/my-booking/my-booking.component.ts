@@ -11,6 +11,8 @@ import { MESSAGE_TITLE, ROUTER, TOAST } from 'src/app/shared';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FilterHelper } from 'src/app/core/helpers/filter.helper';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BookingStatusService } from 'src/app/shared/services/booking-status.service';
+import { BookingStatus } from 'src/app/shared/models/bookingStatus';
 
 interface Booking {
     date: string;
@@ -28,8 +30,8 @@ export class MyBookingComponent {
     myBooking: Booking[] = [];
     keyToast = TOAST.KEY_BC;
     formFilter!: FormGroup;
-    statusPage = '4';
-
+    statusPage: number = 0;
+    status!: BookingStatus[];
     constructor(
         private _router: Router,
         private _layoutService: LayoutService,
@@ -38,12 +40,13 @@ export class MyBookingComponent {
         private _toastService: ToastService,
         private _confirmationService: ConfirmationService,
         private _fb: FormBuilder,
+        private _bookingStatusService: BookingStatusService,
         private _detect: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
         this.initForm();
-        this.getCustomerId();
+        this.getListBookingStatus();
         this.getListMyBooking();
     }
 
@@ -54,20 +57,18 @@ export class MyBookingComponent {
         });
     }
 
-    getCustomerId() {
-        this.customerId = this._sessionService.userAuthenticate.userId;
+    getListBookingStatus() {
+        this._bookingStatusService.getListStatusBooking().subscribe((res) => {
+            this.status = res.data?.reverse() as BookingStatus[];
+        });
     }
 
     getListMyBooking() {
+        this.customerId = this._sessionService.userAuthenticate.userId;
         this._bookingService.getListBookingWithIdCustomer(this.customerId).subscribe({
             next: (res) => {
                 const myBooking = this.handleTotalMoneyAndTimeMyBooking(res.data as MyBooking[]);
                 this.groupByDateBooking(myBooking);
-            },
-            error: (error) => {
-                error.error.messages.forEach((item: string) => {
-                    this._toastService.showError(item, this.keyToast);
-                });
             },
         });
     }
@@ -98,12 +99,14 @@ export class MyBookingComponent {
         return result;
     }
 
-    getBookingWithStatus(status: string) {
+    getBookingWithStatus(status: number | undefined) {
         this.formFilter.patchValue({
             keyword: '',
         });
-        this.statusPage = status;
-        if (status === '4') {
+        if (status) {
+            this.statusPage = status;
+        }
+        if (status === 0) {
             this.getListMyBooking();
         } else {
             this.formFilter.patchValue({
@@ -206,7 +209,7 @@ export class MyBookingComponent {
         this.formFilter.reset();
         this.initForm();
         this.getListMyBooking();
-        this.statusPage = '4';
+        this.statusPage = 0;
     }
 
     get filledInput(): boolean {

@@ -1,5 +1,5 @@
 export interface BookingStatus {
-    id?: string;
+    id?: number;
     value?: string;
     createdOn?: string;
     lastModifiedOn?: string;

@@ -3,34 +3,21 @@
     <div class="flex flex-column text-center md:text-left mb-3">
         <span class="text-900 text-2xl">{{ "CLIENT_BOOKING.MY_BOOKING" | translate }}</span>
     </div>
-    <ul class="status-list flex justify-content-around py-3 mt-5 mb-8 surface-100 flex-wrap align-items-center border-round shadow-2">
+    <ul class="status-list flex justify-content-around p-2 mt-5 mb-8 surface-100 flex-wrap align-items-center border-round shadow-2">
         <li
-            class="status-item list-none uppercase col-6 sm:col-3 md:col-3 lg:col-3 lg:col-3 text-center hover:surface-150 cursor-pointer"
-            (click)="getBookingWithStatus('4')"
-            [ngClass]="{ active: statusPage === '4' }"
+            class="status-item list-none uppercase col-6 sm:col-3 md:col-3 lg:col-3 lg:col-3 text-center hover:surface-150 cursor-pointer h-full"
+            (click)="getBookingWithStatus(0)"
+            [ngClass]="{ active: statusPage === 0 }"
         >
             {{ "CLIENT_BOOKING.ALL" | translate }}
         </li>
         <li
+            *ngFor="let item of status"
             class="status-item list-none uppercase col-6 sm:col-3 md:col-3 lg:col-3 lg:col-3 text-center hover:surface-150 cursor-pointer"
-            (click)="getBookingWithStatus('1')"
-            [ngClass]="{ active: statusPage === '1' }"
+            (click)="getBookingWithStatus(item.id)"
+            [ngClass]="{ active: item.id === statusPage }"
         >
-            {{ "STATUS.WAITING" | translate }}
-        </li>
-        <li
-            class="status-item list-none uppercase col-6 sm:col-3 md:col-3 lg:col-3 lg:col-3 text-center hover:surface-150 cursor-pointer"
-            (click)="getBookingWithStatus('2')"
-            [ngClass]="{ active: statusPage === '2' }"
-        >
-            {{ "STATUS.INPROGRESS" | translate }}
-        </li>
-        <li
-            class="status-item list-none uppercase col-6 sm:col-3 md:col-3 lg:col-3 lg:col-3 text-center hover:surface-150 cursor-pointer"
-            (click)="getBookingWithStatus('3')"
-            [ngClass]="{ active: statusPage === '3' }"
-        >
-            {{ "STATUS.DONE" | translate }}
+            {{ item.value }}
         </li>
     </ul>
     <form [formGroup]="formFilter" (ngSubmit)="filterBooking()" class="surface-card grid-nogutter border-round shadow-2 col-12 my-5">
@@ -100,45 +87,22 @@
                                 >
                             </div>
                         </div>
-                        <div
-                            *ngIf="item.bookingStatus === 1"
-                            class="bg-gray-50 mr-0 lg:mr-3 mt-4 lg:mt-0 p-2 flex align-items-center"
-                            [style.border-radius]="'2.5rem'"
-                        >
-                            <span
-                                class="bg-gray-500 text-white flex align-items-center justify-content-center border-circle mr-2"
-                                style="min-width: 2rem; min-height: 2rem"
+                        <ng-container *ngFor="let st of status">
+                            <div
+                                *ngIf="item.bookingStatus === st.id"
+                                class="mr-0 lg:mr-3 mt-4 lg:mt-0 p-2 flex align-items-center"
+                                [style.border-radius]="'2.5rem'"
+                                [ngClass]="{ waiting: st.id === 1, inprogress: st.id === 2, done: st.id === 3 }"
                             >
-                                <i class="pi pi-check"></i>
-                            </span>
-                            <span class="text-gray-500">{{ "STATUS.WAITING" | translate }}</span>
-                        </div>
-                        <div
-                            *ngIf="item.bookingStatus === 2"
-                            class="bg-orange-50 mr-0 lg:mr-3 mt-4 lg:mt-0 p-2 flex align-items-center"
-                            [style.border-radius]="'2.5rem'"
-                        >
-                            <span
-                                class="bg-orange-500 text-white flex align-items-center justify-content-center border-circle mr-2"
-                                style="min-width: 2rem; min-height: 2rem"
-                            >
-                                <i class="pi pi-check"></i>
-                            </span>
-                            <span class="text-orange-500">{{ "STATUS.INPROGRESS" | translate }}</span>
-                        </div>
-                        <div
-                            *ngIf="item.bookingStatus === 3"
-                            class="bg-green-50 mr-0 lg:mr-3 mt-4 lg:mt-0 p-2 flex align-items-center"
-                            [style.border-radius]="'2.5rem'"
-                        >
-                            <span
-                                class="bg-green-500 text-white flex align-items-center justify-content-center border-circle mr-2"
-                                style="min-width: 2rem; min-height: 2rem"
-                            >
-                                <i class="pi pi-check"></i>
-                            </span>
-                            <span class="text-green-500">{{ "STATUS.DONE" | translate }}</span>
-                        </div>
+                                <span
+                                    class="icon-check text-white flex align-items-center justify-content-center border-circle mr-2"
+                                    style="min-width: 2rem; min-height: 2rem"
+                                >
+                                    <i class="pi pi-check"></i>
+                                </span>
+                                <span class="content">{{ st.value }}</span>
+                            </div>
+                        </ng-container>
                         <!-- <p-divider *ngIf="i !== order.products.length - 1" class="w-full block lg:hidden surface-border"></p-divider> -->
                     </div>
                 </div>
@@ -146,7 +110,7 @@
                     <a
                         tabindex="0"
                         class="cursor-pointer py-4 flex flex-column md:flex-row text-center justify-content-center align-items-center text-primary hover:bg-primary hover:text-0 transition-duration-150 w-full"
-                        [ngClass]="{ disabled: item.bookingStatus !== 1 }"
+                        [ngClass]="{ 'disabled-btn': item.bookingStatus !== 1 }"
                         style="border-bottom-left-radius: 6px"
                         (click)="navigateToEditBooking(item)"
                         ><i class="pi pi-folder mr-2 mb-2 md:mb-1"></i>{{ "BTN.UPDATE" | translate }}</a
@@ -154,7 +118,7 @@
                     <a
                         tabindex="0"
                         class="cursor-pointer py-4 flex flex-column md:flex-row text-center justify-content-center align-items-center text-primary hover:bg-primary hover:text-0 transition-duration-150 w-full"
-                        [ngClass]="{ disabled: item.bookingStatus === 2 }"
+                        [ngClass]="{ 'disabled-btn': item.bookingStatus === 2 }"
                         (click)="showConfirmDelete(item)"
                         ><i class="pi pi-refresh mr-2 mb-2 md:mb-1"></i>{{ "BTN.DELETE" | translate }}</a
                     >
