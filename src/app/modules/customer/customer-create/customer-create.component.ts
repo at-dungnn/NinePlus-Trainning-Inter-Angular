@@ -3,10 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Customer } from 'src/app/demo/api/customer';
-import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE,  MatchPassword,  REGIX, ROUTER, TOAST } from 'src/app/shared';
+import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, MatchPassword, REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormatPhone } from 'src/app/shared/validator/phone';
 
 @Component({
     selector: 'app-customer-create',
@@ -46,27 +47,37 @@ export class CustomerCreateComponent implements OnInit {
                 phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
                 address: [''],
                 dateOfBirth: [''],
-                username: [''],
-                password: [''],
+                username: [null],
+                password: [null],
                 totalMoney: [0],
             },
             {
-                validator: [MatchPassword.UsernamePasswordValidator('username', 'password')],
+                validator: [FormatPhone.formatValidator('phoneNumber')],
             }
         );
     }
 
-    initMinAndMaxDateOfBirth () {
-         this.minDate = new Date();
-         this.maxDate = new Date();
-         this.minDate.setFullYear(this.maxDate.getFullYear() - 100);
-         this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
+    initMinAndMaxDateOfBirth() {
+        this.minDate = new Date();
+        this.maxDate = new Date();
+        this.minDate.setFullYear(this.maxDate.getFullYear() - 100);
+        this.maxDate.setFullYear(this.maxDate.getFullYear() - 15);
     }
 
     onSubmit() {
         this.submitted = true;
         this.loadingSubmit();
         if (this.formAddNewCustomer.valid) {
+            if (!this.valueFormAddNewCustomer.password) {
+                this.formAddNewCustomer.patchValue({
+                    password: null,
+                });
+            }
+            if (!this.valueFormAddNewCustomer.username) {
+                this.formAddNewCustomer.patchValue({
+                    username: null,
+                });
+            }
             let newCustomer = this.trimValueCustomer(this.valueFormAddNewCustomer);
             if (this.isValidUsernameAndPassword(newCustomer) === true) {
                 this.saveCustomer(newCustomer);
@@ -83,8 +94,8 @@ export class CustomerCreateComponent implements OnInit {
         if (customer.address) {
             customer.address = HandleString.trim(customer.address);
         }
-        // "The JSON value could not be converted to System.Nullable`1[System.DateTime]
         if (!customer.dateOfBirth) {
+            // "The JSON value could not be converted to System.Nullable`1[System.DateTime]
             delete customer['dateOfBirth'];
         } else {
             customer.dateOfBirth = this.convertDateOfBirth(customer);
@@ -100,6 +111,12 @@ export class CustomerCreateComponent implements OnInit {
             this._toastService.showError(MESSAGE_ERROR_INPUT.PASSWORD_OR_USERNAME_EMPTY, this.keyToast);
             return false;
         } else if (username && password) {
+            const startUsername = username.slice(0, 6);
+            if (username === password || password.startsWith(startUsername)) {
+                this._toastService.showError(MESSAGE_ERROR_INPUT.PASSWORD_MATCH_USERNAME, this.keyToast);
+                return false;
+            }
+
             if (username && username.length < 8) {
                 this._toastService.showError(MESSAGE_ERROR_INPUT.MIN_LENGTH_USERNAME, this.keyToast);
                 return false;

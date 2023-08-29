@@ -108,6 +108,7 @@ export class EditMyBookingComponent {
                     const service: Service | undefined = (res.data as Service[]).find((item) => {
                         return serviceIdSelected[i] === item.id;
                     });
+
                     if (service) {
                         this.selectedServices.push(service);
                     }

@@ -33,7 +33,6 @@ import { PasswordModule } from 'primeng/password';
         TranslateModule,
         KeyFilterModule,
         PasswordModule,
-        LoginModule,
     ],
     declarations: [RegisterComponent],
 })

@@ -96,7 +96,6 @@ export class BookingEditComponent implements OnInit {
         if (this.bookingId) {
             this._bookingService.getBookingById(this.bookingId).subscribe({
                 next: (res) => {
-                    console.log(res);
                     this._updateFormValue(res as UpdateBooking);
                 },
             });

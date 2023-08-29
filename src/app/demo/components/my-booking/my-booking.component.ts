@@ -128,8 +128,9 @@ export class MyBookingComponent {
 
     navigateToEditBooking(booking: MyBooking) {
         if (booking.bookingStatus === 1) {
+            const data = JSON.stringify(booking);
             setTimeout(() => {
-                this._router.navigate([ROUTER.EDIT_CLIENT_BOOKING + '/' + booking.bookingId]);
+                this._router.navigate([ROUTER.EDIT_CLIENT_BOOKING + '/' + booking.bookingId, { queryParams: data }]);
             }, 1000);
         }
     }

@@ -25,19 +25,16 @@
                         <label for="phone-number" class="font-medium text-900"
                             >{{ "FIELDS.PHONE" | translate }} <span class="text-red-500 text-900">*</span></label
                         >
-                        <p-inputMask
-                            mask="99999999999"
-                            slotChar=""
-                            formControlName="phoneNumber"
-                            [showClear]="true"
-                            [autoClear]="false"
-                        ></p-inputMask>
+                        <p-inputMask mask="9999999999" slotChar="" formControlName="phoneNumber" [showClear]="true" [autoClear]="false"></p-inputMask>
                         <div
                             *ngIf="f['phoneNumber'].invalid && (f['phoneNumber'].touched || submitted) && f['phoneNumber'].errors"
                             class="text-red-500 mt-2 block"
                         >
                             <div *ngIf="f['phoneNumber'].errors['required']">{{ "INVALID.PHONE" | translate }}</div>
                             <div *ngIf="f['phoneNumber'].hasError('minlength')">{{ "INVALID.MIN_LENGTH_PHONE" | translate }}</div>
+                        </div>
+                        <div class="text-red-500 mt-2 block" *ngIf="f['phoneNumber'].hasError('formatPhoneValidator')">
+                            {{ "INVALID.FORMAT_NUMBER" | translate }}.
                         </div>
                     </div>
                     <div class="field mb-4 col-12">

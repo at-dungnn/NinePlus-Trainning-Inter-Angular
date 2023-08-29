@@ -20,7 +20,7 @@ export class LoginComponent {
     formLogin!: FormGroup;
     isLoadingSubmit = false;
     keyToast = TOAST.KEY_BC;
-    rgPassword : RegExp = REGIX.password
+    rgPassword: RegExp = REGIX.password;
     constructor(
         private _authenticateService: AuthenticateService,
         private _toastService: ToastService,
@@ -90,6 +90,7 @@ export class LoginComponent {
     }
 
     closeFormLogin() {
+        this.formLogin.reset();
         this.hiddenPopup.emit();
     }
 

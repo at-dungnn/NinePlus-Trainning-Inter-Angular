@@ -12,7 +12,10 @@
 ::-webkit-scrollbar-thumb {
     background: #c1c1c1;
 }
-
+.p-multiselect-chip {
+    height: 50px !important;
+    align-items: center !important;
+}
 @media (max-width: 576px) {
     .card-service {
         padding: 0 1rem 1rem 1rem !important;

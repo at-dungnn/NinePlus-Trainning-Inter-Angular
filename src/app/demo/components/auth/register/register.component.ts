@@ -9,6 +9,7 @@ import { ToastService } from 'src/app/shared/services/toast.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { LayoutService } from 'src/app/layout/service/app.layout.service';
 import { cloneDeep } from 'lodash';
+import { FormatPhone } from 'src/app/shared/validator/phone';
 
 @Component({
     templateUrl: './register.component.html',
@@ -60,7 +61,7 @@ export class RegisterComponent {
                 password: ['', [Validators.required, Validators.minLength(8)]],
             },
             {
-                validator: [MatchPassword.UsernamePasswordValidator('username', 'password')],
+                validator: [MatchPassword.UsernamePasswordValidator('username', 'password'), FormatPhone.formatValidator('phoneNumber')],
             }
         );
     }
@@ -178,13 +179,5 @@ export class RegisterComponent {
 
     get filledInput(): boolean {
         return this._layoutService.config.inputStyle === 'filled';
-    }
-
-    hidePopupLogin() {
-        this.isPopupLogin = false;
-    }
-
-    showPopupLogin() {
-        this.isPopupLogin = true;
     }
 }

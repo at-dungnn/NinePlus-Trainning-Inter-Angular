@@ -122,7 +122,7 @@ export class ProfileCustomerComponent {
                     }, 1000);
                     this._toastService.showSuccess(MESSAGE_TITLE.EDIT_SUCC, this.keyToast);
                     setTimeout(() => {
-                        this.navigateToLanding();
+                        window.location.reload();
                     }, 1000);
                 }
             },

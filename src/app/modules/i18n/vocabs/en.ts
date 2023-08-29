@@ -139,6 +139,7 @@ export const locale = {
             EMAIL: 'Email is required',
             FORMAT_EMAIL: 'Invalid email',
             PHONE: 'Phone number is required',
+            FORMAT_NUMBER: 'Phone number is not in the correct format',
             NAME: 'Name is required',
             PATTERN_NAME: 'Please, enter the correct name format',
             PASSWORD: 'Password is required',

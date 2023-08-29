@@ -32,8 +32,8 @@ export class HeaderComponent {
     ) {}
 
     ngOnInit(): void {
-        this.checkEventHiddenPopupLogin();
         this.getRole();
+        this.checkEventHiddenPopupLogin();
     }
 
     getRole() {
@@ -46,7 +46,7 @@ export class HeaderComponent {
     checkEventHiddenPopupLogin() {
         this.route.queryParams.subscribe((params) => {
             const type = params['type'];
-            if (type === TYPE.LOGIN) {
+            if (type === TYPE.LOGIN && !this.role) {
                 this.showPopupLogin();
             }
         });

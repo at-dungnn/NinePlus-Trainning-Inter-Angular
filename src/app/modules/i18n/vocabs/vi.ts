@@ -143,6 +143,7 @@ export const locale = {
             EMAIL: 'Email bắt buộc',
             FORMAT_EMAIL: 'Email chưa đúng định dạng',
             PHONE: 'Số điện thoại là bắt buộc',
+            FORMAT_NUMBER: "Số điện thoại chưa đúng định dạng",
             NAME: 'Tên bắt buộc',
             PATTERN_NAME: 'Vui lòng, nhập đúng định dạng tên',
             PASSWORD: 'Mật khẩu bắt buộc',

@@ -8,6 +8,7 @@ import { Customer } from 'src/app/demo/api/customer';
 import { HandleString, MESSAGE_ERROR_INPUT, MESSAGE_TITLE, REGIX, ROUTER, TOAST } from 'src/app/shared';
 import { CustomerService } from 'src/app/shared/services/customer.service';
 import { ToastService } from 'src/app/shared/services/toast.service';
+import { FormatPhone } from 'src/app/shared/validator/phone';
 
 const MESSAGE_ERROR = {
     CHECK_ID_CUSTOMER: 'Customer does not exist or recheck internet connection',
@@ -48,6 +49,7 @@ export class CustomerEditComponent implements OnInit {
     ngOnInit(): void {
         this.getIdParamRequest();
         this.initFormUpdateCustomer();
+        this.patchValueFormUpdate();
         this.initMinAndMaxDateOfBirth();
     }
 
@@ -56,24 +58,42 @@ export class CustomerEditComponent implements OnInit {
             this.customerId = params.get('id') + '';
         });
     }
+
     initFormUpdateCustomer() {
-        this.formUpdateCustomer = this._fb.group({
-            id: [''],
-            customerName: ['', [Validators.required]],
-            phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
-            address: [''],
-            dateOfBirth: [''],
-            totalMoney: [0],
-        });
+        this.formUpdateCustomer = this._fb.group(
+            {
+                id: [this.customerId],
+                customerName: ['', [Validators.required]],
+                phoneNumber: ['', [Validators.required, Validators.minLength(10)]],
+                address: [''],
+                dateOfBirth: [''],
+                totalMoney: [0],
+            },
+            {
+                validator: [FormatPhone.formatValidator('phoneNumber')],
+            }
+        );
+    }
+
+    patchValueFormUpdate() {
         this._customerService.getCustomerById(this.customerId).subscribe({
             next: (data) => {
                 if (!isEmpty(data)) {
+                    const validators = this.formUpdateCustomer.get('phoneNumber')?.validator;
                     const customer = data as Customer;
                     customer.id = Number(this.customerId);
-                    this.formUpdateCustomer.patchValue(customer);
                     if (customer.dateOfBirth) {
                         this.formUpdateCustomer.patchValue({
+                            ...customer,
                             dateOfBirth: new Date(customer.dateOfBirth),
+                        });
+                        if (validators) {
+                            this.formUpdateCustomer.get('phoneNumber')?.setValidators(validators);
+                            this.formUpdateCustomer.get('phoneNumber')?.updateValueAndValidity();
+                        }
+                    } else {
+                        this.formUpdateCustomer.patchValue({
+                            ...customer,
                         });
                     }
                 }

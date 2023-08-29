@@ -98,6 +98,7 @@ export enum MESSAGE_ERROR_INPUT {
     EMAIL_INVALID = 'Email không hợp lệ',
     INCORRECT_ACCOUNT = 'Tài khoản không chính xác',
     MATCH_PASSWORD = 'Mật khẩu không trùng khớp',
+    PASSWORD_MATCH_USERNAME = "Tài khoản không được trùng vật mật khẩu"
 }
 
 export enum MESSAGE_ERROR_INPUT_VN {

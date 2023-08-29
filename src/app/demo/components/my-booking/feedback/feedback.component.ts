@@ -78,7 +78,6 @@ export class FeedbackComponent {
     async createFeedback() {
         this.submitted = true;
         this.isLoadingSubmit = true;
-        console.log(this.valueForm.bookingDetailId);
         if (this.formFeedback.valid) {
             if (this.fileUploadImage.length > 0 || this.fileUploadVideo.length > 0) {
                 this.fileUploads = this.fileUploadImage.concat(this.fileUploadVideo);

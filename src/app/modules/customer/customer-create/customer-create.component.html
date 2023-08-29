@@ -39,6 +39,9 @@
                             <div *ngIf="f['phoneNumber'].errors['required']">{{ "INVALID.PHONE" | translate }}</div>
                             <div *ngIf="f['phoneNumber'].hasError('minlength')">{{ "INVALID.MIN_LENGTH_PHONE" | translate }}</div>
                         </div>
+                        <div class="text-red-500 mt-2 block" *ngIf="f['phoneNumber'].hasError('formatPhoneValidator')">
+                            {{ "INVALID.FORMAT_NUMBER" | translate }}.
+                        </div>
                     </div>
                     <div class="field mb-4 col-12">
                         <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
@@ -77,7 +80,7 @@
                     <div class="field mb-4 col-12">
                         <label for="password" class="font-medium text-900">{{ "FIELDS.PASSWORD" | translate }} </label>
                         <p-password formControlName="password" [toggleMask]="true" [feedback]="false" [pKeyFilter]="rgPassword"></p-password>
-                        <div *ngIf="f['password'].hasError('passwordUsernameMatch')">{{ "INVALID.USERNAME_MATCH_PASSWORD" | translate }}.</div>
+                       
                     </div>
 
                     <div class="col-12 flex">

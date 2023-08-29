@@ -10,7 +10,7 @@
             <h5 class="font-bold mr-auto block mb-1 text-4xl">{{ "AUTH.CREATE_ACCOUNT" | translate }}</h5>
             <div class="align-items-center flex signin">
                 <span class="text-color-secondary title-no-account"> {{ "AUTH.YOU_HAVE_ACCOUNT" | translate }} </span>
-                <button type="'button" class="btn btn-secondary ml-3" (click)="showPopupLogin()">
+                <button type="button" class="btn btn-secondary ml-3" (click)="navigateToLanding()">
                     {{ "TRANSLATOR.SIGN_IN" | translate }}
                 </button>
             </div>
@@ -49,6 +49,9 @@
                     <div *ngIf="f['phoneNumber'].errors['required']">{{ "INVALID.PHONE" | translate }}</div>
                     <div *ngIf="f['phoneNumber'].hasError('minlength')">{{ "INVALID.MIN_LENGTH_PHONE" | translate }}</div>
                 </div>
+                <div class="text-red-500 mt-2 block" *ngIf="f['phoneNumber'].hasError('formatPhoneValidator')">
+                    {{ "INVALID.FORMAT_NUMBER" | translate }}.
+                </div>
             </div>
 
             <div class="field mb-5">
@@ -67,7 +70,9 @@
                     <div *ngIf="f['password'].errors['required']">{{ "INVALID.PASSWORD" | translate }}</div>
                     <div *ngIf="f['password'].hasError('minlength')">{{ "INVALID.MIN_LENGTH_PASSWORD" | translate }}</div>
                 </div>
-                <div *ngIf="f['password'].hasError('passwordUsernameMatch')">{{ "INVALID.USERNAME_MATCH_PASSWORD" | translate }}.</div>
+                <div class="text-red-500 mt-2 block" *ngIf="f['password'].hasError('passwordUsernameMatch')">
+                    {{ "INVALID.USERNAME_MATCH_PASSWORD" | translate }}.
+                </div>
             </div>
             <div class="field mb-5">
                 <label for="address" class="font-medium text-900">{{ "FIELDS.ADDRESS" | translate }}</label>
@@ -87,7 +92,6 @@
             </div>
         </div>
     </form>
-    <app-login [isPopupLogin]="isPopupLogin" (hiddenPopup)="hidePopupLogin()"></app-login>
 </div>
 
 <app-config [minimal]="true"></app-config>
